@@ -7,20 +7,23 @@
 -- 		Arthur : Criação das tabelas e inserts
 --  2025-11-14
 --      Gabriel  : Alteração dos IDs, removendo o auto_increment e deixando a adição de forma manual
+-- 	20255-11-22
+-- 		Giovanne : Equipe 'Administradores'
 
 USE CONTROLE_TREINAMENTOS;
 
+-- CRIANDO A TABELA EQUIPES
 CREATE TABLE equipes (
     id INT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL UNIQUE,
-    descricao TEXT NOT NULL,
-    icone VARCHAR(500)
+    descricao VARCHAR(250) NOT NULL,
+    icone VARCHAR(100)
 ); 
 
-SHOW TABLES;
-
-INSERT INTO equipes (id,nome, descricao, icone)
+-- Inserindo as equipes
+INSERT INTO equipes (id, nome, descricao, icone)
 VALUES 
+(0, 'Administradores', 'Equipe de administração do site', 'bi bi-people'),
 (1, 'TDO - Ferramentaria', 'Equipe de desenvolvimento de ferramentas especiais', 'bi bi-tools'),
 (2, 'Pintura', 'Equipe responsavel pela pintura', 'bi bi-brush'),
 (3, 'GA - Gestão de Almoxarifado/Geral', 'Equipe responsável pela linha de montagem', 'bi bi-car-front-fill'),

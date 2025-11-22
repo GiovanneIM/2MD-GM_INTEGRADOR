@@ -7,6 +7,8 @@
 -- 		Giovanne : Criação das tabelas e inserts
 -- 2025-11-14
 --  	Gabriel  : Adição de id_equipe para identificação de área
+-- 2025-11-22
+-- 		Giovanne : Alterando o atributo id_equipe para uma FK
 
 
 USE CONTROLE_TREINAMENTOS;
@@ -20,13 +22,15 @@ CREATE TABLE if not exists usuarios (
     tipo				ENUM('admin', 'ft', 'mt') NOT NULL DEFAULT 'mt',
     data_criacao		DATETIME DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao	DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    id_equipe			int 
+    id_equipe			INT,
+    
+    FOREIGN KEY (id_equipe) REFERENCES equipes(id) ON DELETE SET NULL
 );
 
--- Usuarios de teste (a senha é 123456)
+-- Inserindo usuários de teste (a senha é 123456)
 INSERT INTO usuarios (nome, email, senha, tipo, id_equipe) VALUES
 -- Administrador
-('Administrador', 'admin@produtos.com', '$2a$10$BLAcJu1irAzg06WbtoLoPe0RA.hkfZ0oJ25KYARPkHWRweJuWBALy', 'admin', null),
+('Administrador', 'admin@produtos.com', '$2a$10$BLAcJu1irAzg06WbtoLoPe0RA.hkfZ0oJ25KYARPkHWRweJuWBALy', 'admin', 0),
 -- Membros de TDO - FERRAMENTARIA
 ('João Pedro Silva', 'joao@email.com', '$2a$10$BLAcJu1irAzg06WbtoLoPe0RA.hkfZ0oJ25KYARPkHWRweJuWBALy', 'ft', 1),
 ('Maria Eduarda Oliveira', 'maria@email.com', '$2a$10$BLAcJu1irAzg06WbtoLoPe0RA.hkfZ0oJ25KYARPkHWRweJuWBALy', 'ft', 1),
