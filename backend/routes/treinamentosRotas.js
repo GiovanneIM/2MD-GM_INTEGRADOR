@@ -17,7 +17,8 @@ router.get('/criador/:id', TreinamentoController.listarTrOferecidos)
 router.get('/:id/seisMeses', TreinamentoController.listarTrParticipanteSeisMeses)
 
 // Listar o número de treinamentos que um usuario criou nos últimos 6 meses por estado
-// router.get('/:id/criador/seisMeses', TreinamentoController.listarTrOferecidosSeisMeses)
+router.get('/:id/criador/seisMeses', TreinamentoController.listarTrOferecidosSeisMeses)
+
 
 // Criar treinamento
 router.post('/', TreinamentoController.criarTreinamento)

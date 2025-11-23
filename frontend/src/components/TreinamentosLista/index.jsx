@@ -6,12 +6,8 @@ import './trLista.css';
 
 
 export default function TreinamentosLista({
-    treinamentosRealizados,
-    treinamentosOfertados,
-
     treinamentosExibidos,
-    setTreinamentosExibidos,
-
+    setOpcaoExibir,
     tipoUsuario
 }) {
     const [filtroRO, setFiltroRO] = useState('Realizados');
@@ -57,7 +53,7 @@ export default function TreinamentosLista({
                     <button
                         className={`col-12 col-sm-6 col-md-3 btn border rounded-0 btn-filtro ${filtroRO === 'Realizados' ? 'btn-ativo' : ''}`}
                         onClick={() => {
-                            setTreinamentosExibidos(treinamentosRealizados)
+                            setOpcaoExibir('Realizados');
                             setFiltroRO('Realizados');
                             setFiltro('');
                         }}
@@ -78,7 +74,7 @@ export default function TreinamentosLista({
                             <button
                                 className={`col-12 col-sm-6 col-md-3 btn border rounded-0 btn-filtro ${filtroRO === 'Ofertados' ? 'btn-ativo' : ''}`}
                                 onClick={() => {
-                                    setTreinamentosExibidos(treinamentosOfertados)
+                                    setOpcaoExibir('Ofertados');
                                     setFiltroRO('Ofertados');
                                     setFiltro('');
                                 }}

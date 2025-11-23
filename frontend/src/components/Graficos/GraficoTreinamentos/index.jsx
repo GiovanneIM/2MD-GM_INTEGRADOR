@@ -17,24 +17,32 @@ ChartJS.register(
 	Tooltip,
 );
 
-export default function GraficoSessoes({ treinamentosOfertados }) {
-	const [data, setData] = useState(null)
+export default function GraficoTreinamentos({ opcaoExibir }) {
+	const [data, setData] = useState({ labels: [], datasets: [{}] })
 
+	/* Carregando os treinamentos */
 	useEffect(() => {
+		setData({ labels: [], datasets: [{}] });
+
 		async function carregar() {
-			const res = await fetch('http://localhost:3000/api/treinamentos/2/seisMeses')
-			const data = await res.json()
-
-			console.log(data.dados);
-			console.log(formatarDadosParaChart(data.dados));
-
-			setData(formatarDadosParaChart(data.dados))
+			// Carregando os treinamentos realizados
+			if (opcaoExibir === 'Realizados') {
+				const res = await fetch('http://localhost:3000/api/treinamentos/2/seisMeses')
+				const data = await res.json()
+				setData(formatarDadosParaChart(data.dados))
+			}
+			// Carregando os treinamentos criados
+			else {
+				const res = await fetch('http://localhost:3000/api/treinamentos/2/criador/seisMeses')
+				const data = await res.json()
+				setData(formatarDadosParaChart(data.dados))
+			}
 		}
 
 		carregar()
-	}, [])
+	}, [opcaoExibir])
 
-	/* Função para formatar os dados para a formatação do Data do Chart.js */
+	/* Função para formatar os dados da API para a formatação do Data do Chart.js */
 	function formatarDadosParaChart(registros) {
 		const estados = [
 			{
@@ -55,13 +63,15 @@ export default function GraficoSessoes({ treinamentosOfertados }) {
 			}
 		];
 
-		// 1. Extrair meses em ordem sem duplicados
+		// Obtendo os meses
 		const labels = [...new Set(registros.map(r => r.mes))];
 
-		// 2. Montar datasets empilhados
+		// Montando os datasets
 		const datasets = estados.map(estado => ({
 			label: estado.estado,
+
 			backgroundColor: estado.cor,
+
 			data: labels.map(mes => {
 				const item = registros.find(r => r.mes === mes && r.estado === estado.estado);
 				return item ? item.total : 0;
@@ -71,7 +81,7 @@ export default function GraficoSessoes({ treinamentosOfertados }) {
 		return { labels, datasets };
 	}
 
-
+	/* Configurações do gráfico */
 	const options = {
 		responsive: true,
 		plugins: {
@@ -88,8 +98,8 @@ export default function GraficoSessoes({ treinamentosOfertados }) {
 			{/* Titulo */}
 			<div className="card-header bg-white border-0 px-0 mb-3">
 				<div className="d-flex flex-column">
-					<h5 className="mb-0 fs-5">Sessoes realizadas por mês</h5>
-					<div className="text-muted" style={{ fontSize: '0.85rem' }}>Sessoes realizadas por você nos últimos 6 meses</div>
+					<h5 className="mb-0 fs-5">Treinamentos realizados por mês</h5>
+					<div className="text-muted" style={{ fontSize: '0.85rem' }}>Treinamentos realizados por você nos últimos 6 meses</div>
 				</div>
 			</div>
 

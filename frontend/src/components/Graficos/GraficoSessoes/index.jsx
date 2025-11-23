@@ -17,36 +17,59 @@ ChartJS.register(
 	Tooltip,
 );
 
-export default function GraficoSessoes({ treinamentosOfertados }) {
-	const [data, setData] = useState(null)
+export default function GraficoSessoes({ opcaoExibir }) {
+	const [data, setData] = useState({ labels: [], datasets: [{}] })
 
+	/* Carregando os treinamentos */
 	useEffect(() => {
+		setData({ labels: [], datasets: [{}] });
+
 		async function carregar() {
-			const res = await fetch('http://localhost:3000/api/treinamentos/2/seisMeses')
-			const data = await res.json()
-
-			console.log(data.dados);
-			console.log(formatarDadosParaChart(data.dados));
-
-			setData(formatarDadosParaChart(data.dados))
+			if (opcaoExibir === 'Realizados') {
+				// const res = await fetch('http://localhost:3000/api/treinamentos/2/seisMeses')
+				// const data = await res.json()
+				// setData(formatarDadosParaChart(data.dados))
+			}
+			else {
+				// const res = await fetch('http://localhost:3000/api/treinamentos/2/criador/seisMeses')
+				// const data = await res.json()
+				// setData(formatarDadosParaChart(data.dados))
+			}
 		}
 
 		carregar()
-	}, [])
+	}, [opcaoExibir])
 
-
-
+	/* Função para formatar os dados da API para a formatação do Data do Chart.js */
 	function formatarDadosParaChart(registros) {
-		const estados = ["Pendente", "Em andamento", "Concluido", "Cancelado"];
+		const estados = [
+			{
+				estado: 'Pendente',
+				cor: '#0d6efd',
+			},
+			{
+				estado: 'Em andamento',
+				cor: '#ffc107',
+			},
+			{
+				estado: 'Concluido',
+				cor: '#198754',
+			},
+			{
+				estado: 'Cancelado',
+				cor: '#dc3545'
+			}
+		];
 
-		// 1. Extrair meses em ordem sem duplicados
+		// Obtendo os meses
 		const labels = [...new Set(registros.map(r => r.mes))];
 
-		// 2. Montar datasets empilhados
+		// Montando os datasets
 		const datasets = estados.map(estado => ({
-			label: estado,
+			label: estado.estado,
+			backgroundColor: estado.cor,
 			data: labels.map(mes => {
-				const item = registros.find(r => r.mes === mes && r.estado === estado);
+				const item = registros.find(r => r.mes === mes && r.estado === estado.estado);
 				return item ? item.total : 0;
 			})
 		}));
@@ -54,33 +77,7 @@ export default function GraficoSessoes({ treinamentosOfertados }) {
 		return { labels, datasets };
 	}
 
-
-	// const data = {
-	// 	labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-	// 	datasets: [
-	// 		{
-	// 			label: 'Cancelado',
-	// 			data: [5, 7, 3, 4, 6, 2],
-	// 			backgroundColor: '#dc3545',
-	// 		},
-	// 		{
-	// 			label: 'Pendente',
-	// 			data: [5, 7, 3, 4, 6, 2],
-	// 			backgroundColor: '#ffc107',
-	// 		},
-	// 		{
-	// 			label: 'Em andamento',
-	// 			data: [2, 1, 4, 3, 2, 5],
-	// 			backgroundColor: '#0d6efd',
-	// 		},
-	// 		{
-	// 			label: 'Concluido',
-	// 			data: [3, 4, 1, 2, 3, 4],
-	// 			backgroundColor: '#198754',
-	// 		}
-	// 	]
-	// };
-
+	/* Configurações do gráfico */
 	const options = {
 		responsive: true,
 		plugins: {

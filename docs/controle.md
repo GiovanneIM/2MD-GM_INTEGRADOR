@@ -6,7 +6,7 @@
 
 ## O QUE FALTA COMPLETAR?
 - Proteger as rotas na API
-- 
+- Gráfico de sessões (Dashboard)
 - 
 - 
 

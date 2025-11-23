@@ -16,7 +16,7 @@ export default function Dashboard() {
 	const [treinamentosOferecidos, setTreinamentosOferecidos] = useState([]);
 	const [treinamentosRealizados, setTreinamentosRealizados] = useState([]);
 	const [treinamentosExibidos, setTreinamentosExibidos] = useState([]);
-
+	const [opcaoExibir, setOpcaoExibir] = useState('Realizados');
 
 	/* Carregando o usuário logado */
 	useEffect(() => {
@@ -91,6 +91,16 @@ export default function Dashboard() {
 		}
 	}, [usuario])
 
+	/* Controle para o filtro de quais treinamentos estão sendo exibidos (Inscritos ou Ofertados) */
+	useEffect(() => {
+		if (opcaoExibir === 'Realizados') {
+			setTreinamentosExibidos(treinamentosRealizados);
+		}
+		else {
+			setTreinamentosExibidos(treinamentosOferecidos);
+		}
+	}, [opcaoExibir])
+
 
 	return (
 		<>
@@ -108,8 +118,8 @@ export default function Dashboard() {
 					<div className="col-lg-7">
 						<div className="col-12 h-100">
 							<TreinamentosLista
-								treinamentosOfertados={treinamentosOferecidos ?? []} treinamentosRealizados={treinamentosRealizados ?? []}
-								treinamentosExibidos={treinamentosExibidos ?? []} setTreinamentosExibidos={setTreinamentosExibidos}
+								treinamentosExibidos={treinamentosExibidos ?? []} 
+								setOpcaoExibir={setOpcaoExibir}
 								tipoUsuario={usuario.tipo}
 							/>
 						</div>
@@ -130,14 +140,14 @@ export default function Dashboard() {
 					</div>
 
 					{/* Grafico de treinamentos */}
-					<div className="col-6 h-50 pt-2">
+					<div className="col-lg-6 h-100 pt-2">
 						<div className="h-100 col-12 bg-white rounded shadow-sm p-3">
-							<GraficoTreinamentos />
+							<GraficoTreinamentos opcaoExibir={opcaoExibir}/>
 						</div>
 					</div>
 
 					{/* Grafico de sessões */}
-					<div className="col-6 h-50 pt-2">
+					<div className="col-lg-6 h-100 pt-2">
 						<div className="h-100 col-12 bg-white rounded shadow-sm p-3">
 							<GraficoSessoes />
 						</div>

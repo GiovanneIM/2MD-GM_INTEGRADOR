@@ -40,10 +40,10 @@ export default function AcoesRapidas() {
                         <i className="fas fa-plus me-2 text-primary text-center" style={{ width: '1.5rem' }} /> Novo treinamento
                     </a>
                     <button className="btn btn-White border text-start d-flex align-items-center">
-                        <i className="fas fa-user-plus me-2 text-primary text-center" style={{ width: '1.5rem' }} /> Ver treinamentos
+                        <i className="fas fa-book me-2 text-primary text-center" style={{ width: '1.5rem' }} /> Ver treinamentos
                     </button>
                     <a className="btn btn-White border text-start d-flex align-items-center" href={`/equipes/${usuario?.id_equipe}`}>
-                        <i className="fas fa-users me-2 text-primary text-center" style={{ width: '1.5rem' }} /> Ver equipe
+                        <i className="fas fa-users me-2 text-primary text-center" style={{ width: '1.5rem' }} /> Ver minha equipe
                     </a>
                     <button className="btn btn-White border text-start d-flex align-items-center">
                         <i className="fas fa-cog me-2 text-primary text-center" style={{ width: '1.5rem' }} /> Configurações

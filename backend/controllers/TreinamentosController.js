@@ -127,7 +127,24 @@ class TreinamentoController {
     /*  OBTER O Nº DE TREINAMENTOS QUE UM USUÁRIO CRIOU NOS ÚLTIMOS 6 MESES
         separados por mês e estado */
     static async listarTrOferecidosSeisMeses(req, res) {
+        try {
+            const id = parseInt(req.params.id);
 
+            const resultado = await TreinamentoModel.listarTrOferecidosSeisMeses(id);
+
+            res.status(200).json({
+                sucesso: true,
+                dados: resultado.treinamentos
+            });
+
+        } catch (error) {
+            console.error('Erro ao listar treinamentos oferecidos nos últimos 6 meses:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível listar os treinamentos oferecidos nos últimos 6 meses'
+            });
+        }
     }
 }
 
