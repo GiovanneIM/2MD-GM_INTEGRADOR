@@ -6,15 +6,16 @@ import TreinamentosLista from "@/components/TreinamentosLista";
 import AcoesRapidas from "@/components/ft/AcoesRapidas";
 
 // Gráficos
-import EstadosTreinamentos from "@/components/Graficos/EstadosTreinamentos";
-import TreinamentosRealizados from "@/components/Graficos/TreinamentosRealizados";
-import TreinamentosOfertados from "@/components/Graficos/TreinamentosOfertados";
+import GraficoEstados from "@/components/Graficos/GraficoEstados";
+import GraficoTreinamentos from "@/components/Graficos/GraficoTreinamentos";
+import GraficoSessoes from "@/components/Graficos/GraficoSessoes";
 
 
 export default function Dashboard() {
 	const [usuario, setUsuario] = useState([]);
 	const [treinamentosOferecidos, setTreinamentosOferecidos] = useState([]);
 	const [treinamentosRealizados, setTreinamentosRealizados] = useState([]);
+	const [treinamentosExibidos, setTreinamentosExibidos] = useState([]);
 
 
 	/* Carregando o usuário logado */
@@ -46,7 +47,7 @@ export default function Dashboard() {
 					const data = await res.json();
 
 					if (data.sucesso) {
-						console.log(data.dados);
+						// console.log(data.dados);
 
 						setTreinamentosOferecidos(data.dados);
 					}
@@ -72,9 +73,10 @@ export default function Dashboard() {
 					const data = await res.json();
 
 					if (data.sucesso) {
-						console.log(data.dados);
+						// console.log(data.dados);
 
 						setTreinamentosRealizados(data.dados);
+						setTreinamentosExibidos(data.dados);
 					}
 					else {
 						console.log(data.mensagem);
@@ -104,53 +106,45 @@ export default function Dashboard() {
 
 					{/* Listagem de treinamentos */}
 					<div className="col-lg-7">
-						<TreinamentosLista treinamentosRealizados={treinamentosRealizados ?? []} treinamentosOfertados={treinamentosOferecidos ?? []} tipoUsuario={usuario.tipo}/>
+						<div className="col-12 h-100">
+							<TreinamentosLista
+								treinamentosOfertados={treinamentosOferecidos ?? []} treinamentosRealizados={treinamentosRealizados ?? []}
+								treinamentosExibidos={treinamentosExibidos ?? []} setTreinamentosExibidos={setTreinamentosExibidos}
+								tipoUsuario={usuario.tipo}
+							/>
+						</div>
 					</div>
 
 					{/* Ações rápidas e gráfico de pizza */}
 					<div className="col-lg-5">
+
 						{/* Ações Rápidas */}
 						<div className="col-12 h-50 pb-2">
-							< AcoesRapidas />
+							<AcoesRapidas />
 						</div>
 
 						{/* Gráfico de pizza */}
 						<div className="col-12 h-50 pt-2">
-							<div className="h-100 col-12 bg-white rounded shadow-sm p-3">
-								<EstadosTreinamentos treinamentos={treinamentosRealizados} />
-							</div>
-						</div>
-
-					</div>
-
-					<div className="col-12 d-flex flex-wrap">
-						{/* Grafico de treinamento realizado*/}
-						<div className="col-12 col-md-6 pt-2 pe-md-2">
-							<div className="h-100 col-12 bg-white rounded shadow-sm p-3">
-								<TreinamentosRealizados />
-							</div>
-						</div>
-
-						{/* Grafico de treinamento ofertados*/}
-						<div className="col-12 col-md-6 pt-2 ps-md-2">
-							<div className="h-100 col-12 bg-white rounded shadow-sm p-3">
-								<TreinamentosOfertados />
-							</div>
+							<GraficoEstados treinamentos={treinamentosExibidos} />
 						</div>
 					</div>
+
+					{/* Grafico de treinamentos */}
+					<div className="col-6 h-50 pt-2">
+						<div className="h-100 col-12 bg-white rounded shadow-sm p-3">
+							<GraficoTreinamentos />
+						</div>
+					</div>
+
+					{/* Grafico de sessões */}
+					<div className="col-6 h-50 pt-2">
+						<div className="h-100 col-12 bg-white rounded shadow-sm p-3">
+							<GraficoSessoes />
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</>
 	);
 }
-
-
-{/* // TESTANDO GRÁFICOS = = = = = = = = = = = = = = = = = = = = */ }
-{/* <div className="col-lg-6">
-							<div className="col-12 bg-white pe-2 rounded shadow-sm">
-								<Grafico1 />
-							</div>
-						</div> */}
-
-{/* <StackedBarChart /> */ }
-{/* = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */ }
