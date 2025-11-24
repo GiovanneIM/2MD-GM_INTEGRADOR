@@ -40,7 +40,9 @@ export default function AcoesRapidas() {
                         <i className="fas fa-plus me-2 text-primary text-center" style={{ width: '1.5rem' }} /> Novo treinamento
                     </a>
                     <button className="btn btn-White border text-start d-flex align-items-center">
+                    <a className="btn btn-White p-0 text-start d-flex align-items-center" href={`/verTreinamento/${usuario?.id_treinamento}`}>
                         <i className="fas fa-user-plus me-2 text-primary text-center" style={{ width: '1.5rem' }} /> Ver treinamentos
+                    </a>
                     </button>
                     <a className="btn btn-White border text-start d-flex align-items-center" href={`/equipes/${usuario?.id_equipe}`}>
                         <i className="fas fa-users me-2 text-primary text-center" style={{ width: '1.5rem' }} /> Ver equipe

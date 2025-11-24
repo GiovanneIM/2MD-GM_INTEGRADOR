@@ -14,11 +14,6 @@
     border-radius: 10px;
 }
 
-.cardDescricao input {
-    height: 100px;
-    resize: vertical; /* permite redimensionar apenas na vertical (opcional) */
-}
-
 .botaoLogo { 
     display: flex;
     justify-content: space-between;
@@ -28,4 +23,14 @@
 .list-unstyled a {
     text-decoration: none;
     color: black;
+}
+
+.blog-post-meta a {
+    text-decoration: none;
+}
+
+/* textarea maior e estilizado */
+.textarea-descricao {
+    min-height: 150px;
+    resize: vertical;
 }
