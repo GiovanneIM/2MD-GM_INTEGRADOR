@@ -7,26 +7,33 @@ export default function CardMembros({
 }) {
 	function modalInfos() {
 		Swal.fire({
-			width: 300,
+			width: 380,
+			background: '#f4f6f8',
+			showConfirmButton: false,
 			html: `
-			<div class="d-flex flex-column justify-content-center align-items-center gap-3">
-				<div class="overflow-hidden z-index-1 position-relative px-4" style="width:10rem">
+			<div class="gm-container">
+	
+				<!-- Foto do usuário -->
+				<div class="gm-photo-wrapper">
 					<img
-						class="rounded-circle bordas2px bordaAzulGM border-4"
+						class="gm-photo"
 						src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-						alt=""
-						style="width:100%"
+						alt="Foto"
 					/>
 				</div>
-				<div class="d-flex flex-column text-start justify-content-between border bg-secondary-subtle p-3 rounded w-100">
-					<div><b>${pessoa.nome}</b></div>
-					<div>Email: ${pessoa.email}</div>
-					<div>Telefone: ${pessoa?.telefone ?? ''}</div>
+	
+				<!-- Card de informações -->
+				<div class="gm-card">
+					<div class="gm-name">${pessoa.nome}</div>
+					<div class="gm-info"><strong>Email:</strong> ${pessoa.email}</div>
+					<div class="gm-info"><strong>Telefone:</strong> ${pessoa?.telefone ?? ''}</div>
 				</div>
+	
 			</div>
 			`
-		})
+		});
 	}
+	
 
 
 	return (
@@ -46,15 +53,15 @@ export default function CardMembros({
 				}</small>
 
 				<div className="pt-2 card-icons gap-1">
-					<a className="icon-sm bg-primary rounded-circle text-white" href="">
+					<a className="icon-sm bg-primary rounded-circle text-white" href="https://www.gmail.com/mail/help/intl/pt_pt/about.html?linkId=75998329">
 						<i className="bi bi-envelope"></i>
 					</a>
 
-					<a className="icon-sm bg-primary rounded-circle text-white" href="">
+					<a className="icon-sm bg-primary rounded-circle text-white" href="https://www.linkedin.com/">
 						<i className="bi bi-linkedin"></i>
 					</a>
 
-					<a className="icon-sm bg-primary rounded-circle text-white" href="">
+					<a className="icon-sm bg-primary rounded-circle text-white" href="https://play.google.com/store/apps/details?id=com.google.android.dialer&hl=pt-BR&pli=1">
 						<i className="bi bi-telephone"></i>
 					</a>
 				</div>

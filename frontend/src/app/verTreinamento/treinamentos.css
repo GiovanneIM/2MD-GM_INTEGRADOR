@@ -1,0 +1,126 @@
+body {
+    margin-top: 20px;
+    background: #F2F4F8;
+    font-family: "Roboto", sans-serif;
+}
+
+/* CARD PRINCIPAL */
+.main-box {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 25px;
+    border-top: 6px solid #0956FF;
+}
+
+/* TÍTULOS DA TABELA */
+.table thead > tr > th span {
+    border: none;
+    font-size: 0.95em;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #003DA5;
+}
+
+/* TABELA */
+.table tbody > tr > td {
+    font-size: 0.875em;
+    background: #ffffff;
+    border-top: 8px solid #F2F4F8;
+    vertical-align: middle;
+    padding: 12px 8px;
+}
+
+/* HOVER LINHA */
+.table-hover tbody tr:hover td {
+    background: #E6EEF8;
+}
+
+/* AVATARES */
+.user-list tbody td > img {
+    max-width: 55px;
+    border-radius: 8px;
+    border: 2px solid #0956FF;
+}
+
+/* NOME DO USUÁRIO */
+.user-link {
+    display: block;
+    font-size: 1.1em;
+    color: #0956FF;
+    font-weight: 600;
+}
+
+.user-link:hover {
+    color: #246FDB;
+}
+
+/* SUB-TÍTULO */
+.user-subhead {
+    font-size: 0.85em;
+    color: #555;
+}
+
+/* STATUS LABELS REESTILIZADOS */
+.label {
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 0.75em;
+    font-weight: bold;
+}
+
+.label-default {
+    background: #9aa0a6;
+}
+.label-success {
+    background: #00A65A;
+}
+.label-warning {
+    background: #FFB100;
+}
+.label-danger {
+    background: #D70000;
+}
+
+/* ICONES DE AÇÕES */
+.table a.table-link {
+    margin: 0 5px;
+    font-size: 1.2em;
+    color: #0956FF;
+}
+
+.table a.table-link:hover {
+    color: #246FDB;
+}
+
+.table a.table-link.danger {
+    color: #D70000;
+}
+
+.table a.table-link.danger:hover {
+    color: #A10000;
+}
+
+/* PAGINAÇÃO GM */
+.pagination li a {
+    color: #0956FF;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+.pagination li a:hover {
+    background: #0956FF;
+    color: white;
+}
+
+.titulo {
+    display: flex;
+    padding-top: 4rem;
+    padding-bottom: 1rem;
+    justify-content: center;
+    color: #0956FF;
+}
+
+.titulo h1 {
+    font-size: 55px;
+}
