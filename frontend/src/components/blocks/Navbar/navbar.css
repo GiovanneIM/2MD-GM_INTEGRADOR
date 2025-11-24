@@ -1,204 +1,132 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap'); */
 
 :root {
-  --borderRadius: 10px;
-  --spacer: 1rem;
-  --primary: #406ff3;
-  --text: #6a778e;
-  --linkHeight: calc(var(--spacer) * 3.5);
-  --timing: 250ms;
-  --transition: all var(--timing) ease;
+    --borderRadius: 10px;
+    --spacer: 1rem;
+    --primary: #0956FF;
+    --text: #6a778e;
+    --linkHeight: calc(var(--spacer) * 3.5);
+    --timing: 250ms;
+    --transition: all var(--timing) ease;
 }
 
-/* ===== DESKTOP ===== */
-.navbar {
-  position: fixed;
-  top: var(--spacer);
-  left: var(--spacer);
-  background: #fff;
-  border-radius: var(--borderRadius);
-  padding: var(--spacer) 0;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.03);
-  height: calc(100vh - (var(--spacer) * 4));
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  z-index: 999;
-}
 
+/* ===== DESKTOP e TABLET ===== */
 .navbar__menu {
-  padding: 1rem;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
+    list-style: none;
 }
 
 .navbar__item {
-  position: relative;
+    height: 3.5rem;
+    /* width: 5rem; */
 }
 
 .navbar__link {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: var(--linkHeight);
-  width: calc(var(--spacer) * 5.5);
-  color: var(--text);
-  transition: var(--transition);
-  font-family: 'Open Sans', sans-serif;
-  border-radius: calc(var(--borderRadius) * 1.75);
+    width: 3.5rem;
+    height: 3.5rem;
+
+    text-decoration: none;
+    color: var(--text);
+    transition: var(--transition);
+
+    position: relative;
 }
 
 .navbar__link span {
-  position: absolute;
-  left: 100%;
-  transform: translate(calc(-1 * var(--spacer) * 3));
-  margin-left: 1rem;
-  opacity: 0;
-  pointer-events: none;
-  color: var(--primary);
-  background: #fff;
-  padding: calc(var(--spacer) * 0.75);
-  transition: var(--transition);
-  border-radius: calc(var(--borderRadius) * 1.75);
-  white-space: nowrap;
+    /* Espaçamento */
+    margin-left: 1rem;
+    padding: calc(var(--spacer) * 0.75);
 }
 
 .navbar__link:hover {
-  color: #fff;
+    color: white;
+    background-color: var(--primary);
+}
+
+.navbar__link span {
+    position: absolute;
+    left: 100%;
+
+    opacity: 0;
+
+    color: #fff;
+    background: var(--primary);
+
+    margin-left: 1rem;
+    padding: calc(var(--spacer) * 0.75);
+
+    /* O Span só torna clicável quando está com visibility = visible */
+    visibility: hidden;
+    pointer-events: visible;
+    /* Quebra em ' ' */
+    white-space: wrap;
+
+    transition: var(--transition);
+    transform: translate(calc(-1 * var(--spacer) * 3));
 }
 
 .navbar__link:hover span,
 .navbar:not(:hover) .navbar__link:focus span {
-  opacity: 1;
-  transform: translate(0);
-}
-
-/* Fundo azul animado */
-.navbar__item::before {
-  content: '';
-  position: absolute;
-  opacity: 0;
-  z-index: -1;
-  top: 0;
-  left: var(--spacer);
-  width: var(--linkHeight);
-  height: var(--linkHeight);
-  background: var(--primary);
-  border-radius: calc(var(--borderRadius) * 1.75);
-  transition: all var(--timing) cubic-bezier(1, 0.2, 0.1, 1.2);
-}
-
-@keyframes gooeyEffect {
-  0% { transform: scale(1, 1); }
-  50% { transform: scale(0.5, 1.5); }
-  100% { transform: scale(1, 1); }
-}
-
-.navbar__item:hover::before {
-  opacity: 1;
-  animation: gooeyEffect var(--timing) 1;
-}
-
-/* ===== TABLET (entre 768px e 1024px) ===== */
-@media (max-width: 1024px) and (min-width: 769px) {
-  .navbar {
-    flex-direction: row;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    border-radius: 0;
-    justify-content: space-around;
-    padding: 0.5rem 1rem;
-  }
-
-  .navbar__menu {
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100%;
-    padding: 0;
-  }
-
-  .navbar__link {
-    width: auto;
-    padding: 0 1rem;
-  }
-
-  .navbar__link span {
-    display: inline;
+    visibility: visible;
     opacity: 1;
-    transform: none;
-    background: transparent;
-    color: var(--text);
-    position: relative;
-    left: 0;
-    margin: 0 0 0 0.5rem;
-  }
-
-  .navbar__item::before {
-    display: none;
-  }
+    transform: translate(0);
 }
 
-/* ===== MOBILE ===== */
-@media (max-width: 768px) {
-  .navbar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: var(--linkHeight);
-    border-radius: 0;
-    display: flex;
-    justify-content: center;
-    padding: 0;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
-    background: #fff;
-  }
+/* ===== CELULAR ===== */
 
-  .navbar__menu {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-  }
+.navbar__menu {
+    list-style: none;
+}
 
-  .navbar__item {
-    flex: 1;
-    text-align: center;
-  }
+.navbarItem_Cel {
+    height: 3rem;
+}
 
-  .navbar__link {
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
+.navbarLink_Cel {
+    height: 3.5rem;
+    text-decoration: none;
     color: var(--text);
-    width: 100%;
     transition: var(--transition);
-  }
+}
 
-  .navbar__link:hover {
-    background: var(--primary);
-    color: #fff;
-  }
+.navbarLink_Cel span {
+    /* Espaçamento */
+    margin-left: 1rem;
+    padding: calc(var(--spacer) * 0.75);
+}
 
-  .navbar__link span {
+.navbarLink_Cel:hover {
+    color: white;
+    background-color: var(--text);
+}
+
+
+
+.theme-wrapper {
+    display: inline-block;
+}
+
+.theme-popup {
     display: none;
-  }
+    position: absolute;
+    top: 0;
+    left: 3.2rem; /* aparece ao lado */
+    background: white;
+    z-index: 50;
+    white-space: nowrap;
+    border-radius: 0.5rem;
+}
 
-  .navbar__item::before {
-    display: none;
-  }
+.theme-wrapper:hover .theme-popup {
+    display: flex; /* mostra ao passar o mouse */
+    gap: 0.5rem;
+}
 
-  .navbar__link svg {
-    width: 22px;
-    height: 22px;
-  }
+.theme-option {
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.theme-option:hover {
+    background-color: #e9ecef;
 }

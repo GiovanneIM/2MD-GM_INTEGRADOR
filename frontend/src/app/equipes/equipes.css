@@ -1,34 +1,158 @@
-.profile-card{
-    width: 400px;
-    height: 400px;
-}
-
-.iconeFerramentaria{
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    width: 150px;
-    height: 150px;
-    border-radius: 100%;
+/* === Layout geral === */
+.equipes-wrapper {
+    min-height: 100vh;
+    padding: 4rem 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    font-family: "Roboto", "Segoe UI", sans-serif;
 }
 
-.card-body{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
+.titulo-pagina {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #0956FF; /* Azul GM */
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
 }
 
-.iconePintura{
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    width: 150px;
-    height: 150px;
-    border-radius: 100%;
+.subtitulo {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 3rem;
+}
+
+/* === Container de cards === */
+.equipes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 1300px;
+}
+
+/* === Card individual === */
+.profile-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    border: 1px solid #dfe3e8;
+    transition: transform 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease;
+    cursor: pointer;
+    text-align: center;
+    perspective: 1000px;
+    position: relative;
+}
+
+/* Efeito de "evidência" ao passar o mouse */
+.profile-card:hover {
+    transform: translateY(-15px) scale(1.03);
+    box-shadow: 0 25px 50px rgba(0, 61, 165, 0.2);
+    border-color: #0956FF;
+    z-index: 10;
+}
+
+/* === Ícone circular === */
+.iconeFerramentaria {
+    border: 3px solid #0956FF;
+    background: #f0f4fa;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0 auto 1.5rem auto;
+    transition: all 0.4s ease;
+}
+
+.iconeFerramentaria i {
+    font-size: 70px;
+    color: #0956FF;
+    transition: color 0.4s ease, transform 0.4s ease;
+}
+
+.profile-card:hover .iconeFerramentaria {
+    background: #0956FF;
+}
+
+.profile-card:hover .iconeFerramentaria i {
+    color: #fff;
+    transform: scale(1.2) rotate(5deg);
+}
+
+/* === Texto do card === */
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0956FF;
+    margin-bottom: 0.5rem;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* === Animação de entrada dos cards === */
+.profile-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s forwards;
+    animation-delay: calc(var(--i) * 0.1s);
+}
+
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === Responsividade === */
+@media (max-width: 1024px) {
+    .equipes-container {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .titulo-pagina {
+        font-size: 2.2rem;
+    }
+    .subtitulo {
+        font-size: 1rem;
+    }
+    .equipes-wrapper {
+        padding: 2rem 1rem;
+    }
+    .iconeFerramentaria {
+        width: 120px;
+        height: 120px;
+    }
+    .iconeFerramentaria i {
+        font-size: 55px;
+    }
+}
+
+@media (max-width: 480px) {
+    .equipes-container {
+        grid-template-columns: 1fr;
+    }
+    .profile-card {
+        padding: 1.5rem 1rem;
+    }
+    .card-title {
+        font-size: 1.3rem;
+    }
+    .card-text {
+        font-size: 0.95rem;
+    }
+}
+
+.logo{
+    display: flex;
+    gap: 1rem;
 }

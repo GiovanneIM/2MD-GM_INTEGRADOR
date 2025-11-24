@@ -5,11 +5,20 @@ import dotenv from 'dotenv';            // Variáveis de ambiente - Utilizado pa
 import path from 'path';                // 
 import { fileURLToPath } from 'url';    // 
 
+// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+// IMPORTANDO AS ROTAS 
 // Importar rotas
 import produtoRotas from './routes/produtoRotas.js';
 import authRotas from './routes/authRotas.js';
 import criptografiaRotas from './routes/criptografiaRotas.js';
 import usuarioRotas from './routes/usuarioRotas.js';
+
+// NÓS CRIAMOS
+import treinamentosRotas from './routes/treinamentosRotas.js';
+import equipesRotas from './routes/equipesRotas.js'
+
+// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 // Importar middlewares
 import { logMiddleware } from './middlewares/logMiddleware.js';
@@ -30,11 +39,11 @@ app.use(helmet()); // Segurança HTTP headers
 
 // Configurar CORS para permitir que rotas OPTIONS específicas sejam processadas
 app.use(cors({
-    origin: '*', // Permitindo acesso de qualquer endereço
+    origin: '*',                                            // Permitindo acesso de qualquer endereço (Alterar para o endereço do Frontend)
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],   // Metódos permitidos
     allowedHeaders: ['Content-Type', 'Authorization'],      // Headers permmitidos
-    preflightContinue: false, // Deixa as rotas OPTIONS específicas serem processadas
-    optionsSuccessStatus: 200 // Retorna 200 para OPTIONS em vez de 204
+    preflightContinue: false,                               // Deixa as rotas OPTIONS específicas serem processadas
+    optionsSuccessStatus: 200                               // Retorna 200 para OPTIONS em vez de 204
 }));
 
 app.use(express.json());
@@ -46,11 +55,19 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Middleware para log de requisições (salva no banco de dados)
 app.use(logMiddleware);
 
+// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+// ATIVANDO AS ROTAS 
+
 // Rotas da API
 app.use('/api/auth', authRotas);
 app.use('/api/produtos', produtoRotas);
 app.use('/api/criptografia', criptografiaRotas);
 app.use('/api/usuarios', usuarioRotas);
+
+// NÓS CRIAMOS
+app.use('/api/treinamentos', treinamentosRotas);
+app.use('/api/equipes', equipesRotas);
 
 // Rota raiz
 app.get('/', (req, res) => {
@@ -78,6 +95,8 @@ app.get('/', (req, res) => {
     });
 });
 
+// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
 // Middleware para tratar rotas não encontradas
 app.use('*', (req, res) => {
     res.status(404).json({
@@ -89,6 +108,8 @@ app.use('*', (req, res) => {
 
 // Middleware global de tratamento de erros (deve ser o último)
 app.use(errorMiddleware);
+
+// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 // Iniciar servidor
 app.listen(PORT, () => {

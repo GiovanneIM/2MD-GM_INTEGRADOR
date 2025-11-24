@@ -2,14 +2,15 @@ import jwt from 'jsonwebtoken';
 import UsuarioModel from '../models/UsuarioModel.js';
 import { JWT_CONFIG } from '../config/jwt.js';
 
-// Controller para operações de autenticação
+// CONTROLLER PARA OPERAÇÕES DE AUTENTICAÇÃO
+
 class AuthController {
-    
+
     // POST /auth/login - Fazer login
     static async login(req, res) {
         try {
             const { email, senha } = req.body;
-            
+
             // Validações básicas
             if (!email || email.trim() === '') {
                 return res.status(400).json({
@@ -39,7 +40,7 @@ class AuthController {
 
             // Verificar credenciais
             const usuario = await UsuarioModel.verificarCredenciais(email.trim(), senha);
-            
+
             if (!usuario) {
                 return res.status(401).json({
                     sucesso: false,
@@ -50,10 +51,10 @@ class AuthController {
 
             // Gerar token JWT
             const token = jwt.sign(
-                { 
-                    id: usuario.id, 
+                {
+                    id: usuario.id,
                     email: usuario.email,
-                    tipo: usuario.tipo 
+                    tipo: usuario.tipo
                 },
                 JWT_CONFIG.secret,
                 { expiresIn: JWT_CONFIG.expiresIn }
@@ -86,7 +87,7 @@ class AuthController {
     static async registrar(req, res) {
         try {
             const { nome, email, senha, tipo } = req.body;
-            
+
             // Validações básicas
             if (!nome || nome.trim() === '') {
                 return res.status(400).json({
@@ -166,7 +167,7 @@ class AuthController {
 
             // Criar usuário
             const usuarioId = await UsuarioModel.criar(dadosUsuario);
-            
+
             res.status(201).json({
                 sucesso: true,
                 mensagem: 'Usuário registrado com sucesso',
@@ -191,7 +192,7 @@ class AuthController {
     static async obterPerfil(req, res) {
         try {
             const usuario = await UsuarioModel.buscarPorId(req.usuario.id);
-            
+
             if (!usuario) {
                 return res.status(404).json({
                     sucesso: false,
@@ -223,7 +224,7 @@ class AuthController {
             // Obter parâmetros de paginação da query string
             const pagina = parseInt(req.query.pagina) || 1;
             const limite = parseInt(req.query.limite) || 10;
-            
+
             // Validações
             if (pagina < 1) {
                 return res.status(400).json({
@@ -232,7 +233,7 @@ class AuthController {
                     mensagem: 'A página deve ser um número maior que zero'
                 });
             }
-            
+
             const limiteMaximo = parseInt(process.env.PAGINACAO_LIMITE_MAXIMO) || 100;
             if (limite < 1 || limite > limiteMaximo) {
                 return res.status(400).json({
@@ -241,9 +242,9 @@ class AuthController {
                     mensagem: `O limite deve ser um número entre 1 e ${limiteMaximo}`
                 });
             }
-            
+
             const resultado = await UsuarioModel.listarTodos(pagina, limite);
-            
+
             // Remover senha de todos os usuários
             const usuariosSemSenha = resultado.usuarios.map(({ senha, ...usuario }) => usuario);
 
@@ -270,8 +271,8 @@ class AuthController {
     // POST /usuarios - Criar novo usuário (apenas admin)
     static async criarUsuario(req, res) {
         try {
-            const { nome, email, senha, tipo } = req.body;
-            
+            const { nome, email, senha, tipo, id_equipe } = req.body;
+
             // Validações básicas
             if (!nome || nome.trim() === '') {
                 return res.status(400).json({
@@ -346,12 +347,13 @@ class AuthController {
                 nome: nome.trim(),
                 email: email.trim().toLowerCase(),
                 senha: senha,
-                tipo: tipo || 'comum'
+                tipo: tipo || 'mt',
+                id_equipe: id_equipe
             };
 
             // Criar usuário
             const usuarioId = await UsuarioModel.criar(dadosUsuario);
-            
+
             res.status(201).json({
                 sucesso: true,
                 mensagem: 'Usuário criado com sucesso',
@@ -359,7 +361,8 @@ class AuthController {
                     id: usuarioId,
                     nome: dadosUsuario.nome,
                     email: dadosUsuario.email,
-                    tipo: dadosUsuario.tipo
+                    tipo: dadosUsuario.tipo,
+                    id_equipe: dadosUsuario.id_equipe
                 }
             });
         } catch (error) {
@@ -377,7 +380,7 @@ class AuthController {
         try {
             const { id } = req.params;
             const { nome, email, senha, tipo } = req.body;
-            
+
             // Validação do ID
             if (!id || isNaN(id)) {
                 return res.status(400).json({
@@ -399,7 +402,7 @@ class AuthController {
 
             // Preparar dados para atualização
             const dadosAtualizacao = {};
-            
+
             if (nome !== undefined) {
                 if (nome.trim() === '') {
                     return res.status(400).json({
@@ -427,7 +430,7 @@ class AuthController {
                         mensagem: 'Formato de email inválido'
                     });
                 }
-                
+
                 // Verificar se o email já está em uso por outro usuário
                 const usuarioComEmail = await UsuarioModel.buscarPorEmail(email);
                 if (usuarioComEmail && usuarioComEmail.id !== parseInt(id)) {
@@ -437,7 +440,7 @@ class AuthController {
                         mensagem: 'Este email já está sendo usado por outro usuário'
                     });
                 }
-                
+
                 dadosAtualizacao.email = email.trim().toLowerCase();
             }
 
@@ -467,7 +470,7 @@ class AuthController {
 
             // Atualizar usuário
             const resultado = await UsuarioModel.atualizar(id, dadosAtualizacao);
-            
+
             res.status(200).json({
                 sucesso: true,
                 mensagem: 'Usuário atualizado com sucesso',
@@ -489,7 +492,7 @@ class AuthController {
     static async excluirUsuario(req, res) {
         try {
             const { id } = req.params;
-            
+
             // Validação do ID
             if (!id || isNaN(id)) {
                 return res.status(400).json({
@@ -511,7 +514,7 @@ class AuthController {
 
             // Excluir usuário
             const resultado = await UsuarioModel.excluir(id);
-            
+
             res.status(200).json({
                 sucesso: true,
                 mensagem: 'Usuário excluído com sucesso',

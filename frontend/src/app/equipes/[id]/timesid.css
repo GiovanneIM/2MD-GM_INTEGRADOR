@@ -1,0 +1,32 @@
+.team-section {
+  padding: 70px 0;
+}
+
+.team-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #0956FF;
+}
+
+.team-description {
+  font-size: 1.1rem;
+  color: #444;
+  max-width: 700px;
+  margin: 10px auto 0 auto;
+}
+
+
+/* === Animação de entrada dos cards === */
+.animacao {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s forwards;
+    animation-delay: calc(var(--i) * 0.1s);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,31 @@
+.conteiner {
+    justify-content: center;
+}
+
+.flex-grow-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.col-md-8 {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.cardDescricao input {
+    height: 100px;
+    resize: vertical; /* permite redimensionar apenas na vertical (opcional) */
+}
+
+.botaoLogo { 
+    display: flex;
+    justify-content: space-between;
+    height: 35px;
+}
+
+.list-unstyled a {
+    text-decoration: none;
+    color: black;
+}

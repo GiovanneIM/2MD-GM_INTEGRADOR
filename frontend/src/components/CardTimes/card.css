@@ -1,0 +1,47 @@
+.card-funcionario {
+  width: 220px; 
+  transition: transform .3s ease;
+}
+
+.card-funcionario:hover {
+  transform: translateY(-5px);
+}
+
+.card-funcionario img {
+  width: 120px;         
+  height: 120px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1rem !important;
+}
+
+.card-body h6 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.card-body small {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.card-icons a {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.bi{
+  height: 20px;
+  width: 20px;
+}
+
+.pt-2{
+  display: flex;
+  justify-content: center;
+}

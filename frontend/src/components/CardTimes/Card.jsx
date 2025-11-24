@@ -1,21 +1,64 @@
-//exemplo de card usando Bootstrap 5
 import './card.css'
 
+import Swal from 'sweetalert2';
 
-export default function Card() {
-  return (<>
-    <div className="card bottom-bordaAzulGM shadow-sm overflow-hidden">
-      <figure className="m-0 p-0">
-        <img className="img-fluid m-3" loading="lazy" alt="Foto da parada" src="data:image/jpeg;base64,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" />
-        <figcaption className="m-0 p-4">
-          <div className='d-flex justify-content-center align-items-center'>
-            <h4 className="mb-1">
-              #Nome#
-            </h4>
-          </div>
-        </figcaption>
-      </figure>
-    </div>
-  </>
-  );
+export default function CardMembros({
+	pessoa
+}) {
+	function modalInfos() {
+		Swal.fire({
+			width: 300,
+			html: `
+			<div class="d-flex flex-column justify-content-center align-items-center gap-3">
+				<div class="overflow-hidden z-index-1 position-relative px-4" style="width:10rem">
+					<img
+						class="rounded-circle bordas2px bordaAzulGM border-4"
+						src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+						alt=""
+						style="width:100%"
+					/>
+				</div>
+				<div class="d-flex flex-column text-start justify-content-between border bg-secondary-subtle p-3 rounded w-100">
+					<div><b>${pessoa.nome}</b></div>
+					<div>Email: ${pessoa.email}</div>
+					<div>Telefone: ${pessoa?.telefone ?? ''}</div>
+				</div>
+			</div>
+			`
+		})
+	}
+
+
+	return (
+		<div className="card-funcionario text-center bg-white p-3 shadow rounded" onClick={modalInfos}>
+			<div className="overflow-hidden z-index-1 position-relative px-4">
+				<img
+					className="rounded-circle bordas2px bordaAzulGM border-4"
+					src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+					alt=""
+				/>
+			</div>
+
+			<div className=" rounded-3 mt-n3 card-body">
+				<h6 className="fw-700 dark-color mb-1" style={{height: '50px'}}>{pessoa.nome}</h6>
+				<small>{
+					pessoa.tipo === 'ft' ? ('Facilitador de time') : ('Membro de time')
+				}</small>
+
+				<div className="pt-2 card-icons gap-1">
+					<a className="icon-sm bg-primary rounded-circle text-white" href="">
+						<i className="bi bi-envelope"></i>
+					</a>
+
+					<a className="icon-sm bg-primary rounded-circle text-white" href="">
+						<i className="bi bi-linkedin"></i>
+					</a>
+
+					<a className="icon-sm bg-primary rounded-circle text-white" href="">
+						<i className="bi bi-telephone"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	);
 }

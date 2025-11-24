@@ -100,6 +100,8 @@ function sanitizeRequestBody(body) {
 // Função para salvar o log no banco de dados
 async function saveLog(logData) {
     try {
+        // console.log(logData);
+        
         await create('logs', logData);
     } catch (error) {
         console.error('Erro ao inserir log no banco:', error);

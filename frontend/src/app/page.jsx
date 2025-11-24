@@ -2,18 +2,13 @@ import './main.css';
 
 /*
 	PAGINA INICIAL
-		• Apresentação do sistema
-		• Opção para login
+		• Apresentação do sistema (OK)
+		• Opção para login (OK)
 */
 
 export default function Home() {
-	return (<>
+	return <>
 		{/* Header */}
-		{/* <header className="col-12 d-flex justify-content-center justify-content-md-between px-3 py-2 bordas2px border-top-0 border-start-0 border-end-0 bordaAzulGM align-items-center">
-			<div className="fw-bold fs-5" style={{textTransform:'uppercase'}}>Sistemas para gestão de treinamentos</div>
-			<a className="btn btn-azulGM" href="/login">Fazer login</a>
-		</header> */}
-
 		<header className="fundoAzulGM col-12 d-flex flex-column flex-md-row row-gap-3 justify-content-center justify-content-md-between px-5 py-2  align-items-center">
 			<div className="fw-bold fs-5 text-center" style={{ textTransform: 'uppercase' }}>Sistema para gestão de treinamentos</div>
 			<a className="btn btn-White fw-medium" href="/login">Fazer login</a>
@@ -78,11 +73,7 @@ export default function Home() {
 						<img src="/img/img1.svg" className="img-fluid" />
 					</div>
 
-					{/* Imagem Fábrica */}
-					{/* <div className="col-md-6">
-						<img src="/img/img2.svg" className="img-fluid rounded shadow-sm" />
-					</div> */}
-
+					{/* Imagem reunião */}
 					<div className="col-md-6">
 						<img src="https://blog.portalpos.com.br/wp-content/uploads/2023/04/treinamento-empresarial.jpg" className="img-fluid rounded shadow-sm" />
 					</div>
@@ -104,5 +95,4 @@ export default function Home() {
 		</footer>
 
 	</>
-	);
 }

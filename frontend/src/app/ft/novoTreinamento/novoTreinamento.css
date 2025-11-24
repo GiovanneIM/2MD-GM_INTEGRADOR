@@ -1,0 +1,19 @@
+.selectParticipante {
+    border-radius: .7rem;
+    padding: .8rem;
+    margin-bottom: .5rem;
+    cursor: pointer;
+    transition: transform .2s;
+}
+
+
+.selectParticipante:hover {
+    background-color: #0956FF12;
+    transform: translateY(-5px);
+}
+
+
+.participanteSelecionado {
+    background-color: #0956FF22;
+    border-left: 4px solid #0956FF !important;
+}

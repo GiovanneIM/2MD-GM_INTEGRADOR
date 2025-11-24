@@ -1,0 +1,8 @@
+.btn-filtro:hover {
+    background-color: #e6e6e6;
+    border: 1px solid #212529bf;
+}
+
+.btn-filtro.btn-ativo {
+    background-color: #e6e6e6;
+}

@@ -6,7 +6,8 @@
         • Coletar Senha (OK)
         • Fazer requisição para verificar E-mail e senha (OK)
         • Exibir caso haja erro na requisição (OK)
-        • Redirecionar o usuário
+        • Salvar o token de sessão (OK)
+        • Redirecionar o usuário (OK)
 */
 
 import { useState } from 'react';
@@ -26,22 +27,25 @@ export default function Login() {
         // Criando o objeto para a requisição
         const usuario = { email, senha }
 
-        console.log(usuario);
-
-        fetch('http://localhost:3000/api/auth/login',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(usuario)
-            }
-        ).then(res => {
+        // Fazendo a requisição
+        fetch('http://localhost:3000/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(usuario)
+        }).then( res => {   // Resposta da API
             return res.json()
-        }).then(data => {
+        }).then(data => {   //  Dados da resposta
             console.log(data);
 
+            // Se o login foi efetuado
             if (data.sucesso) {
-                // REDIRECIONAR O USUÁRIO APÓS O LOGIN
+                // Salvando o token de sessão no session storage
+                sessionStorage.setItem('token', data.dados.token)
+
+                // Redirecionando o usuário para sua página de dashboard
+                window.location.href = `/${data.dados.usuario.tipo}/dashboard`
             }
+            // Se o login falhou
             else {
                 setErro(data.mensagem)
             }
