@@ -9,11 +9,7 @@ import './footer.css';
 export default function Footer() {
   // Retornando uma tag vazia em páginas que não têm Navbar
   const pathname = usePathname();
-<<<<<<< HEAD
-  if (["/", "/login", "/dashboard", "/equipes"].includes(pathname)) {
-=======
-  if (["/", "/login", "/dashboard","/times"].includes(pathname)) {
->>>>>>> b0b0816e8ea970715787dff6b59c9e85e02b42dc
+  if (["/", "/login", "/dashboard", "/equipes","/times"].includes(pathname)) {
     return <></>;
   }
     return <>
