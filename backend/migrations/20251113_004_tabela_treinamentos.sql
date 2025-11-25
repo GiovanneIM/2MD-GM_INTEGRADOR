@@ -45,10 +45,6 @@ INSERT INTO sessoes (idTreinamento, dia) values
 (4, '2025-12-01 13:00:00')
 ;
 */
-<<<<<<< HEAD
-=======
-
->>>>>>> ff79dff5cecbaba6cc2ff4161baf55f88032dbf5
 -- =====================================================================================================================================
 -- Criando a tabela de participacoes
 CREATE TABLE if not exists participacoes (
