@@ -330,7 +330,7 @@ export default function Treinamentos() {
                                     <tr>
                                         <td>
                                             <a href="#" className="user-link">
-                                            Treinamento
+                                                Treinamento
                                             </a>
                                         </td>
                                         <td>2013/12/31</td>
