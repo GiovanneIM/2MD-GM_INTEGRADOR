@@ -1,5 +1,6 @@
 'use client'
 
+import Calendario from "@/components/calendario";
 /*
     Página para que o usuário tenha controle sobre seus treinamentos e sessões
         • Exibir os treinamentos do usuário
@@ -105,18 +106,20 @@ export default function treinamentos() {
             <div className="col-12 d-flex flex-wrap row-gap-3">
                 {/* Próximas sessões */}
                 <div className="col-12 col-lg-6 pe-lg-2">
-                    <div className="col-12 bg-white shadow p-3 rounded">
+                    <div className="col-12 bg-white shadow-sm p-3 rounded">
                         <div className='col-12 d-flex mb-3 align-items-center gap-2'>
                             <EstadoTreinamento estado={'Sessao'} />
                             <h5 className="mb-0 fs-5">Próximas sessões</h5>
                         </div>
 
-                        <div className="col-12 border rounded p-3 overflow-y-scroll" style={{ height: '350px' }}>
+                        {/* <div className="col-12 border rounded p-3 overflow-y-scroll" style={{ height: '350px' }}>
                             <div className="border rounded p-3">
                                 <div>Nome treinamento</div>
                                 <div>00/00/0000 - 00:00</div>
                             </div>
-                        </div>
+                        </div> */}
+
+                        <Calendario />
                     </div>
                 </div>
 

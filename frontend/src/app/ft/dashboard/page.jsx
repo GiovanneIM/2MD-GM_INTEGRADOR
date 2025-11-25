@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 import TreinamentosLista from "@/components/TreinamentosLista";
 import AcoesRapidas from "@/components/ft/AcoesRapidas";
+import Calendario from "@/components/calendario";
 
 // Gráficos
 import GraficoEstados from "@/components/Graficos/GraficoEstados";
@@ -115,10 +116,10 @@ export default function Dashboard() {
 				<div className="row g-3">
 
 					{/* Listagem de treinamentos */}
-					<div className="col-lg-7">
+					<div className="col-lg-6">
 						<div className="col-12 h-100">
 							<TreinamentosLista
-								treinamentosExibidos={treinamentosExibidos ?? []} 
+								treinamentosExibidos={treinamentosExibidos ?? []}
 								setOpcaoExibir={setOpcaoExibir}
 								tipoUsuario={usuario.tipo}
 							/>
@@ -126,7 +127,7 @@ export default function Dashboard() {
 					</div>
 
 					{/* Ações rápidas e gráfico de pizza */}
-					<div className="col-lg-5">
+					<div className="col-lg-6">
 
 						{/* Ações Rápidas */}
 						<div className="col-12 h-50 pb-2">
@@ -140,18 +141,45 @@ export default function Dashboard() {
 					</div>
 
 					{/* Grafico de treinamentos */}
-					<div className="col-lg-6 h-100 pt-2">
+					<div className="col-lg-6">
 						<div className="h-100 col-12 bg-white rounded shadow-sm p-3">
-							<GraficoTreinamentos opcaoExibir={opcaoExibir}/>
+							<GraficoTreinamentos opcaoExibir={opcaoExibir} />
 						</div>
 					</div>
 
 					{/* Grafico de sessões */}
-					<div className="col-lg-6 h-100 pt-2">
+					<div className="col-lg-6">
 						<div className="h-100 col-12 bg-white rounded shadow-sm p-3">
 							<GraficoSessoes />
 						</div>
 					</div>
+
+					{/* Teste Calendário */}
+
+					{/* Calendário */}
+					{/* <div className="col-lg-6">
+						<div className="col-12 h-100 bg-white shadow p-3 rounded">
+							<div className='col-12 d-flex mb-3 align-items-center gap-2'>
+								<h5 className="mb-0 fs-5">Próximas sessões</h5>
+							</div>
+
+							<Calendario />
+						</div>
+					</div> */}
+
+					{/* <div className="col-lg-6">
+						<div className="col-lg-12 h-50 pb-2">
+							<div className="h-100 col-12 bg-white rounded shadow-sm p-3">
+								<GraficoTreinamentos opcaoExibir={opcaoExibir} />
+							</div>
+						</div>
+
+						<div className="col-lg-12 h-50 pt-2">
+							<div className="h-100 col-12 bg-white rounded shadow-sm p-3">
+								<GraficoSessoes />
+							</div>
+						</div>
+					</div> */}
 
 				</div>
 			</div>
