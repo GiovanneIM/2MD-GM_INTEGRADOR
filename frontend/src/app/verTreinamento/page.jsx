@@ -65,12 +65,6 @@ export default function Treinamentos() {
                                                     <i className="fa fa-search-plus fa-stack-1x fa-inverse" />
                                                 </span>
                                             </a>
-                                            <a href="#" className="table-link">
-                                                <span className="fa-stack">
-                                                    <i className="fa fa-square fa-stack-2x" />
-                                                    <i className="fa fa-pencil fa-stack-1x fa-inverse" />
-                                                </span>
-                                            </a>
                                             <a href="#" className="table-link danger">
                                                 <span className="fa-stack">
                                                     <i className="fa fa-square fa-stack-2x" style={{ color: 'red' }}></i>
@@ -94,12 +88,6 @@ export default function Treinamentos() {
                                                 <span className="fa-stack">
                                                     <i className="fa fa-square fa-stack-2x" />
                                                     <i className="fa fa-search-plus fa-stack-1x fa-inverse" />
-                                                </span>
-                                            </a>
-                                            <a href="#" className="table-link">
-                                                <span className="fa-stack">
-                                                    <i className="fa fa-square fa-stack-2x" />
-                                                    <i className="fa fa-pencil fa-stack-1x fa-inverse" />
                                                 </span>
                                             </a>
                                             <a href="#" className="table-link danger">
@@ -127,12 +115,6 @@ export default function Treinamentos() {
                                                     <i className="fa fa-search-plus fa-stack-1x fa-inverse" />
                                                 </span>
                                             </a>
-                                            <a href="#" className="table-link">
-                                                <span className="fa-stack">
-                                                    <i className="fa fa-square fa-stack-2x" />
-                                                    <i className="fa fa-pencil fa-stack-1x fa-inverse" />
-                                                </span>
-                                            </a>
                                             <a href="#" className="table-link danger">
                                                 <span className="fa-stack">
                                                     <i className="fa fa-square fa-stack-2x" style={{ color: 'red' }}></i>
@@ -158,12 +140,6 @@ export default function Treinamentos() {
                                                     <i className="fa fa-search-plus fa-stack-1x fa-inverse" />
                                                 </span>
                                             </a>
-                                            <a href="#" className="table-link">
-                                                <span className="fa-stack">
-                                                    <i className="fa fa-square fa-stack-2x" />
-                                                    <i className="fa fa-pencil fa-stack-1x fa-inverse" />
-                                                </span>
-                                            </a>
                                             <a href="#" className="table-link danger">
                                                 <span className="fa-stack">
                                                     <i className="fa fa-square fa-stack-2x" style={{ color: 'red' }}></i>
@@ -187,12 +163,6 @@ export default function Treinamentos() {
                                                 <span className="fa-stack">
                                                     <i className="fa fa-square fa-stack-2x" />
                                                     <i className="fa fa-search-plus fa-stack-1x fa-inverse" />
-                                                </span>
-                                            </a>
-                                            <a href="#" className="table-link">
-                                                <span className="fa-stack">
-                                                    <i className="fa fa-square fa-stack-2x" />
-                                                    <i className="fa fa-pencil fa-stack-1x fa-inverse" />
                                                 </span>
                                             </a>
                                             <a href="#" className="table-link danger">
@@ -220,12 +190,6 @@ export default function Treinamentos() {
                                                     <i className="fa fa-search-plus fa-stack-1x fa-inverse" />
                                                 </span>
                                             </a>
-                                            <a href="#" className="table-link">
-                                                <span className="fa-stack">
-                                                    <i className="fa fa-square fa-stack-2x" />
-                                                    <i className="fa fa-pencil fa-stack-1x fa-inverse" />
-                                                </span>
-                                            </a>
                                             <a href="#" className="table-link danger">
                                                 <span className="fa-stack">
                                                     <i className="fa fa-square fa-stack-2x" style={{ color: 'red' }}></i>
@@ -249,12 +213,6 @@ export default function Treinamentos() {
                                                 <span className="fa-stack">
                                                     <i className="fa fa-square fa-stack-2x" />
                                                     <i className="fa fa-search-plus fa-stack-1x fa-inverse" />
-                                                </span>
-                                            </a>
-                                            <a href="#" className="table-link">
-                                                <span className="fa-stack">
-                                                    <i className="fa fa-square fa-stack-2x" />
-                                                    <i className="fa fa-pencil fa-stack-1x fa-inverse" />
                                                 </span>
                                             </a>
                                             <a href="#" className="table-link danger">
@@ -282,12 +240,6 @@ export default function Treinamentos() {
                                                     <i className="fa fa-search-plus fa-stack-1x fa-inverse" />
                                                 </span>
                                             </a>
-                                            <a href="#" className="table-link">
-                                                <span className="fa-stack">
-                                                    <i className="fa fa-square fa-stack-2x" />
-                                                    <i className="fa fa-pencil fa-stack-1x fa-inverse" />
-                                                </span>
-                                            </a>
                                             <a href="#" className="table-link danger">
                                                 <span className="fa-stack">
                                                     <i className="fa fa-square fa-stack-2x" style={{ color: 'red' }}></i>
@@ -311,12 +263,6 @@ export default function Treinamentos() {
                                                 <span className="fa-stack">
                                                     <i className="fa fa-square fa-stack-2x" />
                                                     <i className="fa fa-search-plus fa-stack-1x fa-inverse" />
-                                                </span>
-                                            </a>
-                                            <a href="#" className="table-link">
-                                                <span className="fa-stack">
-                                                    <i className="fa fa-square fa-stack-2x" />
-                                                    <i className="fa fa-pencil fa-stack-1x fa-inverse" />
                                                 </span>
                                             </a>
                                             <a href="#" className="table-link danger">
@@ -343,13 +289,7 @@ export default function Treinamentos() {
                                                     <i className="fa fa-square fa-stack-2x" />
                                                     <i className="fa fa-search-plus fa-stack-1x fa-inverse" />
                                                 </span>
-                                            </a>
-                                            <a href="#" className="table-link">
-                                                <span className="fa-stack">
-                                                    <i className="fa fa-square fa-stack-2x" />
-                                                    <i className="fa fa-pencil fa-stack-1x fa-inverse" />
-                                                </span>
-                                            </a>
+                                            </a> 
                                             <a href="#" className="table-link danger">
                                                 <span className="fa-stack">
                                                     <i className="fa fa-square fa-stack-2x" style={{ color: 'red' }}></i>
