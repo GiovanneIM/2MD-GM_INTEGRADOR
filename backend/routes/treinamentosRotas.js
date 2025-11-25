@@ -7,10 +7,18 @@ const router = express.Router();
 router.get('/', TreinamentoController.listarTodos)
 
 // Listar treinamentos realizados por usuario
-router.get('/:id', TreinamentoController.listarTreinamentosParticipante)
+router.get('/:id', TreinamentoController.listarTrParticipante)
 
 // Listar treinamentos oferecidos por um usuario
-router.get('/criador/:id', TreinamentoController.listarTreinamentosOferecidos)
+router.get('/criador/:id', TreinamentoController.listarTrOferecidos)
+
+
+// Listar o número de treinamentos em que um usuario foi inscrito nos últimos 6 meses por estado
+router.get('/:id/seisMeses', TreinamentoController.listarTrParticipanteSeisMeses)
+
+// Listar o número de treinamentos que um usuario criou nos últimos 6 meses por estado
+router.get('/:id/criador/seisMeses', TreinamentoController.listarTrOferecidosSeisMeses)
+
 
 // Criar treinamento
 router.post('/', TreinamentoController.criarTreinamento)

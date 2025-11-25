@@ -55,6 +55,7 @@ export default function Equipes() {
                     <p className="text-muted mt-2">Carregando equipes...</p>
                 ) : (
                     equipes.map((eq, index) => (
+                        eq.id > 0 &&
                         <div
                             key={eq.id}
                             className="card profile-card shadow"

@@ -21,7 +21,7 @@ export default function TreinamentosItem({ tr }) {
         return () => clearInterval(interval);
     }, [tr.data_criacao]);
 
-    // Função para calcular o tempo decorrido desde a data de criação do treinamento
+    /* Função para calcular o tempo decorrido desde a data de criação do treinamento */
     function tempoDecorrido(data_criacao) {
         const diferenca = Date.now() - new Date(data_criacao).getTime();
 
