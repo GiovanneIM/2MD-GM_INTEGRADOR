@@ -1,6 +1,6 @@
 'use client'
 
-import Calendario from "@/components/calendario";
+import Calendario from "@/components/Calendario";
 /*
     Página para que o usuário tenha controle sobre seus treinamentos e sessões
         • Exibir os treinamentos do usuário

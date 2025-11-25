@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 import TreinamentosLista from "@/components/TreinamentosLista";
 import AcoesRapidas from "@/components/ft/AcoesRapidas";
-import Calendario from "@/components/calendario";
+import Calendario from "@/components/Calendario";
 
 // Gráficos
 import GraficoEstados from "@/components/Graficos/GraficoEstados";
