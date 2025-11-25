@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 /*
     Página para listar as equipes
@@ -6,11 +6,11 @@
         • Ao selecionar uma equipe, direcionar para a página dos membros da equipe (OK)
 */
  
-import "./equipes.css";
+import './equipes.css';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-import LogoGM from "@/components/LogoGM";
+import LogoGM from '@/components/LogoGM';
 
 export default function Equipes() {
     const [equipes, setEquipes] = useState([]);
@@ -28,7 +28,7 @@ export default function Equipes() {
                     console.log(data.mensagem);
                 }
             } catch (err) {
-                console.error("Erro ao carregar equipes:", err);
+                console.error('Erro ao carregar equipes:', err);
             }
         }
 
@@ -36,38 +36,39 @@ export default function Equipes() {
     }, []);
 
     return (
-        <div className="equipes-wrapper">
+        <div className='equipes'>
 
             {/* Título da pagina e logo*/}
-            <div className="logo">
-                <h1 className="titulo-pagina">Equipes</h1>
+            <div className='d-flex gap-3'>
+                {/* Titulo */}
+                <h1 className='azulGM fw-bold mb-2 equipes-titulo'>Equipes</h1>
 
-                {/* Logo gm */}
+                {/* Logo GM */}
                 <LogoGM tamanho={55} cor={'#0956FF'} />
             </div>
 
             {/* Subtitulo */}
-            <p className="subtitulo">Escolha uma equipe e veja seus times</p>
+            <p className='equipe-subtitulo'>Escolha uma equipe e veja seus times</p>
 
             {/* Listando as equipes */}
-            <div className="equipes-container">
+            <div className='equipes-container'>
                 {equipes.length === 0 ? (
-                    <p className="text-muted mt-2">Carregando equipes...</p>
+                    <p className='text-muted mt-2'>Carregando equipes...</p>
                 ) : (
                     equipes.map((eq, index) => (
                         eq.id > 0 &&
                         <div
                             key={eq.id}
-                            className="card profile-card shadow"
+                            className='card profile-card shadow'
                             onClick={() => window.location.href = `/equipes/${eq.id}`}
-                            style={{ "--i": index }}
+                            style={{ '--i': index }}
                         >
-                            <div className="card-body">
-                                <div className="iconeFerramentaria">
+                            <div className='card-body'>
+                                <div className='iconeFerramentaria'>
                                     <i className={eq.icone}></i>
                                 </div>
-                                <h3 className="card-title">{eq.nome}</h3>
-                                <p className="card-text">{eq.descricao}</p>
+                                <h3 className='card-title'>{eq.nome}</h3>
+                                <p className='card-text'>{eq.descricao}</p>
                             </div>
                         </div>
                     ))

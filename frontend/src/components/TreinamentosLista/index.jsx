@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from "react";
-import TreinamentosItem from "./TreinamentoItem";
+import { useEffect, useState } from 'react';
+import TreinamentosItem from './TreinamentoItem';
 import './trLista.css';
 
 
@@ -24,10 +24,10 @@ export default function TreinamentosLista({
 
     /* Objeto para as cores do estado */
     const Status = {
-        "Pendente": ["primary", "fa-question-circle"],
-        "Em andamento": ["warning", "fa-cogs"],
-        "Concluido": ["success", "fa-check"],
-        "Cancelado": ["danger", "fa-xmark"],
+        'Pendente': ['primary', 'fa-question-circle'],
+        'Em andamento': ['warning', 'fa-cogs'],
+        'Concluido': ['success', 'fa-check'],
+        'Cancelado': ['danger', 'fa-xmark'],
     };
 
     /* Função para filtrar treinamentos por estado */
@@ -40,13 +40,13 @@ export default function TreinamentosLista({
 
     return (
         
-            <div className="h-100 col-12 card border-0 shadow-sm p-3">
+            <div className='h-100 col-12 card border-0 shadow-sm p-3'>
 
                 {/* Div superior */}
-                <div className="card-header bg-white border-0 px-0 d-flex flex-wrap">
+                <div className='card-header bg-white border-0 px-0 d-flex flex-wrap'>
                     {/* Título */}
                     <div className='col-12 col-md-6'>
-                        <h5 className="mb-0 fs-5">Treinamentos</h5>
+                        <h5 className='mb-0 fs-5'>Treinamentos</h5>
                     </div>
 
                     {/* Botão para exibir os treinamentos realizados */}
@@ -87,7 +87,7 @@ export default function TreinamentosLista({
                 </div>
 
                 {/* Botões de filtro */}
-                <div className="col-12 d-flex flex-wrap">{
+                <div className='col-12 d-flex flex-wrap'>{
                     // Criando 1 botão para cada estado
                     Object.keys(Status).map((estado) => {
                         // Verificando se o filtro está ativo para esse botão
@@ -126,14 +126,14 @@ export default function TreinamentosLista({
                     {trExibir.length > 0 ? (
                         trExibir.map(tr => <TreinamentosItem tr={tr} key={tr.id} />)
                     ) : (
-                        <div className="h-100 gap-3 d-flex flex-column justify-content-center align-items-center">
-                            <p className="text-muted">Sem treinamentos</p>
+                        <div className='h-100 gap-3 d-flex flex-column justify-content-center align-items-center'>
+                            <p className='text-muted'>Sem treinamentos</p>
                         </div>
                     )}
                 </div>
 
                 {/* Total de treinamentos de cada estado */}
-                <div className="d-flex flex-wrap row-gap-3 mt-3">
+                <div className='d-flex flex-wrap row-gap-3 mt-3'>
                     {
                         Object.keys(Status).map((estado, index) => {
                             // Calculando o número de treinamentos com o estado determinado
@@ -141,7 +141,7 @@ export default function TreinamentosLista({
 
                             // Criando o botão
                             return (
-                                <div key={index} className="col-md-6 d-flex gap-2 align-items-center">
+                                <div key={index} className='col-md-6 d-flex gap-2 align-items-center'>
                                     <div className={`bg-${Status[estado][0]} bg-opacity-10 rounded d-flex justify-content-center align-items-center`} style={{ height: '2.5rem', width: '2.5rem' }}>
                                         <i className={`fas ${Status[estado][1]} text-${Status[estado][0]}`} />
                                     </div>

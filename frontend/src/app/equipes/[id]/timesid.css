@@ -1,14 +1,10 @@
-.team-section {
-  padding: 70px 0;
-}
-
-.team-title {
+.equipe-nome {
   font-size: 2.8rem;
   font-weight: 800;
   color: #0956FF;
 }
 
-.team-description {
+.equipe-descricao {
   font-size: 1.1rem;
   color: #444;
   max-width: 700px;
@@ -16,7 +12,7 @@
 }
 
 
-/* === Animação de entrada dos cards === */
+/* --- Animação de entrada dos cards --- */
 .animacao {
     opacity: 0;
     transform: translateY(20px);

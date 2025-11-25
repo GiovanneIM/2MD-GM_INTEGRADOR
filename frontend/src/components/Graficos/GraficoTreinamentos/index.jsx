@@ -1,14 +1,14 @@
 'use client'
 
-import { Bar } from "react-chartjs-2";
+import { Bar } from 'react-chartjs-2';
 import {
 	Chart as ChartJS,
 	CategoryScale,
 	LinearScale,
 	BarElement,
 	Tooltip,
-} from "chart.js";
-import { useEffect, useState } from "react";
+} from 'chart.js';
+import { useEffect, useState } from 'react';
 
 ChartJS.register(
 	CategoryScale,
@@ -94,17 +94,17 @@ export default function GraficoTreinamentos({ opcaoExibir }) {
 	};
 
 	return (
-		<div className="col-12 d-flex flex-column justify-content-between">
+		<div className='col-12 d-flex flex-column justify-content-between'>
 			{/* Titulo */}
-			<div className="card-header bg-white border-0 px-0 mb-3">
-				<div className="d-flex flex-column">
-					<h5 className="mb-0 fs-5">Treinamentos realizados por mês</h5>
-					<div className="text-muted" style={{ fontSize: '0.85rem' }}>Treinamentos realizados por você nos últimos 6 meses</div>
+			<div className='card-header bg-white border-0 px-0 mb-3'>
+				<div className='d-flex flex-column'>
+					<h5 className='mb-0 fs-5'>Treinamentos realizados por mês</h5>
+					<div className='text-muted' style={{ fontSize: '0.85rem' }}>Treinamentos realizados por você nos últimos 6 meses</div>
 				</div>
 			</div>
 
 			{/* Gráfico */}
-			<div className="col-12 d-flex justify-content-center align-items-center">
+			<div className='col-12 d-flex justify-content-center align-items-center'>
 				{data && <Bar data={data} options={options} />}
 			</div>
 		</div>

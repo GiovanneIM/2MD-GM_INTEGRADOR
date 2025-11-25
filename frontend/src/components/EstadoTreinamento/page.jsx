@@ -2,11 +2,11 @@ export default function EstadoTreinamento({ estado }) {
 
     /* Objeto para as cores do estado */
     const Status = {
-        "Sessao": ["info", "fa-clock"],
-        "Pendente": ["primary", "fa-question-circle"],
-        "Em andamento": ["warning", "fa-cogs"],
-        "Concluido": ["success", "fa-check"],
-        "Cancelado": ["danger", "fa-xmark"],
+        'Sessao': ['info', 'fa-clock'],
+        'Pendente': ['primary', 'fa-question-circle'],
+        'Em andamento': ['warning', 'fa-cogs'],
+        'Concluido': ['success', 'fa-check'],
+        'Cancelado': ['danger', 'fa-xmark'],
     };
 
     return (<>
