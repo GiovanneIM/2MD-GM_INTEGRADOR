@@ -54,7 +54,7 @@ class EquipesModel {
             const connection = await getConnection();
 
             try {
-                const sql = `SELECT id, nome, email, tipo, id_equipe FROM usuarios u WHERE u.id_equipe = ${idEquipe};`;
+                const sql = `SELECT id, nome, email, telefone, tipo, id_equipe FROM usuarios u WHERE u.id_equipe = ${idEquipe};`;
 
                 const [membros] = await connection.query(sql);
 
@@ -77,7 +77,7 @@ class EquipesModel {
             const connection = await getConnection();
 
             try {
-                const sql = `SELECT id, nome, email, tipo, id_equipe FROM usuarios u WHERE u.id_equipe = ${idEquipe} AND u.tipo = 'ft';`;
+                const sql = `SELECT id, nome, email, telefone, tipo, id_equipe FROM usuarios u WHERE u.id_equipe = ${idEquipe} AND u.tipo = 'ft';`;
 
                 const [membros] = await connection.query(sql);
 
@@ -100,7 +100,7 @@ class EquipesModel {
             const connection = await getConnection();
 
             try {
-                const sql = `SELECT id, nome, email, tipo, id_equipe FROM usuarios u WHERE u.id_equipe = ${idEquipe} AND tipo = 'mt';`;
+                const sql = `SELECT id, nome, email, telefone, tipo, id_equipe FROM usuarios u WHERE u.id_equipe = ${idEquipe} AND tipo = 'mt';`;
 
                 const [membros] = await connection.query(sql);
 

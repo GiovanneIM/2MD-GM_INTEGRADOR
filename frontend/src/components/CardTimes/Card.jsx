@@ -26,7 +26,7 @@ export default function CardMembros({
 				<div class="gm-card">
 					<div class="gm-name">${pessoa.nome}</div>
 					<div class="gm-info"><strong>Email:</strong> ${pessoa.email}</div>
-					<div class="gm-info"><strong>Telefone:</strong> ${pessoa?.telefone ?? ''}</div>
+					<div class="gm-info"><strong>Telefone:</strong> ${pessoa.telefone}</div>
 				</div>
 	
 			</div>
@@ -34,7 +34,6 @@ export default function CardMembros({
 		});
 	}
 	
-
 
 	return (
 		<div className="card-funcionario text-center bg-white p-3 shadow rounded" onClick={modalInfos}>
