@@ -115,12 +115,55 @@ body {
 
 .titulo {
     display: flex;
-    padding-top: 4rem;
-    padding-bottom: 1rem;
+    align-items: center;
     justify-content: center;
+    gap: 12px;
+    padding: 10px 20px;
     color: #0956FF;
 }
 
+/* Texto responsivo */
 .titulo h1 {
-    font-size: 55px;
+    font-size: 3rem;
+    margin: 0;
+    font-weight: bold;
+}
+
+/* SVG responsivo */
+.titulo-logo {
+    width: 55px;
+    height: auto;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .titulo {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 8px;
+    }
+
+    .titulo h1 {
+        font-size: 1.6rem;
+    }
+
+    .titulo-logo {
+        width: 45px;
+    }
+}
+
+/* Responsividade para celulares pequenos */
+@media (max-width: 480px) {
+    .titulo h1 {
+        font-size: 1.3rem;
+    }
+
+    .titulo-logo {
+        width: 38px;
+    }
+}
+
+td a {
+    text-decoration: none;
 }
