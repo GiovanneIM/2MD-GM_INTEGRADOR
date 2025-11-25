@@ -5,9 +5,9 @@ import { useState, useEffect } from "react";
 import TreinamentosLista from "@/components/TreinamentosLista";
 
 // Gráficos
-import EstadosTreinamentos from "@/components/Graficos/EstadosTreinamentos";
+import EstadosTreinamentos from "@/components/Graficos/GraficoEstados";
 import TreinamentosRealizados from "@/components/Graficos/TreinamentosRealizados";
-import TreinamentosOfertados from "@/components/Graficos/TreinamentosOfertados";
+import TreinamentosOfertados from "@/components/Graficos/GraficoTreinamentos";
 
 export default function Dashboard() {
 	const [usuario, setUsuario] = useState([]);

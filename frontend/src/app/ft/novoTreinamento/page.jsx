@@ -148,10 +148,13 @@ export default function NovoTreinamento() {
 
 
     return <>
-        <div className="container vh-100 d-flex justify-items-center align-items-center">
-            <div className="col-12 bg-white shadow rounded p-3">
-                <h3 className="card-title text-center mb-4">Novo treinamento</h3>
+        <div className="container py-4 vh-100">
+            {/* Titulo da página*/}
+            <div className="d-flex flex-column justify-content-between mb-3">
+                <div className="bottom-bordaAzulGM ps-3 col-12"><h1 className="h3 mb-0 fw-bold fs-2">Novo treinamento</h1></div>
+            </div>
 
+            <div className="col-12 bg-white shadow rounded p-3">
                 {/* Formulário */}
                 <form className="col-12 d-flex flex-wrap" onSubmit={CadastrarTreinamento}>
                     {/* Nome e descrição */}
@@ -170,7 +173,7 @@ export default function NovoTreinamento() {
                                 Descrição do treinamento
                             </label>
                             <textarea
-                                className="form-control flex-grow-1" id="descricao" style={{ minHeight: '250px', maxHeight: '250px' }}
+                                className="form-control flex-grow-1" id="descricao" style={{ minHeight: '300px', maxHeight: '300px' }}
                                 value={descricaoTreinamento} onChange={(e) => setDescricaoTreinamento(e.target.value)}
                                 placeholder="Dê uma descrição ao treinamento..." required
                             />
@@ -194,7 +197,7 @@ export default function NovoTreinamento() {
                         </div>
 
                         {/* Listando os MTs */}
-                        <div className="col-12 border p-3 rounded overflow-y-scroll" style={{ height: '350px' }}>
+                        <div className="col-12 border p-3 rounded overflow-y-scroll" style={{ height: '400px' }}>
                             {
                                 mts.map((mt) => {
                                     return <div

@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS logs (
     data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
     dados_requisicao JSON,
     dados_resposta JSON,
+    
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
 );
 

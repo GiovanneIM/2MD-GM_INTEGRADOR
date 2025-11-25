@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import TreinamentosItem from "./TreinamentoItem";
 import './trLista.css';
 
+
 export default function TreinamentosLista({
-    treinamentosRealizados,
-    treinamentosOfertados,
+    treinamentosExibidos,
+    setOpcaoExibir,
     tipoUsuario
 }) {
     const [filtroRO, setFiltroRO] = useState('Realizados');
@@ -14,10 +15,11 @@ export default function TreinamentosLista({
     const [treinamentos, setTreinamentos] = useState([]);
     const [trExibir, setTrExibir] = useState([]);
 
+    /* Iniciando com o filtro desligado */
     useEffect(() => {
-        setTreinamentos(treinamentosRealizados)
-        setTrExibir(treinamentosRealizados)
-    }, [treinamentosRealizados])
+        setTreinamentos(treinamentosExibidos)
+        setTrExibir(treinamentosExibidos)
+    }, [treinamentosExibidos])
 
 
     /* Objeto para as cores do estado */
@@ -37,29 +39,32 @@ export default function TreinamentosLista({
 
 
     return (
-        <div className="col-12">
-            <div className="col-12 card border-0 shadow-sm p-3">
+        
+            <div className="h-100 col-12 card border-0 shadow-sm p-3">
 
-                {/* Título */}
+                {/* Div superior */}
                 <div className="card-header bg-white border-0 px-0 d-flex flex-wrap">
+                    {/* Título */}
                     <div className='col-12 col-md-6'>
                         <h5 className="mb-0 fs-5">Treinamentos</h5>
                     </div>
 
-                    {/* Botões de Realizado e Ofertados */}
+                    {/* Botão para exibir os treinamentos realizados */}
                     <button
                         className={`col-12 col-sm-6 col-md-3 btn border rounded-0 btn-filtro ${filtroRO === 'Realizados' ? 'btn-ativo' : ''}`}
                         onClick={() => {
-                            setTreinamentos(treinamentosRealizados);
+                            setOpcaoExibir('Realizados');
                             setFiltroRO('Realizados');
                             setFiltro('');
-                            setTrExibir(treinamentosRealizados)
                         }}
-                    >Realizados
+                    >
+                        Realizados
                     </button>
 
+                    {/* Botão para exibir os treinamentos ofertados */}
                     {
                         tipoUsuario === 'mt' ? (
+                            // Botão desativado caso seja MT
                             <button
                                 className={`col-12 col-sm-6 col-md-3 btn border rounded-0 bg-secondary bg-opacity-50`}
                                 disabled
@@ -69,12 +74,12 @@ export default function TreinamentosLista({
                             <button
                                 className={`col-12 col-sm-6 col-md-3 btn border rounded-0 btn-filtro ${filtroRO === 'Ofertados' ? 'btn-ativo' : ''}`}
                                 onClick={() => {
-                                    setTreinamentos(treinamentosOfertados);
+                                    setOpcaoExibir('Ofertados');
                                     setFiltroRO('Ofertados');
                                     setFiltro('');
-                                    setTrExibir(treinamentosOfertados);
                                 }}
-                            >Ofertados
+                            >
+                                Ofertados
                             </button>
                         )
                     }
@@ -127,7 +132,7 @@ export default function TreinamentosLista({
                     )}
                 </div>
 
-                {/* Total de treinamentos com um estado específico */}
+                {/* Total de treinamentos de cada estado */}
                 <div className="d-flex flex-wrap row-gap-3 mt-3">
                     {
                         Object.keys(Status).map((estado, index) => {
@@ -152,6 +157,5 @@ export default function TreinamentosLista({
                 </div>
 
             </div>
-        </div >
     );
 }
