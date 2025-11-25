@@ -25,9 +25,8 @@ CREATE TABLE if not exists treinamentos (
 
 -- =====================================================================================================================================
 
-/*
 -- Criando a tabela de sessoes de treinamento
-/*
+
 CREATE TABLE if not exists sessoes (
 	id					INT PRIMARY KEY AUTO_INCREMENT,
     idTreinamento		INT,
@@ -37,7 +36,7 @@ CREATE TABLE if not exists sessoes (
 );
 
 -- Inserindo dados de teste na tabela  de treinamentos
-
+/*
 INSERT INTO sessoes (idTreinamento, dia) values 
 (2, '2025-11-20 12:00:00'),
 (3, '2025-11-30 10:30:00'),
@@ -58,7 +57,6 @@ CREATE TABLE if not exists participacoes (
 
 -- =====================================================================================================================================
 -- Criando a tabela de certificados
-/*
 CREATE TABLE if not exists certificados (
 	idUsuario		INT ,
     idTreinamento	INT,
@@ -67,6 +65,5 @@ CREATE TABLE if not exists certificados (
     FOREIGN KEY (idUsuario) REFERENCES usuarios(id) ON DELETE CASCADE,
     FOREIGN KEY (idTreinamento) REFERENCES treinamentos(id) ON DELETE CASCADE
 );
-*/
 
 -- =====================================================================================================================================
