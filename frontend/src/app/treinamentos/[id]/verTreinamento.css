@@ -1,0 +1,36 @@
+.conteiner {
+    justify-content: center;
+}
+
+.flex-grow-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.col-md-8 {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.botaoLogo { 
+    display: flex;
+    justify-content: space-between;
+    height: 35px;
+}
+
+.list-unstyled a {
+    text-decoration: none;
+    color: black;
+}
+
+.blog-post-meta a {
+    text-decoration: none;
+}
+
+/* textarea maior e estilizado */
+.textarea-descricao {
+    min-height: 150px;
+    resize: vertical;
+}

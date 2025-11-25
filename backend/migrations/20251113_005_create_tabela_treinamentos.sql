@@ -34,7 +34,8 @@ CREATE TABLE if not exists treinamentos (
 CREATE TABLE if not exists sessoes (
 	id					INT PRIMARY KEY AUTO_INCREMENT,
     idTreinamento		INT NOT NULL,
-    data_hora			DATETIME,
+    data_hora			DATETIME NOT NULL,
+    local				VARCHAR(100) NOT NULL,
     data_criacao		DATETIME DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao	DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
@@ -77,16 +78,5 @@ CREATE TABLE if not exists presencas (
 );
 
 -- =====================================================================================================================================
-
--- Criando a tabela de certificados
-CREATE TABLE if not exists certificados (
-	idUsuario		INT NOT NULL,
-    idTreinamento	INT NOT NULL,
-    dataEmissao		DATETIME DEFAULT CURRENT_TIMESTAMP,
-    
-    PRIMARY KEY (idUsuario, idTreinamento),
-    FOREIGN KEY (idUsuario) REFERENCES usuarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (idTreinamento) REFERENCES treinamentos(id) ON DELETE CASCADE
-);
 
 -- =====================================================================================================================================
