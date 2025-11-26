@@ -56,6 +56,10 @@ export default function Treinamento() {
 													<option value="pendente">Pendente</option>
 												</select>
 											</div>
+
+											<button className='botao'>
+												Enviar
+											</button>
 										</form>
 									</div>
 								</div>
