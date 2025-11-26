@@ -112,7 +112,7 @@ export default function Dashboard() {
 					<p className='text-muted small mt-1 ps-3 fs-6'>Bem vindo(a), {usuario?.nome}</p>
 				</div>
 
-				{/* Lista e ações */}
+				{/* Corpo da página */}
 				<div className='row g-3'>
 
 					{/* Listagem de treinamentos */}
@@ -153,33 +153,6 @@ export default function Dashboard() {
 							<GraficoSessoes />
 						</div>
 					</div>
-
-					{/* Teste Calendário */}
-
-					{/* Calendário */}
-					{/* <div className='col-lg-6'>
-						<div className='col-12 h-100 bg-white shadow p-3 rounded'>
-							<div className='col-12 d-flex mb-3 align-items-center gap-2'>
-								<h5 className='mb-0 fs-5'>Próximas sessões</h5>
-							</div>
-
-							<Calendario />
-						</div>
-					</div> */}
-
-					{/* <div className='col-lg-6'>
-						<div className='col-lg-12 h-50 pb-2'>
-							<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
-								<GraficoTreinamentos opcaoExibir={opcaoExibir} />
-							</div>
-						</div>
-
-						<div className='col-lg-12 h-50 pt-2'>
-							<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
-								<GraficoSessoes />
-							</div>
-						</div>
-					</div> */}
 
 				</div>
 			</div>
