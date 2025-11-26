@@ -1,6 +1,5 @@
 'use client'
 
-import Calendario from '@/components/Calendario';
 /*
     Página para que o usuário tenha controle sobre seus treinamentos e sessões
         • Exibir os treinamentos do usuário
@@ -8,6 +7,7 @@ import Calendario from '@/components/Calendario';
         • Caso o usuário seja o criador do treinamento, permitir que ele controle o treinamento
 */
 
+import Calendario from '@/components/Calendario';
 import EstadoTreinamento from '@/components/EstadoTreinamento/page';
 import { useState, useEffect } from 'react';
 

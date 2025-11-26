@@ -6,6 +6,9 @@ const router = express.Router();
 // Listar TODOS os treinamentos
 router.get('/', TreinamentoController.listarTodos)
 
+// Listar treinamentos específico
+router.get('/treinamento/:id', TreinamentoController.listarTreinamento)
+
 // Listar treinamentos realizados por usuario
 router.get('/:id', TreinamentoController.listarTrParticipante)
 

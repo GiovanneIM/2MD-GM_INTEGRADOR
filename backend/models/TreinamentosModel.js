@@ -25,6 +25,33 @@ class TreinamentoModel {
         }
     }
 
+    /* LISTAR TREINAMENTO ESPECÍFICO */
+    static async listarTreinamento(id) {
+        try {
+            const connection = await getConnection();
+
+            try {
+                const sql = `
+                    SELECT t.nome, t.descricao, t.data_criacao, t.data_atualizacao, t.numSessoes, t.estado, u.nome as criador FROM treinamentos t 
+                    INNER JOIN usuarios u on u.id = t.idCriador
+                    WHERE t.id = 1;
+                `;
+                const [treinamento] = await connection.query(sql);
+
+                return {
+                    treinamento
+                };
+            } finally {
+                connection.release();
+            }
+
+        } catch (error) {
+            console.error('Erro ao listar Treinamento:', error);
+            throw error;
+        }
+    }
+
+
     /* LISTAR TODOS OS TREINAMENTOS DE UM PARTICIPANTE */
     static async listarTrParticipante(id) {
         try {

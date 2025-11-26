@@ -23,6 +23,28 @@ class TreinamentoController {
         }
     }
 
+    /* LISTAR TREINAMENTO ESPECÍFICO */
+    static async listarTreinamento(req, res) {
+        try {
+            const id = parseInt(req.params.id);
+
+            const resultado = await TreinamentoModel.listarTreinamento(id);
+
+            res.status(200).json({
+                sucesso: true,
+                dados: resultado.treinamento
+            });
+
+        } catch (error) {
+            console.error('Erro ao listar treinamento:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível listar os treinamento'
+            });
+        }
+    }
+
     /* LISTAR TODOS OS TREINAMENTOS DE UM PARTICIPANTE */
     static async listarTrParticipante(req, res) {
         try {

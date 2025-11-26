@@ -1,9 +1,9 @@
 'use client';
+
 /*
-    Página onde os usuáriso acessam uma lista que contém os treinamentos em que o usuários está inserido ou criou onde temos algumas informações e é onde o 
-    usuario pode deletar algum treinamento 
-    Nesta página ele pode escolher o treinamento e ele será redirecionados para uma página onde ele pode mudar o nome descrição 
-    e Status do treinamento 
+    Página onde serão listados os treinamentos em que o usuários está inserido ou os quais ele criou
+        • Listar os treinamentos do usuário e suas informações resumidas
+        • Ao selecionar um treino, o usuário é direcionado à página de controle do treinamento
 */
 
 import './treinamentos.css'
