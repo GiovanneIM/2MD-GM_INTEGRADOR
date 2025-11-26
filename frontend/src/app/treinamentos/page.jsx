@@ -18,7 +18,7 @@ export default function Treinamentos() {
     };
 
     return (<>
-        <div className='container py-4 vh-100 d-flex flex-column'>
+        <div className='container h-100 py-4 d-flex flex-column'>
             {/* Titulo da página*/}
             <div className='d-flex flex-column justify-content-between mb-3'>
                 <div className='bottom-bordaAzulGM ps-3 col-12'><h1 className='h3 mb-0 fw-bold fs-2'>Treinamentos</h1></div>
@@ -26,8 +26,32 @@ export default function Treinamentos() {
 
             {/* Corpo da página */}
             <div className='flex-grow-1 d-flex flex-column'>
-                <div className='bg-white shadow-sm p-3 rounded flex-grow-1'>
-                    <div className='col-12 border h-100 rounded p-3'>
+                {/* Lista dos treinamentos */}
+                <div className='bg-white shadow-sm p-3 rounded flex-grow-1 d-flex flex-column gap-3'>
+                    {/* Título  e botões */}
+                    <div className='card-header bg-white border-0 px-0 d-flex flex-wrap'>
+                        <div className='col-12 col-md-6'>
+                            <h5 className='mb-0 fs-5'>Treinamentos</h5>
+                        </div>
+
+                        {/* Botão para exibir os treinamentos realizados */}
+                        <button
+                            className={`col-12 col-sm-6 col-md-3 btn border rounded-0 btn-filtro`}
+                        >
+                            Realizados
+                        </button>
+
+                        {/* Botão para exibir os treinamentos ofertados */}
+                        {
+                            <button
+                                className={`col-12 col-sm-6 col-md-3 btn border rounded-0 btn-filtro`}
+                            >
+                                Ofertados
+                            </button>
+                        }
+                    </div>
+
+                    <div className='col-12 border flex-grow-1 p-3 overflow-y-scroll'>
                         <table className='table user-list'>
                             <thead>
                                 <tr>
@@ -35,7 +59,7 @@ export default function Treinamentos() {
                                         <span>Nome</span>
                                     </th>
                                     <th>
-                                        <span>Criado</span>
+                                        <span>Criado em</span>
                                     </th>
                                     <th className='text-center'>
                                         <span>Status</span>
