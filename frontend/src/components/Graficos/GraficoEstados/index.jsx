@@ -1,10 +1,10 @@
-import { Pie } from "react-chartjs-2";
+import { Pie } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
     ArcElement,
     Tooltip,
     Legend
-} from "chart.js";
+} from 'chart.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -39,12 +39,12 @@ export default function GraficoEstados({ treinamentos }) {
     };
 
     return (
-        // <div className="h-100 col-12 d-flex flex-column align-items-center">
-        <div className="card border-0 shadow-sm p-3 col-12 h-100 pb-2 d-flex flex-column align-items-center">
+        // <div className='h-100 col-12 d-flex flex-column align-items-center'>
+        <div className='card border-0 shadow-sm p-3 col-12 h-100 pb-2 d-flex flex-column align-items-center'>
             {/* Titulo */}
-            <div className="col-12 d-flex flex-column">
-                <h5 className="mb-0 fs-5">Estados dos Treinamentos</h5>
-                <div className="text-muted" style={{ fontSize: '0.85rem' }}>Proporção dos seus treinamentos por estado</div>
+            <div className='col-12 d-flex flex-column'>
+                <h5 className='mb-0 fs-5'>Estados dos Treinamentos</h5>
+                <div className='text-muted' style={{ fontSize: '0.85rem' }}>Proporção dos seus treinamentos por estado</div>
             </div>
 
             <Pie data={data} options={options} />

@@ -1,15 +1,15 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export default function TreinamentosItem({ tr }) {
     const [tempo, setTempo] = useState('');
 
     const Status = {
-        "Pendente": ["primary", "fa-question-circle"],
-        "Em andamento": ["warning", "fa-cogs"],
-        "Concluido": ["success", "fa-check"],
-        "Cancelado": ["danger", "fa-xmark"],
+        'Pendente': ['primary', 'fa-question-circle'],
+        'Em andamento': ['warning', 'fa-cogs'],
+        'Concluido': ['success', 'fa-check'],
+        'Cancelado': ['danger', 'fa-xmark'],
     };
 
     useEffect(() => {
@@ -35,20 +35,20 @@ export default function TreinamentosItem({ tr }) {
         if (segundos < 60) {
             setTempo(`Há alguns segundos`);
         } else if (minutos < 60) {
-            setTempo(`Há ${minutos} ${minutos !== 1 ? "minutos" : "minuto"}`);
+            setTempo(`Há ${minutos} ${minutos !== 1 ? 'minutos' : 'minuto'}`);
         } else if (horas < 24) {
-            setTempo(`Há ${horas} ${horas !== 1 ? "horas" : "hora"}`);
+            setTempo(`Há ${horas} ${horas !== 1 ? 'horas' : 'hora'}`);
         } else if (dias < 365) {
-            setTempo(`Há ${dias} ${dias !== 1 ? "dias" : "dia"}`);
+            setTempo(`Há ${dias} ${dias !== 1 ? 'dias' : 'dia'}`);
         } else if (meses < 12) {
-            setTempo(`Há ${meses} ${meses !== 1 ? "meses" : "mês"}`);
+            setTempo(`Há ${meses} ${meses !== 1 ? 'meses' : 'mês'}`);
         } else {
-            setTempo(`Há ${anos} ${anos !== 1 ? "anos" : "ano"}`);
+            setTempo(`Há ${anos} ${anos !== 1 ? 'anos' : 'ano'}`);
         }
     };
 
     return (
-        <div key={tr.id} className="d-flex align-items-center border-bottom mb-2 pb-2">
+        <div key={tr.id} className='d-flex align-items-center border-bottom mb-2 pb-2'>
             <div
                 className={`flex-shrink-0 bg-${Status[tr.estado][0]} bg-opacity-10 rounded d-flex justify-content-center align-items-center`}
                 style={{ width: '2.5rem', height: '2.5rem' }}
@@ -56,9 +56,9 @@ export default function TreinamentosItem({ tr }) {
                 <i className={`fas ${Status[tr.estado][1]} text-${Status[tr.estado][0]}`} />
             </div>
 
-            <div className="flex-grow-1 ms-3">
-                <h6 className="mb-1">{tr.nome}</h6>
-                <p className="text-muted small mb-0">{tempo}</p>
+            <div className='flex-grow-1 ms-3'>
+                <h6 className='mb-1'>{tr.nome}</h6>
+                <p className='text-muted small mb-0'>{tempo}</p>
             </div>
         </div>
     );

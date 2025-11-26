@@ -5,9 +5,9 @@
         • Coletar as informações do treinamento (Nome, descrição e participantes)
 */
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 
 import './novoTreinamento.css';
 
@@ -62,7 +62,7 @@ export default function NovoTreinamento() {
                     console.log(data.mensagem);
                 }
             } catch (err) {
-                console.error("Erro ao carregar membros:", err);
+                console.error('Erro ao carregar membros:', err);
             }
         }
 
@@ -114,27 +114,27 @@ export default function NovoTreinamento() {
             if (data.sucesso) {
                 // Alerta de usuário cadastrado
                 Swal.fire({
-                    title: "Treinamento cadastrado",
+                    title: 'Treinamento cadastrado',
                     html: `
-                            <p class="mb-2">Treinamento criado com sucesso</p>
-                            <div class="text-start p-3 border rounded" style="background:#f8f9fa;">
-                                <table class="table table-sm mb-0">
+                            <p class='mb-2'>Treinamento criado com sucesso</p>
+                            <div class='text-start p-3 border rounded' style='background:#f8f9fa;'>
+                                <table class='table table-sm mb-0'>
                                     <tbody>
                                         <div>
-                                            <div class="fw-bold">Nome</div>
+                                            <div class='fw-bold'>Nome</div>
                                             <div>${data.dados.nome}</div>
                                         </div>
                                         <div>
-                                            <div class="fw-bold mt-3">Descrição</div>
+                                            <div class='fw-bold mt-3'>Descrição</div>
                                             <div>${data.dados.descricao}</div>
                                         </div>
                                     </tbody>
                                 </table>
                             </div>
                         `,
-                    icon: "success",
-                    confirmButtonText: "Fechar",
-                    confirmButtonColor: "#0956FF"
+                    icon: 'success',
+                    confirmButtonText: 'Fechar',
+                    confirmButtonColor: '#0956FF'
                 });
             }
             else {
@@ -148,69 +148,69 @@ export default function NovoTreinamento() {
 
 
     return <>
-        <div className="container py-4 vh-100">
+        <div className='container py-4 vh-100'>
             {/* Titulo da página*/}
-            <div className="d-flex flex-column justify-content-between mb-3">
-                <div className="bottom-bordaAzulGM ps-3 col-12"><h1 className="h3 mb-0 fw-bold fs-2">Novo treinamento</h1></div>
+            <div className='d-flex flex-column justify-content-between mb-3'>
+                <div className='bottom-bordaAzulGM ps-3 col-12'><h1 className='h3 mb-0 fw-bold fs-2'>Novo treinamento</h1></div>
             </div>
 
-            <div className="col-12 bg-white shadow rounded p-3">
+            <div className='col-12 bg-white shadow rounded p-3'>
                 {/* Formulário */}
-                <form className="col-12 d-flex flex-wrap" onSubmit={CadastrarTreinamento}>
+                <form className='col-12 d-flex flex-wrap' onSubmit={CadastrarTreinamento}>
                     {/* Nome e descrição */}
-                    <div className="col-12 col-lg-6 pe-lg-2 d-flex flex-column justify-content-lg-between">
+                    <div className='col-12 col-lg-6 pe-lg-2 d-flex flex-column justify-content-lg-between'>
                         {/* Nome */}
                         <div>
-                            <label htmlFor="nomeTreinamento" className="form-label border-bottom border-primary-subtle col-12 fs-5">
+                            <label htmlFor='nomeTreinamento' className='form-label border-bottom border-primary-subtle col-12 fs-5'>
                                 Nome do treinamento
                             </label>
-                            <input type="text" className="form-control" id="nomeTreinamento" placeholder="Digite o nome do treinamento" value={nomeTreinamento} onChange={(e) => setNomeTreinamento(e.target.value)} required />
+                            <input type='text' className='form-control' id='nomeTreinamento' placeholder='Digite o nome do treinamento' value={nomeTreinamento} onChange={(e) => setNomeTreinamento(e.target.value)} required />
                         </div>
 
                         {/* Descrição */}
-                        <div className="mt-3 d-flex flex-column">
-                            <label htmlFor="descricao" className="form-label border-bottom border-primary-subtle col-12 fs-5">
+                        <div className='mt-3 d-flex flex-column'>
+                            <label htmlFor='descricao' className='form-label border-bottom border-primary-subtle col-12 fs-5'>
                                 Descrição do treinamento
                             </label>
                             <textarea
-                                className="form-control flex-grow-1" id="descricao" style={{ minHeight: '300px', maxHeight: '300px' }}
+                                className='form-control flex-grow-1' id='descricao' style={{ minHeight: '300px', maxHeight: '300px' }}
                                 value={descricaoTreinamento} onChange={(e) => setDescricaoTreinamento(e.target.value)}
-                                placeholder="Dê uma descrição ao treinamento..." required
+                                placeholder='Dê uma descrição ao treinamento...' required
                             />
                         </div>
                     </div>
 
                     {/* Participantes */}
-                    <div className="col-12 col-lg-6 ps-lg-2 h-100 mt-3 mt-lg-0">
-                        <div htmlFor="telefone" className="form-label d-flex flex-wrap justify-content-between border-bottom border-primary-subtle col-12 fs-5">
+                    <div className='col-12 col-lg-6 ps-lg-2 h-100 mt-3 mt-lg-0'>
+                        <div htmlFor='telefone' className='form-label d-flex flex-wrap justify-content-between border-bottom border-primary-subtle col-12 fs-5'>
                             Treinamento destinado a
 
-                            <div className="d-flex fs-6 align-items-center justify-content-center gap-1">
-                                <input className="form-check-input m-0 p-0" type="checkbox" id='adicionarTodos'
+                            <div className='d-flex fs-6 align-items-center justify-content-center gap-1'>
+                                <input className='form-check-input m-0 p-0' type='checkbox' id='adicionarTodos'
                                     checked={participantes.length === mts.length}
                                     onChange={SelecionarTodos}
                                 />
-                                <label className="form-check-label col-12 overflow-hidden" htmlFor='adicionarTodos'>
+                                <label className='form-check-label col-12 overflow-hidden' htmlFor='adicionarTodos'>
                                     Selecionar todos os MTs
                                 </label>
                             </div>
                         </div>
 
                         {/* Listando os MTs */}
-                        <div className="col-12 border p-3 rounded overflow-y-scroll" style={{ height: '400px' }}>
+                        <div className='col-12 border p-3 rounded overflow-y-scroll' style={{ height: '400px' }}>
                             {
                                 mts.map((mt) => {
                                     return <div
-                                        className={`selectParticipante form-check bordas bordaCinza py-2 ${participantes.includes(mt.id) ? "participanteSelecionado" : ""}`}
+                                        className={`selectParticipante form-check bordas bordaCinza py-2 ${participantes.includes(mt.id) ? 'participanteSelecionado' : ''}`}
                                         key={mt.id}
                                     >
-                                        <input className="form-check-input d-none m-0 p-0" type="checkbox" id={mt.id}
+                                        <input className='form-check-input d-none m-0 p-0' type='checkbox' id={mt.id}
                                             checked={participantes.includes(mt.id)}
                                             onChange={() => adicionarParticipante(mt.id)}
                                         />
 
-                                        <label className="form-check-label col-12 overflow-hidden" htmlFor={mt.id}>
-                                            <div className="d-flex">
+                                        <label className='form-check-label col-12 overflow-hidden' htmlFor={mt.id}>
+                                            <div className='d-flex'>
                                                 <div>
                                                     <img
                                                         style={{ height: '4rem', width: '4rem' }}
@@ -218,9 +218,9 @@ export default function NovoTreinamento() {
                                                     />
                                                 </div>
 
-                                                <div className="ms-2">
-                                                    <div className="fw-bold">{mt.nome}</div>
-                                                    <div className="text-muted">{mt.email}</div>                                                    </div>
+                                                <div className='ms-2'>
+                                                    <div className='fw-bold'>{mt.nome}</div>
+                                                    <div className='text-muted'>{mt.email}</div>                                                    </div>
                                             </div>
                                         </label>
                                     </div >
@@ -230,8 +230,8 @@ export default function NovoTreinamento() {
                     </div>
 
                     {/* Botão */}
-                    <div className="col-12 text-center mt-3">
-                        <button type="submit" className="btn btn-azulGM">
+                    <div className='col-12 text-center mt-3'>
+                        <button type='submit' className='btn btn-azulGM'>
                             Novo treinamento
                         </button>
                     </div>
