@@ -71,11 +71,11 @@ export default function Navbar() {
 		// 	texto: 'Dúvidas',
 		// 	icone: 'bi bi-question-lg'
 		// },
-		{
-			link: '#',
-			texto: 'Configurações',
-			icone: 'bi bi-gear'
-		}
+		// {
+		// 	link: '#',
+		// 	texto: 'Configurações',
+		// 	icone: 'bi bi-gear'
+		// }
 	]
 
 
