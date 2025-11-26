@@ -52,25 +52,25 @@ export default function Navbar() {
 			icone: 'bi bi-calendar-week'
 		},
 		{
-			link: '/verTreinamentos',
+			link: '/treinamentos',
 			texto: 'Treinamentos',
 			icone: 'bi bi-bar-chart-line'
 		},
-		{
-			link: '#',
-			texto: 'Mensagens',
-			icone: 'bi bi-chat-left-text'
-		},
+		// {
+		// 	link: '#',
+		// 	texto: 'Mensagens',
+		// 	icone: 'bi bi-chat-left-text'
+		// },
 		{
 			link: '/equipes',
 			texto: 'Equipes',
 			icone: 'bi bi-people'
 		},
-		{
-			link: '#',
-			texto: 'Dúvidas',
-			icone: 'bi bi-question-lg'
-		},
+		// {
+		// 	link: '#',
+		// 	texto: 'Dúvidas',
+		// 	icone: 'bi bi-question-lg'
+		// },
 		{
 			link: '#',
 			texto: 'Configurações',
