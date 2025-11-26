@@ -11,6 +11,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const localizer = momentLocalizer(moment);
 
+/* Eventos */
 const initialEvents = [
     {
         id: 1,
@@ -30,7 +31,7 @@ export default function Calendario() {
     const [events, setEvents] = useState(initialEvents);
 
     return (
-        <div>
+        <div className='flex-grow-1'>
             <Calendar
                 localizer={localizer}
                 events={events}
