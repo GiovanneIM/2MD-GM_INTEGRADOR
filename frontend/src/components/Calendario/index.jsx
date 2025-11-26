@@ -27,14 +27,14 @@ const initialEvents = [
     },
 ];
 
-export default function Calendario() {
+export default function Calendario({eventos}) {
     const [events, setEvents] = useState(initialEvents);
 
     return (
         <div className='flex-grow-1'>
             <Calendar
                 localizer={localizer}
-                events={events}
+                events={eventos ?? events}
                 startAccessor='start'
                 endAccessor='end'
                 views={[Views.MONTH, Views.WEEK, Views.DAY]}
