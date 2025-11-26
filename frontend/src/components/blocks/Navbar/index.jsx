@@ -138,7 +138,7 @@ export default function Navbar() {
 						</a>
 					</div>
 
-					{links.map((lk) =>
+					{links.map((lk, index) =>
 						<div className='navbarItem_Cel d-flex align-items-center px-3 border-bottom' key={index}>
 							<a href={`${lk.link}`} className='navbarLink_Cel rounded d-flex align-items-center justify-content-center'>
 								<i className={`${lk.icone} fs-4`}></i>
