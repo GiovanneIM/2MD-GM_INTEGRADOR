@@ -102,34 +102,36 @@ export default function Dashboard() {
 				<div className='row g-3'>
 
 					{/* Listagem de treinamentos */}
-					<div className='col-lg-12'>
-						<TreinamentosLista
-							treinamentosExibidos={treinamentosExibidos ?? []}
-							setOpcaoExibir={setOpcaoExibir}
-							tipoUsuario={usuario.tipo}
-						/>
+					<div className='col-lg-6'>
+						<div className='col-12 h-100'>
+							<TreinamentosLista
+								treinamentosExibidos={treinamentosExibidos ?? []}
+								setOpcaoExibir={setOpcaoExibir}
+								tipoUsuario={usuario.tipo}
+							/>
+						</div>
 					</div>
 
 					{/* Ações Rápidas */}
-					<div className='col-12 h-50 pb-2'>
-						<AcoesRapidas />
-					</div>
+					<div className='col-lg-6'>
 
+						<div className='col-12 h-50 pb-2'>
+							<AcoesRapidas />
+						</div>
 
-					{/* Gráficos */}
-					<div className='col-lg-5'>
+						{/* Gráficos */}
 						{/* Gráfico de pizza */}
 						<div className='col-12 h-50 pb-2'>
 							<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
 								<EstadosTreinamentos treinamentos={treinamentosRealizados} />
 							</div>
 						</div>
+					</div>
 
-						{/* Grafico de treinamento realizado*/}
-						<div className='col-12 h-50 pt-2'>
-							<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
-								<TreinamentosRealizados />
-							</div>
+					{/* Grafico de treinamento realizado*/}
+					<div className='col-12 h-50 pt-2'>
+						<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
+							<TreinamentosRealizados />
 						</div>
 					</div>
 				</div>

@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 import TreinamentosLista from '@/components/TreinamentosLista';
 import AcoesRapidas from '@/components/admin/AcoesRapidas';
 import AcessoRestrito from '@/components/Sweetalert/AcessoRestrito';
+import GraficoEstados from '@/components/Graficos/GraficoEstados';
 
 
 export default function Dashboard() {
@@ -118,19 +119,32 @@ export default function Dashboard() {
 					<p className='text-muted small mt-1 ps-3 fs-6'>Bem vindo, {usuario.nome}</p>
 				</div>
 
-				{/* Lista e ações */}
+				{/* Corpo da página */}
 				<div className='row g-3'>
 
 					{/* Listagem de treinamentos */}
-					<TreinamentosLista
-						treinamentosExibidos={treinamentosExibidos ?? []}
-						setOpcaoExibir={setOpcaoExibir}
-						tipoUsuario={usuario.tipo}
-					/>
+					<div className='col-lg-6'>
+						<div className='col-12 h-100'>
+							<TreinamentosLista
+								treinamentosExibidos={treinamentosExibidos ?? []}
+								setOpcaoExibir={setOpcaoExibir}
+								tipoUsuario={usuario.tipo}
+							/>
+						</div>
+					</div>
 
 					{/* Ações Rápidas */}
-					< AcoesRapidas />
+					<div className='col-lg-6'>
 
+						{/* Ações Rápidas (literalmente) */}
+						<div className='col-12 h-50 pb-2'>
+							< AcoesRapidas />
+						</div>
+
+						<div className='col-12 h-50 pt-2'>
+							<GraficoEstados treinamentos={treinamentosExibidos} />
+						</div>
+					</div>
 				</div>
 			</div>
 		</>
