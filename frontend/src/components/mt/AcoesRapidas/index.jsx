@@ -36,9 +36,6 @@ export default function AcoesRapidas() {
             {/* Botões */}
             <div className='card-body'>
                 <div className='d-grid gap-2'>
-                    <a className='btn btn-White border text-start d-flex align-items-center' href='/ft/novoTreinamento'>
-                        <i className='fas fa-plus me-2 text-primary text-center' style={{ width: '1.5rem' }} /> Novo treinamento
-                    </a>
                     <a className='btn btn-White border text-start d-flex align-items-center' href='/treinamentos'>
                         <i className='fas fa-book me-2 text-primary text-center' style={{ width: '1.5rem' }} /> Ver treinamentos
                     </a>

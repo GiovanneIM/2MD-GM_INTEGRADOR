@@ -1,8 +1,8 @@
 'use client';
 
 /*
-    Página inicial do admin 
-        • Verificar se há um admin logado (OK)
+	Página inicial do admin 
+		• Verificar se há um admin logado (OK)
 		• Exibir os treinamentos (OK)
 */
 
@@ -19,6 +19,9 @@ export default function Dashboard() {
 	const [usuario, setUsuario] = useState([]);
 	const [treinamentos, setTreinamentos] = useState([]);
 	const [acesso, setAcesso] = useState(null);
+	const [treinamentosExibidos, setTreinamentosExibidos] = useState([]);
+	const [opcaoExibir, setOpcaoExibir] = useState('Realizados');
+
 
 	/* Carregando o usuário logado */
 	useEffect(() => {
@@ -119,7 +122,11 @@ export default function Dashboard() {
 				<div className='row g-3'>
 
 					{/* Listagem de treinamentos */}
-					<TreinamentosLista treinamentos={treinamentos} />
+					<TreinamentosLista
+						treinamentosExibidos={treinamentosExibidos ?? []}
+						setOpcaoExibir={setOpcaoExibir}
+						tipoUsuario={usuario.tipo}
+					/>
 
 					{/* Ações Rápidas */}
 					< AcoesRapidas />
