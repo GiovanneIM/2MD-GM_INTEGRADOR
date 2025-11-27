@@ -5,14 +5,17 @@ import { useState, useEffect } from 'react';
 import TreinamentosLista from '@/components/TreinamentosLista';
 
 // Gráficos
+import AcoesRapidas from '@/components/mt/AcoesRapidas';
 import EstadosTreinamentos from '@/components/Graficos/GraficoEstados';
-import TreinamentosRealizados from '@/components/Graficos/TreinamentosRealizados';
+import TreinamentosRealizados from '@/components/Graficos/GraficoTreinamentos';
 import TreinamentosOfertados from '@/components/Graficos/GraficoTreinamentos';
 
 export default function Dashboard() {
 	const [usuario, setUsuario] = useState([]);
 	const [treinamentosOferecidos, setTreinamentosOferecidos] = useState([]);
 	const [treinamentosRealizados, setTreinamentosRealizados] = useState([]);
+	const [treinamentosExibidos, setTreinamentosExibidos] = useState([]);
+	const [opcaoExibir, setOpcaoExibir] = useState('Realizados');
 
 	/* Carregando o usuário logado */
 	useEffect(() => {
@@ -99,24 +102,36 @@ export default function Dashboard() {
 				<div className='row g-3'>
 
 					{/* Listagem de treinamentos */}
-					<div className='col-lg-7'>
-						<TreinamentosLista treinamentosRealizados={treinamentosRealizados ?? []} treinamentosOfertados={treinamentosOferecidos ?? []} tipoUsuario={usuario.tipo} />
+					<div className='col-lg-6'>
+						<div className='col-12 h-100'>
+							<TreinamentosLista
+								treinamentosExibidos={treinamentosExibidos ?? []}
+								setOpcaoExibir={setOpcaoExibir}
+								tipoUsuario={usuario.tipo}
+							/>
+						</div>
 					</div>
 
-					{/* Gráficos */}
-					<div className='col-lg-5'>
+					{/* Ações Rápidas */}
+					<div className='col-lg-6'>
+
+						<div className='col-12 h-50 pb-2'>
+							<AcoesRapidas />
+						</div>
+
+						{/* Gráficos */}
 						{/* Gráfico de pizza */}
 						<div className='col-12 h-50 pb-2'>
 							<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
 								<EstadosTreinamentos treinamentos={treinamentosRealizados} />
 							</div>
 						</div>
+					</div>
 
-						{/* Grafico de treinamento realizado*/}
-						<div className='col-12 h-50 pt-2'>
-							<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
-								<TreinamentosRealizados />
-							</div>
+					{/* Grafico de treinamento realizado*/}
+					<div className='col-12 h-50 pt-2'>
+						<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
+							<TreinamentosRealizados />
 						</div>
 					</div>
 				</div>

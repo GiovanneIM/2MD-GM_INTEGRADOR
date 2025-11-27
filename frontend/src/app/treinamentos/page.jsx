@@ -74,7 +74,7 @@ export default function Treinamentos() {
                                             Treinamento
                                         </a>
                                     </td>
-                                    <td>2013/08/08</td>
+                                    <td>08/08/2013</td>
                                     <td className='text-center'>
                                         <span className={`text-${Status.Concluido[0]} fa ${Status.Concluido[1]} col-2`}></span>
                                     </td>
@@ -99,7 +99,82 @@ export default function Treinamentos() {
                                             Treinamento
                                         </a>
                                     </td>
-                                    <td>2013/08/12</td>
+                                    <td>08/12/2014</td>
+                                    <td className='text-center'>
+                                        <span className={`text-${Status['Em andamento'][0]} fa ${Status['Em andamento'][1]} col-2`}></span>
+                                    </td>
+                                    <td style={{ width: '20%' }}>
+                                        <a href='#' className='table-link'>
+                                            <span className='fa-stack'>
+                                                <i className='fa fa-square fa-stack-2x' />
+                                                <i className='fa fa-search-plus fa-stack-1x fa-inverse' />
+                                            </span>
+                                        </a>
+                                        <a href='#' className='table-link danger'>
+                                            <span className='fa-stack'>
+                                                <i className='fa fa-square fa-stack-2x' style={{ color: 'red' }}></i>
+                                                <i className='fa fa-trash fa-stack-1x' style={{ color: 'white' }}></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href='#' className='user-link'>
+                                            Treinamento
+                                        </a>
+                                    </td>
+                                    <td>03/03/2015</td>
+                                    <td className='text-center'>
+                                        <span className={`text-${Status.Cancelado[0]} fa ${Status.Cancelado[1]} col-2`}></span>
+                                    </td>
+                                    <td style={{ width: '20%' }}>
+                                        <a href='#' className='table-link'>
+                                            <span className='fa-stack'>
+                                                <i className='fa fa-square fa-stack-2x' />
+                                                <i className='fa fa-search-plus fa-stack-1x fa-inverse' />
+                                            </span>
+                                        </a>
+                                        <a href='#' className='table-link danger'>
+                                            <span className='fa-stack'>
+                                                <i className='fa fa-square fa-stack-2x' style={{ color: 'red' }}></i>
+                                                <i className='fa fa-trash fa-stack-1x' style={{ color: 'white' }}></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href='#' className='user-link'>
+                                            Treinamento
+                                        </a>
+                                    </td>
+                                    <td>01/24/2016</td>
+                                    <td className='text-center'>
+                                        <span className={`text-${Status.Pendente[0]} fa ${Status.Pendente[1]} col-2`}></span>
+                                    </td>
+                                    <td style={{ width: '20%' }}>
+                                        <a href='#' className='table-link'>
+                                            <span className='fa-stack'>
+                                                <i className='fa fa-square fa-stack-2x' />
+                                                <i className='fa fa-search-plus fa-stack-1x fa-inverse' />
+                                            </span>
+                                        </a>
+                                        <a href='#' className='table-link danger'>
+                                            <span className='fa-stack'>
+                                                <i className='fa fa-square fa-stack-2x' style={{ color: 'red' }}></i>
+                                                <i className='fa fa-trash fa-stack-1x' style={{ color: 'white' }}></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href='#' className='user-link'>
+                                            Treinamento
+                                        </a>
+                                    </td>
+                                    <td>31/12/2017</td>
                                     <td className='text-center'>
                                         <span className={`text-${Status.Concluido[0]} fa ${Status.Concluido[1]} col-2`}></span>
                                     </td>
@@ -124,9 +199,9 @@ export default function Treinamentos() {
                                             Treinamento
                                         </a>
                                     </td>
-                                    <td>2013/03/03</td>
+                                    <td>08/08/2018</td>
                                     <td className='text-center'>
-                                        <span className={`text-${Status.Concluido[0]} fa ${Status.Concluido[1]} col-2`}></span>
+                                        <span className={`text-${Status.Cancelado[0]} fa ${Status.Cancelado[1]} col-2`}></span>
                                     </td>
                                     <td style={{ width: '20%' }}>
                                         <a href='#' className='table-link'>
@@ -149,9 +224,9 @@ export default function Treinamentos() {
                                             Treinamento
                                         </a>
                                     </td>
-                                    <td>2004/01/24</td>
+                                    <td>08/12/2019</td>
                                     <td className='text-center'>
-                                        <span className={`text-${Status.Concluido[0]} fa ${Status.Concluido[1]} col-2`}></span>
+                                        <span className={`text-${Status.Pendente[0]} fa ${Status.Pendente[1]} col-2`}></span>
                                     </td>
                                     <td style={{ width: '20%' }}>
                                         <a href='#' className='table-link'>
@@ -174,9 +249,9 @@ export default function Treinamentos() {
                                             Treinamento
                                         </a>
                                     </td>
-                                    <td>2013/12/31</td>
+                                    <td>03/03/2020</td>
                                     <td className='text-center'>
-                                        <span className={`text-${Status.Concluido[0]} fa ${Status.Concluido[1]} col-2`}></span>
+                                        <span className={`text-${Status['Em andamento'][0]} fa ${Status['Em andamento'][1]} col-2`}></span>
                                     </td>
                                     <td style={{ width: '20%' }}>
                                         <a href='#' className='table-link'>
@@ -199,9 +274,9 @@ export default function Treinamentos() {
                                             Treinamento
                                         </a>
                                     </td>
-                                    <td>2013/08/08</td>
+                                    <td>24/01/2021</td>
                                     <td className='text-center'>
-                                        <span className={`text-${Status.Concluido[0]} fa ${Status.Concluido[1]} col-2`}></span>
+                                        <span className={`text-${Status.Cancelado[0]} fa ${Status.Cancelado[1]} col-2`}></span>
                                     </td>
                                     <td style={{ width: '20%' }}>
                                         <a href='#' className='table-link'>
@@ -224,82 +299,7 @@ export default function Treinamentos() {
                                             Treinamento
                                         </a>
                                     </td>
-                                    <td>2013/08/12</td>
-                                    <td className='text-center'>
-                                        <span className={`text-${Status.Concluido[0]} fa ${Status.Concluido[1]} col-2`}></span>
-                                    </td>
-                                    <td style={{ width: '20%' }}>
-                                        <a href='#' className='table-link'>
-                                            <span className='fa-stack'>
-                                                <i className='fa fa-square fa-stack-2x' />
-                                                <i className='fa fa-search-plus fa-stack-1x fa-inverse' />
-                                            </span>
-                                        </a>
-                                        <a href='#' className='table-link danger'>
-                                            <span className='fa-stack'>
-                                                <i className='fa fa-square fa-stack-2x' style={{ color: 'red' }}></i>
-                                                <i className='fa fa-trash fa-stack-1x' style={{ color: 'white' }}></i>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href='#' className='user-link'>
-                                            Treinamento
-                                        </a>
-                                    </td>
-                                    <td>2013/03/03</td>
-                                    <td className='text-center'>
-                                        <span className={`text-${Status.Concluido[0]} fa ${Status.Concluido[1]} col-2`}></span>
-                                    </td>
-                                    <td style={{ width: '20%' }}>
-                                        <a href='#' className='table-link'>
-                                            <span className='fa-stack'>
-                                                <i className='fa fa-square fa-stack-2x' />
-                                                <i className='fa fa-search-plus fa-stack-1x fa-inverse' />
-                                            </span>
-                                        </a>
-                                        <a href='#' className='table-link danger'>
-                                            <span className='fa-stack'>
-                                                <i className='fa fa-square fa-stack-2x' style={{ color: 'red' }}></i>
-                                                <i className='fa fa-trash fa-stack-1x' style={{ color: 'white' }}></i>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href='#' className='user-link'>
-                                            Treinamento
-                                        </a>
-                                    </td>
-                                    <td>2004/01/24</td>
-                                    <td className='text-center'>
-                                        <span className={`text-${Status.Concluido[0]} fa ${Status.Concluido[1]} col-2`}></span>
-                                    </td>
-                                    <td style={{ width: '20%' }}>
-                                        <a href='#' className='table-link'>
-                                            <span className='fa-stack'>
-                                                <i className='fa fa-square fa-stack-2x' />
-                                                <i className='fa fa-search-plus fa-stack-1x fa-inverse' />
-                                            </span>
-                                        </a>
-                                        <a href='#' className='table-link danger'>
-                                            <span className='fa-stack'>
-                                                <i className='fa fa-square fa-stack-2x' style={{ color: 'red' }}></i>
-                                                <i className='fa fa-trash fa-stack-1x' style={{ color: 'white' }}></i>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href='#' className='user-link'>
-                                            Treinamento
-                                        </a>
-                                    </td>
-                                    <td>2013/12/31</td>
+                                    <td>31/12/2022</td>
                                     <td className='text-center'>
                                         <span className={`text-${Status.Concluido[0]} fa ${Status.Concluido[1]} col-2`}></span>
                                     </td>

@@ -115,3 +115,13 @@
     background-color: #0956FF;
     color: #fff;
 }
+
+.contact-info {
+    position: relative; /* necessário para o posicionamento absoluto do logo */
+}
+
+.logo-fixo {
+    position: absolute;
+    bottom: 20px; /* ajuste se quiser */
+    left: 20px;   /* ajuste se quiser */
+}

@@ -1,7 +1,6 @@
 'use client'
 
 import './treinamentoID.css'
-
 import LogoGM from '@/components/LogoGM';
 
 import { useState, useEffect } from "react";
@@ -27,7 +26,6 @@ export default function Treinamento() {
 			} catch (err) {
 				console.error("Erro ao carregar treinamento:", err);
 			}
-
 		}
 
 		carregarTreinamento();
@@ -40,23 +38,34 @@ export default function Treinamento() {
 					<div className='col-lg-10'>
 						<div className='contact-wrapper'>
 							<div className='row g-0'>
+
+								{/* Lado esquerdo */}
 								<div className='col-md-5'>
 									<div className='contact-info h-100'>
 										<h3 className='mb-4'>{treinamento.nome ?? 'Nome do treinamento'}</h3>
-										<div className="icone">
-											<p className='mb-4'>
-												{treinamento.descricao ?? 'Descrição do treinamento'}
-											</p>
+
+										<p className='mb-4'>
+											{treinamento.descricao ?? 'Descrição do treinamento'}
+										</p>
+
+										{/* Logo fixo no canto inferior esquerdo */}
+										<div className="logo-fixo">
 											<LogoGM cor={'#fff'} tamanho={55} />
 										</div>
 									</div>
 								</div>
+
+								{/* Lado direito */}
 								<div className='col-md-7'>
 									<div className='contact-form'>
-										{/* Titulo da página*/}
 										<div className='d-flex flex-column justify-content-between mb-3 pb-2'>
-											<div className='bottom-bordaAzulGM ps-3 col-12'><h1 className='h3 mb-0 fw-bold fs-2 pb-2'>Realizar mudanças no treinamento</h1></div>
+											<div className='bottom-bordaAzulGM ps-3 col-12'>
+												<h1 className='h3 mb-0 fw-bold fs-2 pb-2'>
+													Realizar mudanças no treinamento
+												</h1>
+											</div>
 										</div>
+
 										<form>
 											<div className='row'>
 												<div className='mb-3'>
@@ -68,6 +77,7 @@ export default function Treinamento() {
 													/>
 												</div>
 											</div>
+
 											<div className='mb-3'>
 												<label className='form-label'>Descrição:</label>
 												<textarea
@@ -76,6 +86,7 @@ export default function Treinamento() {
 													placeholder='Nova descrição'
 												/>
 											</div>
+
 											<div className='mb-3'>
 												<label className='form-label'>Status:</label>
 												<select className='form-select'>
@@ -87,12 +98,11 @@ export default function Treinamento() {
 												</select>
 											</div>
 
-											<button className='botao'>
-												Enviar
-											</button>
+											<button className='botao'>Enviar</button>
 										</form>
 									</div>
 								</div>
+
 							</div>
 						</div>
 					</div>
@@ -101,3 +111,4 @@ export default function Treinamento() {
 		</>
 	);
 }
+

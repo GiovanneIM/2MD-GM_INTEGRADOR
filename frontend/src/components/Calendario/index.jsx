@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
     Calendar,
     momentLocalizer,
@@ -11,7 +11,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const localizer = momentLocalizer(moment);
 
-/* Eventos */
+/* Eventos iniciais */
 const initialEvents = [
     {
         id: 1,
@@ -29,6 +29,32 @@ const initialEvents = [
 
 export default function Calendario({eventos}) {
     const [events, setEvents] = useState(initialEvents);
+export default function Calendario() {
+    const [events, setEvents] = useState([]);
+
+    /* Carregar eventos do localStorage ao iniciar */
+    useEffect(() => {
+        const stored = localStorage.getItem('calendar-events');
+
+        if (stored) {
+            const parsed = JSON.parse(stored).map((ev) => ({
+                ...ev,
+                start: new Date(ev.start),
+                end: new Date(ev.end),
+            }));
+            setEvents(parsed);
+        } else {
+            setEvents(initialEvents);
+        }
+    }, []);
+
+    /* Salvar eventos no localStorage sempre que mudarem */
+    useEffect(() => {
+        if (events.length > 0) {
+            localStorage.setItem('calendar-events', JSON.stringify(events));
+        }
+    }, [events]);
+
 
     return (
         <div className='flex-grow-1'>
@@ -44,15 +70,14 @@ export default function Calendario({eventos}) {
                 onSelectSlot={(slot) => {
                     const title = prompt('Nome do evento:');
                     if (title) {
-                        setEvents([
-                            ...events,
-                            {
-                                id: events.length + 1,
-                                title,
-                                start: slot.start,
-                                end: slot.end,
-                            },
-                        ]);
+                        const newEvent = {
+                            id: events.length + 1,
+                            title,
+                            start: slot.start,
+                            end: slot.end,
+                        };
+
+                        setEvents(prev => [...prev, newEvent]);
                     }
                 }}
                 onSelectEvent={(event) =>
