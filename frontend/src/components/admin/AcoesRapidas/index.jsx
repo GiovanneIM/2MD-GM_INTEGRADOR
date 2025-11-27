@@ -12,18 +12,18 @@ export default function AcoesRapidas() {
                 {/* Botões */}
                 <div className='card-body'>
                     <div className='d-grid gap-2'>
-                        <button className='btn btn-White border text-start d-flex align-items-center' onClick={() => { }}>
+                        <a className='btn btn-White border text-start d-flex align-items-center' href='/ft/novoTreinamento'>
                             <i className='fas fa-plus me-2 text-primary text-center' style={{ width: '1.5rem' }} /> Novo treinamento
-                        </button>
+                        </a>
                         <button className='btn btn-White border text-start d-flex align-items-center' onClick={() => window.location.href = '/admin/cadastrar'}>
                             <i className='fas fa-user-plus me-2 text-primary text-center' style={{ width: '1.5rem' }} /> Registrar usuário
                         </button>
-                        <button className='btn btn-White border text-start d-flex align-items-center'>
-                            <i className='fas fa-file-alt me-2 text-primary text-center' style={{ width: '1.5rem' }} /> Gerar Relatório
-                        </button>
-                        <button className='btn btn-White border text-start d-flex align-items-center'>
-                            <i className='fas fa-cog me-2 text-primary text-center' style={{ width: '1.5rem' }} /> Configurações
-                        </button>
+                        <a className='btn btn-White border text-start d-flex align-items-center' href='/treinamentos'>
+                            <i className='fas fa-book me-2 text-primary text-center' style={{ width: '1.5rem' }} /> Ver treinamentos
+                        </a>
+                        <a className='btn btn-White border text-start d-flex align-items-center' href='/equipes'>
+                            <i className='fas fa-users me-2 text-primary text-center' style={{ width: '1.5rem' }} /> Ver equipes
+                        </a>
                     </div>
                 </div>
             </div>
