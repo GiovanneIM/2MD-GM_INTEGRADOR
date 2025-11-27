@@ -151,34 +151,6 @@ export default function Navbar() {
 
 			{/* Tema e Logo da GM */}
 			<div className='d-flex flex-lg-column'>
-				{/* Tema */}
-				<div className='position-relative theme-wrapper me-2 me-lg-0 mb-lg-2 col-lg-12 d-flex justify-content-center align-items-center'>
-
-					{/* Botão para selecionar o tema */}
-					<div className='bordas bordaCinza rounded-circle d-flex align-items-center justify-content-center theme-trigger'
-						style={{ width: '2.5rem', height: '2.5rem', cursor: 'pointer' }}
-					>
-						<i className='bi bi-palette fs-5'></i>
-					</div>
-
-					{/* Div flutuante com as opções */}
-					<div className='theme-popup shadow p-2 rounded bordas bordaCinza'>
-
-						<div className='rounded-circle d-flex align-items-center justify-content-center me-2 theme-option'
-							style={{ width: '2.5rem', height: '2.5rem' }}
-						>
-							<i className='bi bi-sun fs-5'></i>
-						</div>
-
-						<div className='rounded-circle d-flex align-items-center justify-content-center theme-option'
-							style={{ width: '2.5rem', height: '2.5rem' }}
-						>
-							<i className='bi bi-moon fs-5'></i>
-						</div>
-
-					</div>
-				</div>
-
 				<LogoGM tamanho={55} cor={'black'} />
 			</div>
 		</nav>
