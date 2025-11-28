@@ -259,7 +259,7 @@ class TreinamentoModel {
 
             try {
                 const sql = `
-                    SELECT * FROM sessoes WHERE idTreinamento = ${idTreinamento};
+                    SELECT * FROM sessoes WHERE idTreinamento = ${idTreinamento} ORDER BY dia, hora_inicio;
                 `;
                 const [sessoes] = await connection.query(sql);
 

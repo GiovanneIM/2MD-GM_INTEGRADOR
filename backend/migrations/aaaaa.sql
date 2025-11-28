@@ -23,8 +23,8 @@ insert into participacoes (idTreinamento, idParticipante) values
 (4, 2);
 
 
-
 SELECT * FROM sessoes WHERE idTreinamento = 1;
+SELECT * FROM sessoes WHERE idTreinamento = 1 ORDER BY dia, hora_inicio;
 
 
 

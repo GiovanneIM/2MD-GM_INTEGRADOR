@@ -1,6 +1,5 @@
 'use client';
 
-// import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 
 // Importando o calendário
@@ -22,38 +21,39 @@ const localizer = dateFnsLocalizer({
 })
 
 
-/* Eventos testes */
-const eventosTestes = [
-    {
-        id: 1,
-        title: 'Reunião de Projeto - Sessão 1',
+export default function Calendario({ sessoes = [] }) {
+    /* Função para montar os eventos */
+    function eventos() {
+        const eventos = [];
+        sessoes.map((s) => {
+            eventos.push({
+                id: s.id,
+                title: 'Sessão ' + s.indice,
 
-        inicio: new Date(2025, 10, 27, 14, 0),
-        fim: new Date(2025, 10, 27, 18, 0),
+                indice: s.indice,
 
-        idSessao: 1,
-        treinamento: 'Power Apps',
-        orientador: 'João Paulo Machado',
-        criacao: new Date(2025, 10, 10, 12, 0)
-    }
-];
+                inicio: formarData(s.dia, s.hora_inicio),
+                fim: formarData(s.dia, s.hora_fim),
+                criacao: formarData(s.data_criacao.data, s.data_criacao.hora),
 
-/*
-indice: int
-idTreinamento: int
-id: int
-dia: '00/00/0000'
-hora_inicio: '00:00'
-hora_fim: '00:00'
-localidade
-*/
+                localidade: s.localidade,
+                idTreinamento: s.idTreinamento,
+                treinamento: 'treinamento.nome',
+                orientador: 'João Paulo Machado',
+            })
+        })
 
-
-export default function Calendario({ eventos }) {
-    for (const evento in eventos) {
-        
+        return eventos;
     }
 
+    /* Função para formar um tipo data a partir de um dia e uma hora*/
+    function formarData(dia, hora) {
+        const [d, m, a] = dia.split('/').map(Number);
+
+        const [h, min] = hora.split(':').map(Number);
+
+        return new Date(a, m - 1, d, h, min);
+    }
 
     /* Função para deixar a primeira letra de uma string maiúscula*/
     function capitalize(str) {
@@ -71,7 +71,7 @@ export default function Calendario({ eventos }) {
     /* Abrir SweetAlert com informações da sessão */
     function swalSessao(sessao) {
         Swal.fire({
-            title: `Sessão ${sessao.indice}`,
+            title: `${sessao.title}`,
             html: `
                 <div class='text-start p-3 border rounded' style='background:#f8f9fa;'>
                     <table class='table table-sm mb-0'>
@@ -119,7 +119,6 @@ export default function Calendario({ eventos }) {
                 });
 
                 document.getElementById("btnIrSessao").addEventListener("click", () => {
-                    window.location.href = `/sessao/${sessao.idSessao}`
                 });
             }
         })
@@ -142,7 +141,7 @@ export default function Calendario({ eventos }) {
                     agenda: "Agenda"
                 }}
 
-                events={eventos}
+                events={eventos()}
 
                 startAccessor='inicio'
                 endAccessor='fim'
@@ -150,20 +149,6 @@ export default function Calendario({ eventos }) {
                 style={{ height: 600 }}
                 popup
                 selectable
-
-                // onSelectSlot={(slot) => {
-                //     const title = prompt('Nome do evento:');
-                //     if (title) {
-                //         const newEvent = {
-                //             id: events.length + 1,
-                //             title,
-                //             start: slot.start,
-                //             end: slot.end,
-                //         };
-
-                //         setEvents(prev => [...prev, newEvent]);
-                //     }
-                // }}
 
                 onSelectEvent={(event) => swalSessao(event)}
             />
