@@ -222,5 +222,4 @@ class TreinamentoController {
     }
 }
 
-
 export default TreinamentoController;
