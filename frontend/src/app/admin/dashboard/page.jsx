@@ -6,6 +6,7 @@
 		• Exibir os treinamentos (OK)
 */
 
+import './adminDashboard.css';
 import { useState, useEffect } from 'react';
 
 
@@ -83,6 +84,8 @@ export default function Dashboard() {
 		}
 	}, [usuario])
 
+	'use client'
+
 
 	//  = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 	// EXIBIÇÃO DA PÁGINA = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -123,34 +126,34 @@ export default function Dashboard() {
 				<div className='row g-3'>
 
 					{/* Ações Rápidas */}
-					<div className='col-lg-6'>
+					<div className='col-lg-12'>
 						{/* Ações Rápidas (literalmente) */}
 						<div className='col-12 pb-2'>
 							< AcoesRapidas />
 						</div>
 					</div>
 
-					<div className='d-flex p-3'>
+					<div className='d-flex pt-3'>
 						<div className='col-4 px-2'>
 							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1">
-								<div className='col-12 fs-4 text-center'>Treinamentos Pendentes</div>
+								<div className='tre col-12 fs-4 p-2 text-center'>Treinamentos Pendentes</div>
 							</div>
 						</div>
 
 						<div className='col-4 px-2'>
 							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1">
-								<div className='col-12 fs-4 text-center'>Treinamentos Em andamento</div>
+								<div className='tre col-12 fs-4 p-2 text-center'>Treinamentos Em andamento</div>
 							</div>
 						</div>
 
 						<div className='col-4 px-2'>
 							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1">
-								<div className='col-12 fs-4 text-center'>Treinamentos Concluídos</div>
+								<div className='tre col-12 fs-4 p-2 text-center'>Treinamentos Concluídos</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>				
 		</>
 	);
 }
