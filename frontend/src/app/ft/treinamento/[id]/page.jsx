@@ -186,7 +186,7 @@ export default function VerTreinamento() {
 
                 {/* Sessões */}
                 <div className="col-12 bg-white p-3 rounded shadow-sm d-flex flex-wrap row-gap-3">
-                    <Sessoes sessoes={sessoes} registrarSessao={registrarSessao}/>
+                    <Sessoes treinamento={treinamento}  sessoes={sessoes} registrarSessao={registrarSessao}/>
                 </div>
             </div>
         </div>
