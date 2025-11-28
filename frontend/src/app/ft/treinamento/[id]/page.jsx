@@ -12,6 +12,7 @@ import LogoGM from '@/components/LogoGM';
 import EstadoTreinamento from '@/components/EstadoTreinamento/page';
 import Sessoes from '@/components/ft/sessoes';
 
+
 export default function VerTreinamento() {
     const { id } = useParams()
 
@@ -91,27 +92,43 @@ export default function VerTreinamento() {
 
         console.log(novaSessaoDados);
 
-        fetch(`http://127.0.0.1:3000/api/treinamentos/treinamento/${id}/criarSessao`,{
+        fetch(`http://127.0.0.1:3000/api/treinamentos/treinamento/${id}/criarSessao`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(novaSessaoDados)
-        }).then( res => res.json()
-        ).then( data => {
+        }).then(res => res.json()
+        ).then(data => {
             if (data.sucesso) {
                 carregarSessoes()
             }
             else {
                 console.log(data.mensagem);
             }
-        }).catch( err =>
+        }).catch(err =>
             console.error(err)
         )
     }
 
+    function formatarData(data) {
+        if (!data) return "--/--/---- - --:--";
 
-    return (<>
+        const d = new Date(data);
+        if (isNaN(d)) return "--/--/---- - --:--";
+
+        const dia = String(d.getDate()).padStart(2, "0");
+        const mes = String(d.getMonth() + 1).padStart(2, "0");
+        const ano = d.getFullYear();
+        const horas = String(d.getHours()).padStart(2, "0");
+        const minutos = String(d.getMinutes()).padStart(2, "0");
+
+        return `${dia}/${mes}/${ano} às ${horas}:${minutos}`;
+    }
+
+
+
+    if (treinamento && sessoes) return (<>
         <div className='container h-100 py-4 d-flex flex-column'>
             {/* Titulo da página*/}
             <div className='d-flex flex-column justify-content-between mb-3'>
@@ -125,13 +142,21 @@ export default function VerTreinamento() {
                     <div className='col-12 col-lg-6 pb-3 pb-lg-0 pe-md-3 d-flex flex-column gap-3 border-bottom'>
                         {/* Nome do treinamento */}
                         <div className='border-bottom border-2 '>
-                            <div className='fs-2'>{treinamento?.nome ?? 'Nome do treinamento'}</div>
+                            <div className='fs-2'>{treinamento.nome ?? 'Nome do treinamento'}</div>
                         </div>
 
                         {/* Datas */}
                         <div>
-                            <div>Criado em {treinamento?.data_criacao ?? '00/00/0000'} por {treinamento?.criador ?? 'Criador'}</div>
-                            <div className='text-muted'>Atualizado em {treinamento?.data_atualizacao ?? '00/00/0000'} por {treinamento?.criador ?? 'Criador'}</div>
+                            <div>Criado em {formatarData(treinamento.data_criacao) ?? '00/00/0000'}</div>
+                            <div className='text-muted'>Atualizado em {formatarData(treinamento.data_atualizacao) ?? '00/00/0000'}</div>
+                        </div>
+
+                        {/* Criador */}
+                        <div>
+                            <div className='mb-0 fs-5'>Orientador</div>
+                            <div className='ms-3 d-flex align-itens-center gap-2'>
+                                <div>{treinamento.criador}</div>
+                            </div>
                         </div>
 
                         {/* Estado */}
@@ -139,14 +164,14 @@ export default function VerTreinamento() {
                             <div className='mb-0 fs-5'>Estado</div>
                             <div className='ms-3 d-flex align-itens-center gap-2'>
                                 <div>{treinamento?.estado && <EstadoTreinamento estado={treinamento.estado} />}</div>
-                                <div>{treinamento?.estado}</div>
+                                <div className='d-flex align-items-end fs-5 fw-bold'><span>{treinamento.estado}</span></div>
                             </div>
                         </div>
 
                         {/* Descrição */}
                         <div>
                             <div className='mb-0 fs-5'>Descrição</div>
-                            <div className='ms-3 p-2 rounded' style={{ minHeight: '250px' }}>
+                            <div className='ms-3 p-2 rounded' style={{ minHeight: '200px' }}>
                                 {treinamento?.descricao ?? 'Sem Descrição'}
                             </div>
                         </div>
@@ -173,8 +198,8 @@ export default function VerTreinamento() {
                     <div className='col-12 d-flex justify-content-between align-items-center'>
                         {/* Botão voltar e logo */}
                         <div>
-                            <a href='#' className='btn btn-azulGM'>
-                                <i className='bi bi-arrow-left-short'></i> Voltar ao painel de controle
+                            <a href='/treinamentos' className='btn btn-azulGM'>
+                                <i className='bi bi-arrow-left-short'></i> Voltar aos treinamentos
                             </a>
                         </div>
 
@@ -184,7 +209,7 @@ export default function VerTreinamento() {
 
                 {/* Sessões */}
                 <div className='col-12 bg-white p-3 rounded shadow-sm d-flex flex-wrap row-gap-3'>
-                    <Sessoes treinamento={treinamento}  sessoes={sessoes} registrarSessao={registrarSessao}/>
+                    <Sessoes treinamento={treinamento} sessoes={sessoes} registrarSessao={registrarSessao} />
                 </div>
             </div>
         </div>

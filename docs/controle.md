@@ -1,21 +1,20 @@
 ## O QUE TEMOS PRONTO?
 - Página home
-- Página dashboard FT
-- Página de equipes
-- Página de times
 - Página de login
-- Página calendário
+- Página de times
+- Página de equipes
+
+- Página dashboard FT
+- Organização páginas dashboard MT
+
+- Página de treinamentos puxar dados do banco
 
 ## O QUE FALTA COMPLETAR?
-- Proteger as rotas na API
+- Página calendário (Carregar sessões)
 - Gráfico de sessões (Dashboard)
-- Página de treinamentos puxar dados do banco
 - Página de treinamento com id específico e tornar funcional 
-- Tornar a página de perfil funcional
-- Organização páginas dashboard MT e ADMIN
+- Organização páginas dashboard ADMIN
 
 ## O QUE NÃO INICIAMOS?
-
-
-## Dúvidas
-- Admins podem criar treinamentos? -> " Não somente configurar treinamentos já existentes "
+- Proteger as rotas na API
+- Tornar a página de perfil funcional

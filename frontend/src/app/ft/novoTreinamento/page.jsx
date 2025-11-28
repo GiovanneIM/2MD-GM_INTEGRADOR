@@ -21,7 +21,8 @@ export default function NovoTreinamento() {
 
     const [erro, setErro] = useState(null);
 
-    // = = = = = = = = = = = = = = = = = = =
+    // = = = = = = = = = = = = = = = = = = = =
+
     /* Carregando o usuário logado */
     useEffect(() => {
         async function carregarUsuario() {
@@ -146,17 +147,19 @@ export default function NovoTreinamento() {
         })
     }
 
+    // = = = = = = = = = = = = = = = = = = = =
 
     return <>
         <div className='container py-4 vh-100'>
             {/* Titulo da página*/}
             <div className='d-flex flex-column justify-content-between mb-3'>
-                <div className='bottom-bordaAzulGM ps-3 col-12'><h1 className='h3 mb-0 fw-bold fs-2'>Novo treinamento</h1></div>
+                <div className='bottom-bordaAzulGM ps-3 col-12'><h1 className='h3 mb-0 fw-bold fs-2'>Registrar treinamento</h1></div>
             </div>
 
             <div className='col-12 bg-white shadow rounded p-3'>
                 {/* Formulário */}
                 <form className='col-12 d-flex flex-wrap' onSubmit={CadastrarTreinamento}>
+                    
                     {/* Nome e descrição */}
                     <div className='col-12 col-lg-6 pe-lg-2 d-flex flex-column justify-content-lg-between'>
                         {/* Nome */}
