@@ -220,6 +220,71 @@ class TreinamentoModel {
             throw error;
         }
     }
+
+    /* LISTAR TREINAMENTO ESPECÍFICO */
+    static async listarSessoes(idTreinamento) {
+
+        function formatarData(data) {
+            const dia = String(data.getDate()).padStart(2, "0");
+            const mes = String(data.getMonth() + 1).padStart(2, "0");
+            const ano = data.getFullYear();
+
+            return `${dia}/${mes}/${ano}`;
+        }
+
+        function formatarHora(hora) {
+            const [horas, minutos, segundos] = hora.split(':')
+
+            return `${horas}:${minutos}`;
+        }
+
+        function formatarDataHora(data) {
+            // data
+            const dia = String(data.getDate()).padStart(2, "0");
+            const mes = String(data.getMonth() + 1).padStart(2, "0");
+            const ano = data.getFullYear();
+
+            // hora
+            const horas = String(data.getHours()).padStart(2, "0");
+            const minutos = String(data.getMinutes()).padStart(2, "0");
+
+            return {
+                data: `${dia}/${mes}/${ano}`,
+                hora: `${horas}:${minutos}`
+            };
+        }
+        
+
+        try {
+            const connection = await getConnection();
+
+            try {
+                const sql = `
+                    SELECT * FROM sessoes WHERE idTreinamento = ${idTreinamento};
+                `;
+                const [sessoes] = await connection.query(sql);
+
+                // Ajeitando os dados
+                sessoes.map((s) => {
+                    s.data_criacao = formatarDataHora(s.data_criacao);
+                    s.data_atualizacao = formatarDataHora(s.data_atualizacao);
+                    s.dia = formatarData(s.dia);
+                    s.hora_inicio = formatarHora(s.hora_inicio);
+                    s.hora_fim = formatarHora(s.hora_fim);
+                })
+
+                return {
+                    sessoes
+                };
+            } finally {
+                connection.release();
+            }
+
+        } catch (error) {
+            console.error('Erro ao listar Sessões:', error);
+            throw error;
+        }
+    }
 }
 
 

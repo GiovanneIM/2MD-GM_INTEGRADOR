@@ -12,12 +12,13 @@ import { useParams } from "next/navigation";
 
 import LogoGM from "@/components/LogoGM";
 import EstadoTreinamento from '@/components/EstadoTreinamento/page';
-import Calendario from '@/components/Calendario';
+import Sessoes from '@/components/ft/sessoes';
 
 export default function VerTreinamento() {
     const { id } = useParams()
 
     const [treinamento, setTreinamento] = useState({});
+    const [sessoes, setSessoes] = useState(null);
     const [usuario, setUsuario] = useState({});
 
 
@@ -30,6 +31,9 @@ export default function VerTreinamento() {
 
                 if (data.sucesso) {
                     setTreinamento(data.dados[0]);
+
+                    /* Carregando as sessões do treinamento */
+                    carregarSessoes();
                 } else {
                     console.log(data.mensagem);
                 }
@@ -61,28 +65,30 @@ export default function VerTreinamento() {
         carregarUsuario();
     }, []);
 
-    const Status = {
-        "Pendente": ["primary", "fa-question-circle"],
-        "Em andamento": ["warning", "fa-cogs"],
-        "Concluido": ["success", "fa-check"],
-        "Cancelado": ["danger", "fa-xmark"],
-    };
+    /* Função para carregar as sessões de um treinamento */
+    async function carregarSessoes() {
+        try {
+            const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/sessoes`);
+            const data = await res.json();
 
+            if (data.sucesso) {
+                setSessoes(data.dados);
+                console.log(data.dados);
 
-    const eventos = [
-        {
-            id: 1,
-            title: 'Treinamento 1 - Reunião 1',
-            start: new Date(2025, 10, 12, 14, 0),
-            end: new Date(2025, 10, 12, 15, 0),
-        },
-        {
-            id: 2,
-            title: 'Treinamento 1 - Reunião 2',
-            start: new Date(2025, 10, 15, 9, 0),
-            end: new Date(2025, 10, 15, 11, 0),
-        },
-    ]
+            } else {
+                console.log(data.mensagem);
+            }
+        } catch (err) {
+            console.error("Erro ao carregar sessões:", err);
+        }
+
+    }
+
+    function registrarSessao(novaSessaoDados) {
+        console.log(novaSessaoDados);
+        
+    }
+
 
     return (<>
         <div className='container h-100 py-4 d-flex flex-column'>
@@ -93,7 +99,7 @@ export default function VerTreinamento() {
 
             {/* Corpo da página */}
             <div className="row row-gap-3">
-
+                {/* Informações do treinamento */}
                 <div className="col-12 bg-white p-3 rounded shadow-sm d-flex flex-wrap row-gap-3">
                     <div className="col-12 col-lg-6 pb-3 pb-lg-0 pe-md-3 d-flex flex-column gap-3 border-bottom">
                         {/* Nome do treinamento */}
@@ -157,34 +163,7 @@ export default function VerTreinamento() {
 
                 {/* Sessões */}
                 <div className="col-12 bg-white p-3 rounded shadow-sm d-flex flex-wrap row-gap-3">
-                    <div className="col-12 col-lg-6 pb-3 pb-lg-0 pe-md-2 d-flex flex-column gap-3 ">
-                        {/* Div superior */}
-                        <div className='col-12 d-flex justify-content-between border-bottom pb-3 px-3'>
-                            <div className='mb-0 fs-4'>Sessões</div>
-
-                            {/* Botão para adicionar sessão */}
-                            <button className='btn btn-secondary btn-sm'>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus" viewBox="0 0 16 16">
-                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                                </svg>
-                                Nova sessão
-                            </button>
-                        </div>
-
-                        {/* Lista de sessões */}
-                        <div className='flex-grow-1 border p-3'>
-                            <div className='border p-3'>
-                                <div>
-                                    <div>Data: 28/11/2025 - 12:00</div>
-                                    <div>Local: Prédio 1 - 2º Andar - Sala 2</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-12 col-lg-6 pb-3 pb-lg-0 ps-md-2 d-flex flex-column gap-3">
-                        <Calendario eventos={eventos} />
-                    </div>
+                    <Sessoes sessoes={sessoes} registrarSessao={registrarSessao}/>
                 </div>
             </div>
 

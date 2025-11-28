@@ -168,6 +168,28 @@ class TreinamentoController {
             });
         }
     }
+
+    /* LISTAR TREINAMENTO ESPECÍFICO */
+    static async listarSessoes(req, res) {
+        try {
+            const idTreinamento = parseInt(req.params.idTreinamento);
+
+            const resultado = await TreinamentoModel.listarSessoes(idTreinamento);
+
+            res.status(200).json({
+                sucesso: true,
+                dados: resultado.sessoes
+            });
+
+        } catch (error) {
+            console.error('Erro ao listar sessões:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível listar as sessões'
+            });
+        }
+    }
 }
 
 

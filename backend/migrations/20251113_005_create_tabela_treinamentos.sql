@@ -17,8 +17,8 @@ USE CONTROLE_TREINAMENTOS;
 -- Criando a tabela de treinamentos
 CREATE TABLE if not exists treinamentos (
 	id					INT PRIMARY KEY AUTO_INCREMENT,
-    nome				VARCHAR(255) NOT NULL,
-    descricao			VARCHAR(255) NOT NULL,
+    nome				VARCHAR(100) NOT NULL,
+    descricao			VARCHAR(300) NOT NULL,
     data_criacao		DATETIME DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao	DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     numSessoes			INT,
@@ -34,7 +34,9 @@ CREATE TABLE if not exists treinamentos (
 CREATE TABLE if not exists sessoes (
 	id					INT PRIMARY KEY AUTO_INCREMENT,
     idTreinamento		INT NOT NULL,
-    data_hora			DATETIME NOT NULL,
+    data_hora			DATE NOT NULL,
+    hora_inicio			TIME NOT NULL,
+    hora_fim			TIME NOT NULL,
     local				VARCHAR(100) NOT NULL,
     data_criacao		DATETIME DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao	DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
