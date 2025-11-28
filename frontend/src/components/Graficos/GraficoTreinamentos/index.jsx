@@ -98,8 +98,8 @@ export default function GraficoTreinamentos({ opcaoExibir }) {
 			{/* Titulo */}
 			<div className='card-header bg-white border-0 px-0 mb-3'>
 				<div className='d-flex flex-column'>
-					<h5 className='mb-0 fs-5'>Treinamentos realizados por mês</h5>
-					<div className='text-muted' style={{ fontSize: '0.85rem' }}>Treinamentos realizados por você nos últimos 6 meses</div>
+					<h5 className='mb-0 fs-5'>Treinamentos {opcaoExibir} por mês</h5>
+					<div className='text-muted' style={{ fontSize: '0.85rem' }}>Treinamentos {opcaoExibir} por você nos últimos 6 meses</div>
 				</div>
 			</div>
 

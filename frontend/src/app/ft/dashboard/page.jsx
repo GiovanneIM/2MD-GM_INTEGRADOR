@@ -108,7 +108,7 @@ export default function Dashboard() {
 			<div className='container py-4'>
 				{/* Titulo da página*/}
 				<div className='d-flex flex-column justify-content-between mb-3'>
-					<div className='bottom-bordaAzulGM ps-3 col-12'><h1 className='h3 mb-0 fw-bold fs-2'>Painel de Controle</h1></div>
+					<div className='bottom-bordaAzulGM ps-3 col-12'><h1 className='h3 mb-0 fw-bold fs-2'>Painel de Controle - Facilitador de time</h1></div>
 					<p className='text-muted small mt-1 ps-3 fs-6'>Bem vindo(a), {usuario?.nome}</p>
 				</div>
 

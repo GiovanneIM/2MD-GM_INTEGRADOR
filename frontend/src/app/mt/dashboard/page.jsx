@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react';
 
 import TreinamentosLista from '@/components/TreinamentosLista';
+import AcoesRapidas from '@/components/mt/AcoesRapidas';
 
 // Gráficos
-import AcoesRapidas from '@/components/mt/AcoesRapidas';
-import EstadosTreinamentos from '@/components/Graficos/GraficoEstados';
-import TreinamentosRealizados from '@/components/Graficos/GraficoTreinamentos';
-import TreinamentosOfertados from '@/components/Graficos/GraficoTreinamentos';
+import GraficoEstados from '@/components/Graficos/GraficoEstados';
+import GraficoTreinamentos from '@/components/Graficos/GraficoTreinamentos';
+import GraficoSessoes from '@/components/Graficos/GraficoSessoes';
+
 
 export default function Dashboard() {
 	const [usuario, setUsuario] = useState([]);
@@ -46,7 +47,7 @@ export default function Dashboard() {
 					const data = await res.json();
 
 					if (data.sucesso) {
-						console.log(data.dados);
+						// console.log(data.dados);
 
 						setTreinamentosOferecidos(data.dados);
 					}
@@ -72,9 +73,10 @@ export default function Dashboard() {
 					const data = await res.json();
 
 					if (data.sucesso) {
-						console.log(data.dados);
+						// console.log(data.dados);
 
 						setTreinamentosRealizados(data.dados);
+						setTreinamentosExibidos(data.dados);
 					}
 					else {
 						console.log(data.mensagem);
@@ -89,16 +91,27 @@ export default function Dashboard() {
 		}
 	}, [usuario])
 
+	/* Controle para o filtro de quais treinamentos estão sendo exibidos (Inscritos ou Ofertados) */
+	useEffect(() => {
+		if (opcaoExibir === 'Realizados') {
+			setTreinamentosExibidos(treinamentosRealizados);
+		}
+		else {
+			setTreinamentosExibidos(treinamentosOferecidos);
+		}
+	}, [opcaoExibir])
+
+
 	return (
 		<>
 			<div className='container py-4'>
 				{/* Titulo da página*/}
 				<div className='d-flex flex-column justify-content-between mb-3'>
-					<div className='bottom-bordaAzulGM ps-3 col-12'><h1 className='h3 mb-0 fw-bold fs-2'>Painel de Controle</h1></div>
+					<div className='bottom-bordaAzulGM ps-3 col-12'><h1 className='h3 mb-0 fw-bold fs-2'>Painel de Controle - Membro de Time</h1></div>
 					<p className='text-muted small mt-1 ps-3 fs-6'>Bem vindo(a), {usuario?.nome}</p>
 				</div>
 
-				{/* Lista e ações */}
+				{/* Corpo da página */}
 				<div className='row g-3'>
 
 					{/* Listagem de treinamentos */}
@@ -112,31 +125,36 @@ export default function Dashboard() {
 						</div>
 					</div>
 
-					{/* Ações Rápidas */}
+					{/* Ações rápidas e gráfico de pizza */}
 					<div className='col-lg-6'>
 
+						{/* Ações Rápidas */}
 						<div className='col-12 h-50 pb-2'>
 							<AcoesRapidas />
 						</div>
 
-						{/* Gráficos */}
 						{/* Gráfico de pizza */}
-						<div className='col-12 h-50 pb-2'>
-							<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
-								<EstadosTreinamentos treinamentos={treinamentosRealizados} />
-							</div>
+						<div className='col-12 h-50 pt-2'>
+							<GraficoEstados treinamentos={treinamentosExibidos} />
 						</div>
 					</div>
 
-					{/* Grafico de treinamento realizado*/}
-					<div className='col-12 h-50 pt-2'>
+					{/* Grafico de treinamentos */}
+					<div className='col-lg-6'>
 						<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
-							<TreinamentosRealizados />
+							<GraficoTreinamentos opcaoExibir={opcaoExibir} />
 						</div>
 					</div>
+
+					{/* Grafico de sessões */}
+					<div className='col-lg-6'>
+						<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
+							<GraficoSessoes />
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</>
 	);
 }
-
