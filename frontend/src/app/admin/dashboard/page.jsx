@@ -122,27 +122,31 @@ export default function Dashboard() {
 				{/* Corpo da página */}
 				<div className='row g-3'>
 
-					{/* Listagem de treinamentos */}
+					{/* Ações Rápidas */}
 					<div className='col-lg-6'>
-						<div className='col-12 h-100'>
-							<TreinamentosLista
-								treinamentosExibidos={treinamentosExibidos ?? []}
-								setOpcaoExibir={setOpcaoExibir}
-								tipoUsuario={usuario.tipo}
-							/>
+						{/* Ações Rápidas (literalmente) */}
+						<div className='col-12 pb-2'>
+							< AcoesRapidas />
 						</div>
 					</div>
 
-					{/* Ações Rápidas */}
-					<div className='col-lg-6'>
-
-						{/* Ações Rápidas (literalmente) */}
-						<div className='col-12 h-50 pb-2'>
-							< AcoesRapidas />
+					<div className='d-flex p-3'>
+						<div className='col-4 px-2'>
+							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1">
+								<div className='col-12 fs-4 text-center'>Treinamentos Pendentes</div>
+							</div>
 						</div>
 
-						<div className='col-12 h-50 pt-2'>
-							<GraficoEstados treinamentos={treinamentosExibidos} />
+						<div className='col-4 px-2'>
+							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1">
+								<div className='col-12 fs-4 text-center'>Treinamentos Em andamento</div>
+							</div>
+						</div>
+
+						<div className='col-4 px-2'>
+							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1">
+								<div className='col-12 fs-4 text-center'>Treinamentos Concluídos</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -150,19 +154,3 @@ export default function Dashboard() {
 		</>
 	);
 }
-
-
-/*
-	{ id: 1, nome: 'Treinamento 1', descricao: 'Treinamento de como passar pretinho no pneu', estado: 'Pendente', dataCriacao: Date.now() },
-	{ id: 2, nome: 'Treinamento 2', descricao: 'Treinamento de como usar um paquimetro', estado: 'Concluido', dataCriacao: Date.now() },
-	{ id: 3, nome: 'Treinamento 3', descricao: 'Treinamento de como usar uma furadeira no chão', estado: 'Em andamento', dataCriacao: Date.now() },
-	{ id: 4, nome: 'Treinamento 4', descricao: 'Treinamento de como subir em uma escada pela parte de cima', estado: 'Cancelado', dataCriacao: Date.now() },
-	{ id: 5, nome: 'Treinamento 5', descricao: 'Treinamento de como passar pretinho no pneu', estado: 'Pendente', dataCriacao: Date.now() },
-	{ id: 6, nome: 'Treinamento 6', descricao: 'Treinamento de como usar um paquimetro', estado: 'Concluido', dataCriacao: Date.now() },
-	{ id: 7, nome: 'Treinamento 7', descricao: 'Treinamento de como usar uma furadeira no chão', estado: 'Em andamento', dataCriacao: Date.now() },
-	{ id: 8, nome: 'Treinamento 8', descricao: 'Treinamento de como subir em uma escada pela parte de cima', estado: 'Cancelado', dataCriacao: Date.now() },
-	{ id: 9, nome: 'Treinamento 9', descricao: 'Treinamento de como passar pretinho no pneu', estado: 'Pendente', dataCriacao: Date.now() },
-	{ id: 10, nome: 'Treinamento 10', descricao: 'Treinamento de como usar um paquimetro', estado: 'Concluido', dataCriacao: Date.now() },
-	{ id: 11, nome: 'Treinamento 11', descricao: 'Treinamento de como usar uma furadeira no chão', estado: 'Em andamento', dataCriacao: Date.now() },
-	{ id: 12, nome: 'Treinamento 12', descricao: 'Treinamento de como subir em uma escada pela parte de cima', estado: 'Cancelado', dataCriacao: Date.now() }
-*/
