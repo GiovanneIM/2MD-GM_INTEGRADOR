@@ -27,7 +27,8 @@ router.get('/:id/criador/seisMeses', TreinamentoController.listarTrOferecidosSei
 router.post('/', TreinamentoController.criarTreinamento)
 
 
-
+// Listar sessões de um treinamentos específico
+router.get('/treinamento/:idTreinamento/sessoes', TreinamentoController.listarSessoes)
 
 
 export default router;

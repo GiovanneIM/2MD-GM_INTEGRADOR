@@ -12,17 +12,17 @@ import { useParams } from "next/navigation";
 
 import LogoGM from "@/components/LogoGM";
 import EstadoTreinamento from '@/components/EstadoTreinamento/page';
+import Sessoes from '@/components/ft/sessoes';
 
 export default function VerTreinamento() {
     const { id } = useParams()
 
     const [treinamento, setTreinamento] = useState({});
+    const [sessoes, setSessoes] = useState(null);
     const [usuario, setUsuario] = useState({});
-    const [dataCriacao, setDataCriacao] = useState("00/00/0000");
 
 
-
-    // Carregando o treinamento
+    /* Carregando o treinamento */
     useEffect(() => {
         async function carregarTreinamento() {
             try {
@@ -31,6 +31,9 @@ export default function VerTreinamento() {
 
                 if (data.sucesso) {
                     setTreinamento(data.dados[0]);
+
+                    /* Carregando as sessões do treinamento */
+                    carregarSessoes();
                 } else {
                     console.log(data.mensagem);
                 }
@@ -42,8 +45,6 @@ export default function VerTreinamento() {
 
         carregarTreinamento();
     }, []);
-
-
 
     /* Carregando o usuário logado */
     useEffect(() => {
@@ -64,12 +65,30 @@ export default function VerTreinamento() {
         carregarUsuario();
     }, []);
 
-    const Status = {
-        "Pendente": ["primary", "fa-question-circle"],
-        "Em andamento": ["warning", "fa-cogs"],
-        "Concluido": ["success", "fa-check"],
-        "Cancelado": ["danger", "fa-xmark"],
-    };
+    /* Função para carregar as sessões de um treinamento */
+    async function carregarSessoes() {
+        try {
+            const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/sessoes`);
+            const data = await res.json();
+
+            if (data.sucesso) {
+                setSessoes(data.dados);
+                console.log(data.dados);
+
+            } else {
+                console.log(data.mensagem);
+            }
+        } catch (err) {
+            console.error("Erro ao carregar sessões:", err);
+        }
+
+    }
+
+    function registrarSessao(novaSessaoDados) {
+        console.log(novaSessaoDados);
+        
+    }
+
 
     return (<>
         <div className='container h-100 py-4 d-flex flex-column'>
@@ -79,10 +98,10 @@ export default function VerTreinamento() {
             </div>
 
             {/* Corpo da página */}
-            <div className="row">
-
+            <div className="row row-gap-3">
+                {/* Informações do treinamento */}
                 <div className="col-12 bg-white p-3 rounded shadow-sm d-flex flex-wrap row-gap-3">
-                    <div className="col-12 col-md-6 pe-md-3 d-flex flex-column gap-3 border-end">
+                    <div className="col-12 col-lg-6 pb-3 pb-lg-0 pe-md-3 d-flex flex-column gap-3 border-bottom">
                         {/* Nome do treinamento */}
                         <div className='border-bottom border-2 '>
                             <div className="fs-2">{treinamento?.nome ?? 'Nome do treinamento'}</div>
@@ -112,7 +131,7 @@ export default function VerTreinamento() {
                         </div>
                     </div>
 
-                    <div className="col-12 col-md-6 ps-md-3 d-flex flex-column gap-3">
+                    <div className="col-12 col-lg-6 pb-3 pb-lg-0 ps-md-3 d-flex flex-column gap-3 border-lg border-bottom border-start">
                         {/* Participantes */}
                         <button className='btn btn-White d-flex border d-flex align-items-center'>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right-short" viewBox="0 0 16 16">
@@ -121,7 +140,7 @@ export default function VerTreinamento() {
                             <div>Ver Participantes</div>
                         </button>
 
-                        {/* Alterar  */}
+                        {/* Alterar dados */}
                         <button className='btn btn-White d-flex border '>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right-short" viewBox="0 0 16 16">
                                 <path fillRule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8" />
@@ -130,7 +149,7 @@ export default function VerTreinamento() {
                         </button>
                     </div>
 
-                    <div className="col-12 d-flex border-top pt-3 justify-content-between align-items-center">
+                    <div className="col-12 d-flex justify-content-between align-items-center">
                         {/* Botão voltar e logo */}
                         <div>
                             <a href="#" className="btn btn-azulGM">
@@ -142,63 +161,10 @@ export default function VerTreinamento() {
                     </div>
                 </div>
 
-                {/* SIDEBAR */}
-                {/* 
-                <div className="col-md-4">
-                    <div className="card mb-4">
-                        <div className="card-header">Trocar nome do treinamento</div>
-                        <div className="card-body">
-                            <form>
-                                <div className="input-group">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Treinamento ..."
-                                    />
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div className="card mb-4">
-                        <div className="card-header">Trocar descrição</div>
-                        <div className="card-body">
-                            <form>
-                                <div className="input-group">
-                                    <textarea
-                                        className="form-control textarea-descricao"
-                                        placeholder="Descrição ..."
-                                    ></textarea>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div className="card mb-4">
-                        <div className="card-header">Trocar Status</div>
-                        <div className="card-body">
-                            <ul className="list-unstyled mb-0">
-                                <li>
-                                    <i className={`text-${Status.Concluido[0]} fa ${Status.Concluido[1]} col-2`}></i>
-                                    <a href="#">Concluído</a>
-                                </li>
-                                <li>
-                                    <i className={`text-${Status["Em andamento"][0]} fa ${Status["Em andamento"][1]} col-2`}></i>
-                                    <a href="#">Em andamento</a>
-                                </li>
-                                <li>
-                                    <i className={`text-${Status.Cancelado[0]} fa ${Status.Cancelado[1]} col-2`}></i>
-                                    <a href="#">Cancelado</a>
-                                </li>
-                                <li>
-                                    <i className={`text-${Status.Pendente[0]} fa ${Status.Pendente[1]} col-2`}></i>
-                                    <a href="#">Pendente</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> 
-                */}
+                {/* Sessões */}
+                <div className="col-12 bg-white p-3 rounded shadow-sm d-flex flex-wrap row-gap-3">
+                    <Sessoes sessoes={sessoes} registrarSessao={registrarSessao}/>
+                </div>
             </div>
 
             <div className='container mt-5 py-5'>
