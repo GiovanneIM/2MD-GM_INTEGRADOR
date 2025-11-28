@@ -11,6 +11,7 @@ import { useParams } from 'next/navigation';
 import LogoGM from '@/components/LogoGM';
 import EstadoTreinamento from '@/components/EstadoTreinamento/page';
 import Sessoes from '@/components/ft/sessoes';
+import Swal from 'sweetalert2';
 
 
 export default function VerTreinamento() {
@@ -126,7 +127,21 @@ export default function VerTreinamento() {
         return `${dia}/${mes}/${ano} às ${horas}:${minutos}`;
     }
 
+    function cancelarTreinamento() {
+        Swal.fire({
+            title: 'Confirmar Exclusão',
+            html: `Deseja confirmar a exclusão do treinamento "${treinamento.nome}"?`,
 
+            confirmButtonText: 'Confirmar',
+            confirmButtonColor: '#dc3545',
+
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            cancelButtonColor: '#0956FF',
+        })
+    }
+
+    function concluirTreinamento() {}
 
     if (treinamento && sessoes) return (<>
         <div className='container h-100 py-4 d-flex flex-column'>
@@ -177,7 +192,7 @@ export default function VerTreinamento() {
                         </div>
                     </div>
 
-                    <div className='col-12 col-lg-6 pb-3 pb-lg-0 ps-md-3 d-flex flex-column gap-3 border-lg border-bottom border-start'>
+                    <div className='col-12 col-lg-6 d-flex flex-column gap-3 border-lg border-bottom border p-3'>
                         {/* Participantes */}
                         <button className='btn btn-White d-flex border d-flex align-items-center'>
                             <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' className='bi bi-arrow-right-short' viewBox='0 0 16 16'>
@@ -196,21 +211,43 @@ export default function VerTreinamento() {
                     </div>
 
                     <div className='col-12 d-flex justify-content-between align-items-center'>
-                        {/* Botão voltar e logo */}
-                        <div>
+                        {/* Botões */}
+                        <div className='d-flex gap-3 flex-wrap'>
                             <a href='/treinamentos' className='btn btn-azulGM'>
                                 <i className='bi bi-arrow-left-short'></i> Voltar aos treinamentos
                             </a>
+
+                            {
+                                treinamento.estado === 'Pendente' &&
+                                <div>
+                                    <button className='btn btn-danger' onClick={cancelarTreinamento}>
+                                        Cancelar Treinamento
+                                    </button>
+                                </div>
+                            }
+
+                            {
+                                treinamento.estado === 'Em andamento' &&
+                                <div>
+                                    <button className='btn btn-success' onClick={concluirTreinamento}>
+                                        Concluir Treinamento
+                                    </button>
+                                </div>
+                            }
                         </div>
 
+                        {/* Logo GM */}
                         <LogoGM tamanho={55} cor={'#0956FF'} />
                     </div>
                 </div>
 
                 {/* Sessões */}
-                <div className='col-12 bg-white p-3 rounded shadow-sm d-flex flex-wrap row-gap-3'>
-                    <Sessoes treinamento={treinamento} sessoes={sessoes} registrarSessao={registrarSessao} />
-                </div>
+                {
+                    treinamento.estado != 'Pendente' &&
+                    <div className='col-12 bg-white p-3 rounded shadow-sm d-flex flex-wrap row-gap-3'>
+                        <Sessoes treinamento={treinamento} sessoes={sessoes} registrarSessao={registrarSessao} />
+                    </div>
+                }
             </div>
         </div>
     </>);

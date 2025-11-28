@@ -2,6 +2,9 @@ import { create, read, update, deleteRecord, getConnection } from '../config/dat
 
 class TreinamentoModel {
 
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    /* ROTAS RELACIONAS À LISTAGEM DE TREINAMENTOS */
+
     /* LISTAR TODOS OS TREINAMENTOS */
     static async listarTodos() {
         try {
@@ -51,6 +54,9 @@ class TreinamentoModel {
         }
     }
 
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    /* ROTAS RELACIONAS À TREINAMENTOS EM QUE UM USUÁRIO OFERECE OU PARTICIPA */
+
     /* LISTAR TODOS OS TREINAMENTOS DE UM PARTICIPANTE */
     static async listarTrParticipante(id) {
         try {
@@ -96,35 +102,8 @@ class TreinamentoModel {
             throw error;
         }
     }
-
-    /* CRIAR UM NOVO TREINAMENTO */
-    static async criarTreinamento(dadosTreinamento) {
-        try {
-            const treinamento = {
-                nome: dadosTreinamento.nome,
-                descricao: dadosTreinamento.descricao,
-                idCriador: dadosTreinamento.idCriador,
-                numSessoes: 0
-            }
-
-            // return await create('treinamentos', dadosTreinamento);
-            const idTreinamento = await create('treinamentos', treinamento);
-
-            dadosTreinamento.participantes.map((idParticipante) => {
-                const participacao = { idTreinamento, idParticipante }
-
-                create('participacoes', participacao)
-            })
-
-            return idTreinamento;
-        } catch (error) {
-            console.error('Erro ao criar treinamento:', error);
-            throw error;
-        }
-    }
-
-    /*  OBTER O Nº DE TREINAMENTOS EM QUE UM USUÁRIO FOI INSCRITO NOS ÚLTIMOS 6 MESES 
-        separados por mês e estado */
+    
+    /*  OBTER O Nº DE TREINAMENTOS EM QUE UM USUÁRIO FOI INSCRITO NOS ÚLTIMOS 6 MESES separados por mês e estado */
     static async listarTrParticipanteSeisMeses(idUsuario) {
         try {
             const connection = await getConnection();
@@ -172,8 +151,7 @@ class TreinamentoModel {
         }
     }
 
-    /*  OBTER O Nº DE TREINAMENTOS QUE UM USUÁRIO CRIOU NOS ÚLTIMOS 6 MESES
-        separados por mês e estado */
+    /*  OBTER O Nº DE TREINAMENTOS QUE UM USUÁRIO CRIOU NOS ÚLTIMOS 6 MESES separados por mês e estado */
     static async listarTrOferecidosSeisMeses(idUsuario) {
         try {
             const connection = await getConnection();
@@ -219,6 +197,9 @@ class TreinamentoModel {
             throw error;
         }
     }
+
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    /* ROTAS RELACIONAS À SESSÕES DE UM TREINAMENTO */
 
     /* LISTAR TREINAMENTO ESPECÍFICO */
     static async listarSessoes(idTreinamento) {
@@ -304,6 +285,53 @@ class TreinamentoModel {
             throw error;
         }
     }
+
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    /* ROTAS RELACIONADAS AO CICLO DE VIDA DE UM TREINAMENTO */
+
+    /* CRIAR UM NOVO TREINAMENTO */
+    static async criarTreinamento(dadosTreinamento) {
+        try {
+            const treinamento = {
+                nome: dadosTreinamento.nome,
+                descricao: dadosTreinamento.descricao,
+                idCriador: dadosTreinamento.idCriador,
+                numSessoes: 0
+            }
+
+            // return await create('treinamentos', dadosTreinamento);
+            const idTreinamento = await create('treinamentos', treinamento);
+
+            dadosTreinamento.participantes.map((idParticipante) => {
+                const participacao = { idTreinamento, idParticipante }
+
+                create('participacoes', participacao)
+            })
+
+            return idTreinamento;
+        } catch (error) {
+            console.error('Erro ao criar treinamento:', error);
+            throw error;
+        }
+    }
+
+    static async atualizarEstado(idTreinamento, estado) {
+        try {
+            const connection = await getConnection();
+
+            try {
+                return await update('treinamentos', {estado: estado}, `id = ${idTreinamento}`);
+            } finally {
+                connection.release();
+            }
+
+        } catch (error) {
+            console.error('Erro ao atualizar o estodo do treinamentos:', error);
+            throw error;
+        }
+    }
+
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 }
 
 

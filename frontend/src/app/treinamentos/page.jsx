@@ -59,37 +59,37 @@ export default function Treinamentos() {
     const lista = exibir === "Realizados" ? treinamentosRealizados : treinamentosOfertados;
 
 
-        // Função para lidar com o metodo DELETE
-        async function handleDelete(id) {
-            const confirmar = confirm("Tem certeza que deseja excluir este treinamento?");
-            if (!confirmar) return;
-        
-            try {
-                const res = await fetch(`http://localhost:3000/api/treinamentos/${id}`, {
-                    method: "DELETE",
-                    headers: {
-                        "Authorization": "Bearer " + sessionStorage.getItem("token")
-                    }
-                });
-        
-                const data = await res.json();
-        
-                if (data.sucesso) {
-                    // Remover da lista visível
-                    if (exibir === "Realizados") {
-                        setTreinamentosRealizados(prev => prev.filter(t => t.id !== id));
-                    } else {
-                        setTreinamentosOfertados(prev => prev.filter(t => t.id !== id));
-                    }
-                } else {
-                    alert("Erro ao excluir: " + data.mensagem);
+    // Função para lidar com o metodo DELETE
+    async function handleDelete(id) {
+        const confirmar = confirm("Tem certeza que deseja excluir este treinamento?");
+        if (!confirmar) return;
+
+        try {
+            const res = await fetch(`http://localhost:3000/api/treinamentos/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": "Bearer " + sessionStorage.getItem("token")
                 }
-        
-            } catch (error) {
-                console.error(error);
-                alert("Erro ao conectar ao servidor.");
+            });
+
+            const data = await res.json();
+
+            if (data.sucesso) {
+                // Remover da lista visível
+                if (exibir === "Realizados") {
+                    setTreinamentosRealizados(prev => prev.filter(t => t.id !== id));
+                } else {
+                    setTreinamentosOfertados(prev => prev.filter(t => t.id !== id));
+                }
+            } else {
+                alert("Erro ao excluir: " + data.mensagem);
             }
+
+        } catch (error) {
+            console.error(error);
+            alert("Erro ao conectar ao servidor.");
         }
+    }
 
     return (
         <div className='container h-100 py-4 d-flex flex-column'>
@@ -157,33 +157,24 @@ export default function Treinamentos() {
                                         <td>{new Date(tr.data_criacao).toLocaleDateString()}</td>
 
                                         <td className='text-center'>
-                                            <span className={`text-${Status[tr.estado][0]} fa ${Status[tr.estado][1]} col-2`}></span>
+                                            <span className={`text-${Status[tr.estado][0]} fa ${Status[tr.estado][1]} me-2`}></span>
+                                            {tr.estado}
                                         </td>
 
                                         <td style={{ width: '20%' }}>
-                                            <a href={`/ft/treinamento/${tr.id}`} className='table-link'>
+                                            <a href={`/ft/treinamento/${tr.id}`} className='btn btn-azulGM'>
                                                 <span className='fa-stack'>
-                                                    <i className='fa fa-square fa-stack-2x' />
+                                                    {/* <i className='fa fa-square fa-stack-2x' /> */}
                                                     <i className='fa fa-search-plus fa-stack-1x fa-inverse' />
                                                 </span>
+                                                Ver Treinamento
                                             </a>
-
-                                            {/* Você pode ativar o excluir aqui */}
-                                            <a className='table-link danger' onClick={() => handleDelete(tr.id)} style={{ cursor: "pointer" }}>
-                                                <span className='fa-stack'>
-                                                    <i className='fa fa-square fa-stack-2x' style={{ color: 'red' }}></i>
-                                                    <i className='fa fa-trash fa-stack-1x' style={{ color: 'white' }}></i>
-                                                </span>
-                                            </a>
-
                                         </td>
                                     </tr>
                                 ))}
-
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>

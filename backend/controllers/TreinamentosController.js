@@ -2,6 +2,10 @@ import TreinamentoModel from '../models/TreinamentosModel.js';
 
 
 class TreinamentoController {
+
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    /* ROTAS RELACIONAS À LISTAGEM DE TREINAMENTOS */
+
     /* LISTAR TODOS OS TREINAMENTOS */
     static async listarTodos(req, res) {
         try {
@@ -44,6 +48,9 @@ class TreinamentoController {
             });
         }
     }
+
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    /* ROTAS RELACIONAS À TREINAMENTOS EM QUE UM USUÁRIO OFERECE OU PARTICIPA */
 
     /* LISTAR TODOS OS TREINAMENTOS DE UM PARTICIPANTE */
     static async listarTrParticipante(req, res) {
@@ -89,42 +96,7 @@ class TreinamentoController {
         }
     }
 
-    /* CRIAR UM NOVO TREINAMENTO */
-    static async criarTreinamento(req, res) {
-        try {
-            const { nome, descricao, participantes, idCriador } = req.body;
-
-            // Preparar dados do treinamento
-            const dadosTreinamento = {
-                nome: nome.trim(),
-                descricao: descricao ? descricao.trim() : '',
-                participantes: participantes,
-                idCriador: idCriador
-            };
-
-            const produtoId = await TreinamentoModel.criarTreinamento(dadosTreinamento);
-
-            res.status(201).json({
-                sucesso: true,
-                mensagem: 'Treinamento criado com sucesso',
-                dados: {
-                    id: produtoId,
-                    ...dadosTreinamento
-                }
-            });
-
-        } catch (error) {
-            console.error('Erro ao criar treinamento:', error);
-            res.status(500).json({
-                sucesso: false,
-                erro: 'Erro interno do servidor',
-                mensagem: 'Não foi possível criar o treinamento'
-            });
-        }
-    }
-
-    /*  OBTER O Nº DE TREINAMENTOS EM QUE UM USUÁRIO FOI INSCRITO NOS ÚLTIMOS 6 MESES 
-        separados por mês e estado */
+    /*  OBTER O Nº DE TREINAMENTOS EM QUE UM USUÁRIO FOI INSCRITO NOS ÚLTIMOS 6 MESES separados por mês e estado */
     static async listarTrParticipanteSeisMeses(req, res) {
         try {
             const id = parseInt(req.params.id);
@@ -146,8 +118,7 @@ class TreinamentoController {
         }
     }
 
-    /*  OBTER O Nº DE TREINAMENTOS QUE UM USUÁRIO CRIOU NOS ÚLTIMOS 6 MESES
-        separados por mês e estado */
+    /*  OBTER O Nº DE TREINAMENTOS QUE UM USUÁRIO CRIOU NOS ÚLTIMOS 6 MESES separados por mês e estado */
     static async listarTrOferecidosSeisMeses(req, res) {
         try {
             const id = parseInt(req.params.id);
@@ -168,6 +139,9 @@ class TreinamentoController {
             });
         }
     }
+
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    /* ROTAS RELACIONAS À SESSÕES DE UM TREINAMENTO */
 
     /* LISTAR TREINAMENTO ESPECÍFICO */
     static async listarSessoes(req, res) {
@@ -220,6 +194,66 @@ class TreinamentoController {
             });
         }
     }
+
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    /* ROTAS RELACIONADAS AO CICLO DE VIDA DE UM TREINAMENTO */
+
+    /* CRIAR UM NOVO TREINAMENTO */
+    static async criarTreinamento(req, res) {
+        try {
+            const { nome, descricao, participantes, idCriador } = req.body;
+
+            // Preparar dados do treinamento
+            const dadosTreinamento = {
+                nome: nome.trim(),
+                descricao: descricao ? descricao.trim() : '',
+                participantes: participantes,
+                idCriador: idCriador
+            };
+
+            const produtoId = await TreinamentoModel.criarTreinamento(dadosTreinamento);
+
+            res.status(201).json({
+                sucesso: true,
+                mensagem: 'Treinamento criado com sucesso',
+                dados: {
+                    id: produtoId,
+                    ...dadosTreinamento
+                }
+            });
+
+        } catch (error) {
+            console.error('Erro ao criar treinamento:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível criar o treinamento'
+            });
+        }
+    }
+
+    static async atualizarEstado(req, res) {
+        try {
+            const idTreinamento = parseInt(req.params.idTreinamento);
+            const { estado } = req.body;
+
+            const resultado = await TreinamentoModel.atualizarEstado(idTreinamento, estado);
+
+            res.status(200).json({
+                sucesso: true,
+                mensagem: 'Estado atualizado'
+            });
+        } catch (error) {
+            console.error('Erro ao criar sessão:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível criar a sessão'
+            });
+        }
+    }
+
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 }
 
 export default TreinamentoController;
