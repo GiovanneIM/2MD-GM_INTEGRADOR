@@ -110,8 +110,8 @@ export default function Sessoes({
         });
     }
 
-    return (<>
-        <div className="col-12 col-lg-6 pb-3 pb-lg-0 pe-md-2 d-flex flex-column gap-3 ">
+    if (sessoes) return (<>
+        <div className="col-12 col-lg-6 pb-3 pb-lg-0 pe-md-2 d-flex flex-column gap-3 " style={{ height: 600 }}>
             {/* Div superior */}
             <div className='col-12 d-flex justify-content-between border-bottom pb-3 px-3'>
                 <div className='mb-0 fs-4'>Sessões</div>
@@ -128,7 +128,7 @@ export default function Sessoes({
             {/* Lista de sessões */}
             <div className='flex-grow-1 border p-3 d-flex flex-column gap-3 overflow-y-scroll'>
 
-                {sessoes && sessoes.map((s) =>
+                { sessoes.map((s) =>
                     <div className='border p-3' key={s.indice}>
                         <div>
                             <div>Sessão {s.indice}</div>

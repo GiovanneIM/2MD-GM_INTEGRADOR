@@ -84,9 +84,32 @@ export default function VerTreinamento() {
 
     }
 
+    // Função para criar uma nova sessão no treinamento
     function registrarSessao(novaSessaoDados) {
+        novaSessaoDados = {
+            ...novaSessaoDados,
+            idTreinamento: id
+        }
+
         console.log(novaSessaoDados);
-        
+
+        fetch(`http://127.0.0.1:3000/api/treinamentos/treinamento/${id}/criarSessao`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(novaSessaoDados)
+        }).then( res => res.json()
+        ).then( data => {
+            if (data.sucesso) {
+                carregarSessoes()
+            }
+            else {
+                console.log(data.mensagem);
+            }
+        }).catch( err =>
+            console.error(err)
+        )
     }
 
 
@@ -164,70 +187,6 @@ export default function VerTreinamento() {
                 {/* Sessões */}
                 <div className="col-12 bg-white p-3 rounded shadow-sm d-flex flex-wrap row-gap-3">
                     <Sessoes sessoes={sessoes} registrarSessao={registrarSessao}/>
-                </div>
-            </div>
-
-            <div className='container mt-5 py-5'>
-                <div className='bg-white rounded shadow-sm overflow-hidden'>
-                    <div className='col-12 d-flex'>
-                        {/* Esquerda */}
-                        <div className='col-md-5'>
-                            <div className='contact-info h-100 d-flex flex-column justify-content-between'>
-                                {/* Nome */}
-                                <div className='fs-2'>{treinamento?.nome ?? 'Nome do treinamento'}</div>
-
-                                {/* Descrição */}
-                                <div className='border p-3 rounded' style={{ height: '300px' }}>{treinamento?.descricao ?? 'Descrição do treinamento'}</div>
-
-                                {/* Logo */}
-                                <div className=''><LogoGM cor={'#fff'} tamanho={55} /></div>
-                            </div>
-                        </div>
-
-                        {/* Direita */}
-                        <div className='col-md-7'>
-                            <div className='contact-form'>
-                                {/* Titulo da página*/}
-                                <div className='d-flex flex-column justify-content-between mb-3 pb-2'>
-                                    <div className='bottom-bordaAzulGM ps-3 col-12'><h1 className='h3 mb-0 fw-bold fs-2 pb-2'>Realizar mudanças no treinamento</h1></div>
-                                </div>
-                                <form>
-                                    <div className='row'>
-                                        <div className='mb-3'>
-                                            <label className='form-label'>Trocar nome:</label>
-                                            <input
-                                                type='text'
-                                                className='form-control'
-                                                placeholder='Novo nome'
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className='mb-3'>
-                                        <label className='form-label'>Descrição:</label>
-                                        <textarea
-                                            className='form-control'
-                                            rows='5'
-                                            placeholder='Nova descrição'
-                                        />
-                                    </div>
-                                    <div className='mb-3'>
-                                        <label className='form-label'>Status:</label>
-                                        <select className='form-select'>
-                                            <option value="">Selecione o novo status</option>
-                                            <option value="concluido">Concluído</option>
-                                            <option value="em andamento">Em Andamento</option>
-                                            <option value="cancelado">Cancelado</option>
-                                            <option value="pendente">Pendente</option>
-                                        </select>
-                                    </div>
-
-                                    <button className='botao'>
-                                        Enviar
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

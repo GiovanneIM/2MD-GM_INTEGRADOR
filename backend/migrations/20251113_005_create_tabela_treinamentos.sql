@@ -34,10 +34,10 @@ CREATE TABLE if not exists treinamentos (
 CREATE TABLE if not exists sessoes (
 	id					INT PRIMARY KEY AUTO_INCREMENT,
     idTreinamento		INT NOT NULL,
-    data_hora			DATE NOT NULL,
+    dia					DATE NOT NULL,
     hora_inicio			TIME NOT NULL,
     hora_fim			TIME NOT NULL,
-    local				VARCHAR(100) NOT NULL,
+    localidade			VARCHAR(100) NOT NULL,
     data_criacao		DATETIME DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao	DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     

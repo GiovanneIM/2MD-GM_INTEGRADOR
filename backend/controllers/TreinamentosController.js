@@ -102,7 +102,7 @@ class TreinamentoController {
                 idCriador: idCriador
             };
 
-            const produtoId = await TreinamentoModel.criar(dadosTreinamento);
+            const produtoId = await TreinamentoModel.criarTreinamento(dadosTreinamento);
 
             res.status(201).json({
                 sucesso: true,
@@ -187,6 +187,36 @@ class TreinamentoController {
                 sucesso: false,
                 erro: 'Erro interno do servidor',
                 mensagem: 'Não foi possível listar as sessões'
+            });
+        }
+    }
+
+    /* CRIAR UMA SESSÃO */
+    static async criarSessao(req, res) {
+        try {
+            // Obtendo dados da sessão
+            const { dia, hora_inicio, hora_fim, localidade, idTreinamento } = req.body;
+
+            // Preparar dados do treinamento
+            const dadosSessao = { dia, hora_inicio, hora_fim, localidade, idTreinamento };
+
+            const sessaoId = await TreinamentoModel.criarSessao(dadosSessao);
+
+            res.status(201).json({
+                sucesso: true,
+                mensagem: 'Sessão criada com sucesso',
+                dados: {
+                    id: sessaoId,
+                    ...dadosSessao
+                }
+            });
+
+        } catch (error) {
+            console.error('Erro ao criar sessão:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível criar a sessão'
             });
         }
     }

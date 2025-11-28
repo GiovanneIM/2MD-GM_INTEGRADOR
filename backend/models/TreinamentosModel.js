@@ -51,7 +51,6 @@ class TreinamentoModel {
         }
     }
 
-
     /* LISTAR TODOS OS TREINAMENTOS DE UM PARTICIPANTE */
     static async listarTrParticipante(id) {
         try {
@@ -99,7 +98,7 @@ class TreinamentoModel {
     }
 
     /* CRIAR UM NOVO TREINAMENTO */
-    static async criar(dadosTreinamento) {
+    static async criarTreinamento(dadosTreinamento) {
         try {
             const treinamento = {
                 nome: dadosTreinamento.nome,
@@ -282,6 +281,26 @@ class TreinamentoModel {
 
         } catch (error) {
             console.error('Erro ao listar Sessões:', error);
+            throw error;
+        }
+    }
+
+    /* CRIAR UMA NOVA SESSÃO */
+    static async criarSessao(dadosSessao) {
+        try {
+             const sessao = {
+                localidade: dadosSessao.localidade,
+                idTreinamento: dadosSessao.idTreinamento,
+                dia: dadosSessao.dia,
+                hora_inicio: dadosSessao.hora_inicio,
+                hora_fim: dadosSessao.hora_fim,
+            }
+
+            const idSessao = await create('sessoes', sessao);
+            return idSessao;
+            
+        } catch (error) {
+            console.error('Erro ao criar sessão:', error);
             throw error;
         }
     }

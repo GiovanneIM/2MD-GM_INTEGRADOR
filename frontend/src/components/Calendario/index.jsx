@@ -38,34 +38,24 @@ const eventosTestes = [
     }
 ];
 
+/*
+indice: int
+idTreinamento: int
+id: int
+dia: '00/00/0000'
+hora_inicio: '00:00'
+hora_fim: '00:00'
+localidade
+*/
+
 
 export default function Calendario({ eventos }) {
-    // const [events, setEvents] = useState(initialEvents);
+    for (const evento in eventos) {
+        
+    }
 
-    /* Carregar eventos do localStorage ao iniciar */
-    // useEffect(() => {
-    //     const stored = localStorage.getItem('calendar-events');
 
-    //     if (stored) {
-    //         const parsed = JSON.parse(stored).map((ev) => ({
-    //             ...ev,
-    //             start: new Date(ev.start),
-    //             end: new Date(ev.end),
-    //         }));
-    //         setEvents(parsed);
-    //     } else {
-    //         setEvents(initialEvents);
-    //     }
-    // }, []);
-
-    /* Salvar eventos no localStorage sempre que mudarem */
-    // useEffect(() => {
-    //     if (events.length > 0) {
-    //         localStorage.setItem('calendar-events', JSON.stringify(events));
-    //     }
-    // }, [events]);
-
-    /* Função para deixar a primeira letra de uma string */
+    /* Função para deixar a primeira letra de uma string maiúscula*/
     function capitalize(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
@@ -81,7 +71,7 @@ export default function Calendario({ eventos }) {
     /* Abrir SweetAlert com informações da sessão */
     function swalSessao(sessao) {
         Swal.fire({
-            title: `${sessao.title}`,
+            title: `Sessão ${sessao.indice}`,
             html: `
                 <div class='text-start p-3 border rounded' style='background:#f8f9fa;'>
                     <table class='table table-sm mb-0'>
@@ -152,7 +142,7 @@ export default function Calendario({ eventos }) {
                     agenda: "Agenda"
                 }}
 
-                events={eventos ?? eventosTestes}
+                events={eventos}
 
                 startAccessor='inicio'
                 endAccessor='fim'
