@@ -154,14 +154,14 @@ export default function Treinamentos() {
                                             </a>
                                         </td>
 
-                                        <td>{new Date(tr.criado_em).toLocaleDateString()}</td>
+                                        <td>{new Date(tr.data_criacao).toLocaleDateString()}</td>
 
                                         <td className='text-center'>
                                             <span className={`text-${Status[tr.estado][0]} fa ${Status[tr.estado][1]} col-2`}></span>
                                         </td>
 
                                         <td style={{ width: '20%' }}>
-                                            <a href={`/treinamento/${tr.id}`} className='table-link'>
+                                            <a href={`/ft/treinamento/${tr.id}`} className='table-link'>
                                                 <span className='fa-stack'>
                                                     <i className='fa fa-square fa-stack-2x' />
                                                     <i className='fa fa-search-plus fa-stack-1x fa-inverse' />
