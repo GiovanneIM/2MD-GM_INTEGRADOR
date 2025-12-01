@@ -329,7 +329,7 @@ class TreinamentoModel {
             }
 
         } catch (error) {
-            console.error('Erro ao atualizar o estodo do treinamentos:', error);
+            console.error('Erro ao atualizar o estado do treinamentos:', error);
             throw error;
         }
     }

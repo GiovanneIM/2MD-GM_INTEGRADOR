@@ -21,28 +21,28 @@ export default function Treinamento() {
     const [sessoes, setSessoes] = useState(null);
     const [usuario, setUsuario] = useState({});
 
-    /* Função para carregar o treinamento */
-    async function carregarTreinamento() {
-        try {
-            const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}`);
-            const data = await res.json();
-
-            if (data.sucesso) {
-                setTreinamento(data.dados[0]);
-
-                /* Carregando as sessões do treinamento */
-                carregarSessoes();
-            } else {
-                console.log(data.mensagem);
-            }
-        } catch (err) {
-            console.error('Erro ao carregar treinamento:', err);
-        }
-
-    }
 
     /* Carregando o treinamento */
     useEffect(() => {
+        async function carregarTreinamento() {
+            try {
+                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}`);
+                const data = await res.json();
+
+                if (data.sucesso) {
+                    setTreinamento(data.dados[0]);
+
+                    /* Carregando as sessões do treinamento */
+                    carregarSessoes();
+                } else {
+                    console.log(data.mensagem);
+                }
+            } catch (err) {
+                console.error('Erro ao carregar treinamento:', err);
+            }
+
+        }
+
         carregarTreinamento();
     }, []);
 
@@ -127,72 +127,6 @@ export default function Treinamento() {
         return `${dia}/${mes}/${ano} às ${horas}:${minutos}`;
     }
 
-    /* Modal para cancelar treinamento */
-    function cancelarTreinamento() {
-        Swal.fire({
-            title: 'Confirmar Exclusão',
-            html: `Deseja confirmar a exclusão do treinamento "${treinamento.nome}"?`,
-
-            confirmButtonText: 'Confirmar',
-            confirmButtonColor: '#dc3545',
-
-            showCancelButton: true,
-            cancelButtonText: 'Cancelar',
-            cancelButtonColor: '#adb5bd',
-
-            preConfirm: async () => {
-                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/atualizarEstado`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ estado: 'Cancelado' })
-                });
-                const data = await res.json();
-
-                return data.sucesso;
-            }
-
-        }).then((result) => {
-            if (result.isConfirmed) {
-                console.log("Treinamento cancelado!");
-                carregarTreinamento()
-            }
-        });
-    }
-
-    function concluirTreinamento() {
-        Swal.fire({
-            title: 'Confirmar Conclusão',
-            html: `Deseja confirmar a conclusão do treinamento "${treinamento.nome}"?`,
-
-            confirmButtonText: 'Confirmar',
-            confirmButtonColor: '#198754',
-
-            showCancelButton: true,
-            cancelButtonText: 'Cancelar',
-            cancelButtonColor: '#adb5bd',
-
-            preConfirm: async () => {
-                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/atualizarEstado`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ estado: 'Concluido' })
-                });
-                const data = await res.json();
-
-                return data.sucesso;
-            }
-
-        }).then((result) => {
-            if (result.isConfirmed) {
-                console.log("Treinamento Concluído!");
-                carregarTreinamento()
-            }
-        });
-    }
 
     if (treinamento && sessoes) return (<>
         <div className='container h-100 py-4 d-flex flex-column'>
@@ -267,24 +201,6 @@ export default function Treinamento() {
                             <a href='/treinamentos' className='btn btn-azulGM'>
                                 <i className='bi bi-arrow-left-short'></i> Voltar aos treinamentos
                             </a>
-
-                            {
-                                treinamento.estado === 'Pendente' &&
-                                <div>
-                                    <button className='btn btn-danger' onClick={cancelarTreinamento}>
-                                        Cancelar Treinamento
-                                    </button>
-                                </div>
-                            }
-
-                            {
-                                treinamento.estado === 'Em andamento' &&
-                                <div>
-                                    <button className='btn btn-success' onClick={concluirTreinamento}>
-                                        Concluir Treinamento
-                                    </button>
-                                </div>
-                            }
                         </div>
 
                         {/* Logo GM */}
