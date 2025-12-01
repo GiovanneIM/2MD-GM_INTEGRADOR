@@ -1,18 +1,15 @@
 'use client'
 
-/* 
-    Página de perfil do usuário;
-        • Exibir as informações do usuário
-        • Permitir que o usuário altere as informações dele
-*/
-
 import { useState, useEffect } from 'react';
 
 import LogoGM from '@/components/LogoGM'
 import './configuracoes.css'
 
 export default function Configuracoes() {
-    const [usuario, setUsuario] = useState([]);
+
+    const [usuario, setUsuario] = useState({});
+    const [editandoUsuario, setEditandoUsuario] = useState({});
+    const [editando, setEditando] = useState(false);
 
     /* Carregando o usuário logado */
     useEffect(() => {
@@ -24,22 +21,43 @@ export default function Configuracoes() {
             });
             const data = await res.json();
 
-            // Verificando se há um usuário logado
             if (data.sucesso) {
                 sessionStorage.setItem('usuario', JSON.stringify(data.dados));
                 setUsuario(data.dados);
+                setEditandoUsuario(data.dados);
             }
         }
 
         carregarUsuario();
     }, [])
 
+    /* Função para salvar alterações */
+    async function salvarAlteracoes() {
+        const res = await fetch('http://localhost:3000/api/auth/atualizarPerfil', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+            },
+            body: JSON.stringify(editandoUsuario)
+        });
+
+        const data = await res.json();
+
+        if (data.sucesso) {
+            setUsuario(editandoUsuario);
+            setEditando(false);
+            alert("Perfil atualizado com sucesso!");
+        } else {
+            alert("Erro ao atualizar o perfil!");
+        }
+    }
+
     return (<>
         <div className='container py-5'>
 
             {/* Cabeçalho */}
             <div className='col-12 mb-4'>
-
                 <div className='profile-header position-relative mb-4'>
                     <div className='position-absolute top-0 end-0 p-3'>
                         <LogoGM tamanho={80} cor={'#0956FF'} />
@@ -48,7 +66,7 @@ export default function Configuracoes() {
 
                 <div className='text-center'>
 
-                    {/* Foto de perfil */}
+                    {/* Foto */}
                     <div className='position-relative d-inline-block'>
                         <img
                             src='https://tse4.mm.bing.net/th/id/OIP.dvPzAHlp_Tttshx0Th7yiQHaHa?cb=ucfimgc2&rs=1&pid=ImgDetMain&o=7&rm=3'
@@ -61,7 +79,9 @@ export default function Configuracoes() {
                     </div>
 
                     {/* Nome */}
-                    <h3 className='mt-3 mb-1'>{usuario.nome}</h3>
+                    <h3 className='mt-3 mb-1'>
+                        {usuario.nome}
+                    </h3>
 
                     {/* Cargo */}
                     <p className='text-muted mb-3'>{
@@ -72,14 +92,13 @@ export default function Configuracoes() {
                                 : 'Administrador'
                     }</p>
 
-                    {/* Mensagem */}
+                    {/* Botão mensagem */}
                     <div className='d-flex justify-content-center gap-2 mb-4'>
                         <button
                             className='btn btn-azulGM'
                             type='button'
                             data-bs-toggle='modal'
                             data-bs-target='#exampleModal'
-                            data-bs-whatever='@getbootstrap'
                         >
                             <i className='fas fa-envelope me-2' />
                             Enviar mensagem
@@ -88,146 +107,162 @@ export default function Configuracoes() {
                 </div>
             </div>
 
-            {/* conteúdo Principal */}
+            {/* Conteúdo Principal */}
             <div className='col-12 d-flex flex-column flex-md-row row-gap-3'>
-                {/* Informaçõs Pessoais */}
+
+                {/* Informações pessoais */}
                 <div className='col-12 col-md-6 pe-md-2'>
-                    <div className='col-12 d-flex flex-column flex-wrap bg-white shadow rounded p-3'>
-                        <h5 className='mb-4'>Informaçõs Pessoais</h5>
+                    <div className='col-12 d-flex flex-column bg-white shadow rounded p-3'>
+
+                        <div className="d-flex justify-content-between mb-3">
+                            <h5>Informações Pessoais</h5>
+                        </div>
+
                         <div className='row g-3'>
+
+                            {/* Nome */}
                             <div className='col-md-6'>
                                 <div>Nome</div>
-                                <div style={{ height: '24px' }}>{usuario.nome}</div>
-                            </div>
-                            <div className='col-md-6'>
-                            </div>
-                            <div className='col-md-6'>
-                                <div>Email</div>
-                                <div style={{ height: '24px' }}>{usuario.email}</div>
-                            </div>
-                            <div className='col-md-6'>
-                                <div>Telefone</div>
-                                <div style={{ height: '24px' }}>{usuario.telefone}</div>
+
+                                {!editando ? (
+                                    <div style={{ height: '24px' }}>
+                                        {usuario.nome}
+                                    </div>
+                                ) : (
+                                    <input
+                                        className="form-control"
+                                        value={editandoUsuario.nome}
+                                        onChange={e =>
+                                            setEditandoUsuario({ ...editandoUsuario, nome: e.target.value })
+                                        }
+                                    />
+                                )}
                             </div>
 
+                            <div className='col-md-6'></div>
+
+                            {/* Email */}
+                            <div className='col-md-6'>
+                                <div>Email</div>
+
+                                {!editando ? (
+                                    <div style={{ height: '24px' }}>
+                                        {usuario.email}
+                                    </div>
+                                ) : (
+                                    <input
+                                        className="form-control"
+                                        value={editandoUsuario.email}
+                                        onChange={e =>
+                                            setEditandoUsuario({ ...editandoUsuario, email: e.target.value })
+                                        }
+                                    />
+                                )}
+                            </div>
+
+                            {/* Telefone */}
+                            <div className='col-md-6'>
+                                <div>Telefone</div>
+
+                                {!editando ? (
+                                    <div style={{ height: '24px' }}>
+                                        {usuario.telefone}
+                                    </div>
+                                ) : (
+                                    <input
+                                        className="form-control"
+                                        value={editandoUsuario.telefone}
+                                        onChange={e =>
+                                            setEditandoUsuario({ ...editandoUsuario, telefone: e.target.value })
+                                        }
+                                    />
+                                )}
+                            </div>
+
+                            {/* Bio */}
                             <div className='col-12'>
                                 <div>Bio</div>
-                                <div
-                                    className='border rounded'
-                                    style={{ height: '120px' }}
-                                >
-                                    {usuario.bio}
-                                </div>
+
+                                {!editando ? (
+                                    <div className='border rounded p-2' style={{ minHeight: '120px' }}>
+                                        {usuario.bio}
+                                    </div>
+                                ) : (
+                                    <textarea
+                                        className="form-control"
+                                        style={{ minHeight: '120px' }}
+                                        value={editandoUsuario.bio}
+                                        onChange={e =>
+                                            setEditandoUsuario({ ...editandoUsuario, bio: e.target.value })
+                                        }
+                                    />
+                                )}
                             </div>
+
+                            {!editando ? (
+                                <button className="btn btn-primary col-2" onClick={() => setEditando(true)}>
+                                    Editar
+                                </button>
+                            ) : (
+                                <button className="btn btn-success col-2" onClick={salvarAlteracoes}>
+                                    Salvar
+                                </button>
+                            )}
+
                         </div>
+
                     </div>
                 </div>
 
-                {/* Cofigurações do Cards */}
-                {/* <div className='row g-4 mb-4'>
-                            <div className='col-md-6'>
-                                <div className='settings-card card'>
-                                    <div className='card-body'>
-                                        <div className='d-flex justify-content-between align-items-center'>
-                                            <div>
-                                                <h6 className='mb-1'>
-                                                    Autenticação de dois fatores
-                                                </h6>
-                                                <p className='text-muted mb-0 small'>
-                                                    Adicione uma nova camada de segurança
-                                                </p>
-                                            </div>
-                                            <div className='form-check form-switch'>
-                                                <input
-                                                    className='form-check-input'
-                                                    type='checkbox'
-                                                    defaultChecked=''
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='col-md-6'>
-                                <div className='settings-card card'>
-                                    <div className='card-body'>
-                                        <div className='d-flex justify-content-between align-items-center'>
-                                            <div>
-                                                <h6 className='mb-1'>Email Notificações</h6>
-                                                <p className='text-muted mb-0 small'>
-                                                    Receba notificações de atividade
-                                                </p>
-                                            </div>
-                                            <div className='form-check form-switch'>
-                                                <input
-                                                    className='form-check-input'
-                                                    type='checkbox'
-                                                    defaultChecked=''
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
-
                 {/* Atividade recente */}
                 <div className='col-12 col-md-6 ps-md-2'>
-                    <div className='col-12 d-flex flex-column flex-wrap bg-white shadow rounded p-3'>
+                    <div className='col-12 d-flex flex-column bg-white shadow rounded p-3'>
                         <h5 className='mb-5'>Atividade Recente</h5>
+
                         <div className='activity-item mb-3'>
                             <h6 className='mb-1'>#Atividade</h6>
                             <p className='text-muted small mb-0'>#Tempo</p>
                         </div>
+
                         <div className='activity-item mb-3'>
                             <h6 className='mb-1'>#Atividade</h6>
                             <p className='text-muted small mb-0'>#Tempo</p>
                         </div>
+
                         <div className='activity-item'>
                             <h6 className='mb-1'>#Atividade</h6>
                             <p className='text-muted small mb-0'>#Tempo</p>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
-
-
 
         {/* Modal Mensagem */}
         <div
             className='modal fade'
             id='exampleModal'
             tabIndex={-1}
-            aria-labelledby='exampleModalLabel'
             aria-hidden='true'
         >
             <div className='modal-dialog'>
                 <div className='modal-content'>
                     <div className='modal-header'>
-                        <h5 className='modal-title' id='exampleModalLabel'>Nova mensagem</h5>
-                        <button
-                            type='button'
-                            className='btn-close'
-                            data-bs-dismiss='modal'
-                            aria-label='Close'
-                        />
+                        <h5 className='modal-title'>Nova mensagem</h5>
+                        <button className='btn-close' data-bs-dismiss='modal' />
                     </div>
 
                     <div className='modal-body'>
                         <form>
                             <div className='mb-3'>
-                                <label htmlFor='recipient-nome' className='col-form-label'>
-                                    Nome:
-                                </label>
-                                <input type='text' className='form-control' id='recipient-nome' />
+                                <label className='col-form-label'>Nome:</label>
+                                <input type='text' className='form-control' />
                             </div>
 
                             <div className='mb-3'>
-                                <label htmlFor='mensagem-text' className='col-form-label'>
-                                    Mensagem:
-                                </label>
-                                <textarea className='form-control' id='mensagem-text' />
+                                <label className='col-form-label'>Mensagem:</label>
+                                <textarea className='form-control' />
                             </div>
                         </form>
                     </div>
@@ -237,10 +272,7 @@ export default function Configuracoes() {
                             type='button'
                             className='btn btn-primary'
                             onClick={() => {
-                                // coloque aqui a lógica que quiser executar
                                 console.log("Mensagem enviada!");
-
-                                // fechar modal
                                 const modal = bootstrap.Modal.getInstance(
                                     document.getElementById("exampleModal")
                                 );
@@ -253,6 +285,5 @@ export default function Configuracoes() {
                 </div>
             </div>
         </div>
-
     </>)
 }
