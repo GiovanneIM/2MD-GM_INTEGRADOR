@@ -97,17 +97,17 @@ export default function Configuracoes() {
                         <div className='row g-3'>
                             <div className='col-md-6'>
                                 <div>Nome</div>
-                                <div style={{height: '24px'}}>{usuario.nome}</div>
+                                <div style={{ height: '24px' }}>{usuario.nome}</div>
                             </div>
                             <div className='col-md-6'>
                             </div>
                             <div className='col-md-6'>
                                 <div>Email</div>
-                                <div style={{height: '24px'}}>{usuario.email}</div>
+                                <div style={{ height: '24px' }}>{usuario.email}</div>
                             </div>
                             <div className='col-md-6'>
                                 <div>Telefone</div>
-                                <div style={{height: '24px'}}>{usuario.telefone}</div>
+                                <div style={{ height: '24px' }}>{usuario.telefone}</div>
                             </div>
 
                             <div className='col-12'>
@@ -193,21 +193,19 @@ export default function Configuracoes() {
         </div>
 
 
+
         {/* Modal Mensagem */}
-        < div
+        <div
             className='modal fade'
             id='exampleModal'
-            tabIndex={- 1
-            }
+            tabIndex={-1}
             aria-labelledby='exampleModalLabel'
             aria-hidden='true'
         >
             <div className='modal-dialog'>
                 <div className='modal-content'>
                     <div className='modal-header'>
-                        <h5 className='modal-title' id='exampleModalLabel'>
-                            Nova mensagem
-                        </h5>
+                        <h5 className='modal-title' id='exampleModalLabel'>Nova mensagem</h5>
                         <button
                             type='button'
                             className='btn-close'
@@ -215,6 +213,7 @@ export default function Configuracoes() {
                             aria-label='Close'
                         />
                     </div>
+
                     <div className='modal-body'>
                         <form>
                             <div className='mb-3'>
@@ -223,25 +222,37 @@ export default function Configuracoes() {
                                 </label>
                                 <input type='text' className='form-control' id='recipient-nome' />
                             </div>
+
                             <div className='mb-3'>
                                 <label htmlFor='mensagem-text' className='col-form-label'>
                                     Mensagem:
                                 </label>
-                                <textarea
-                                    className='form-control'
-                                    id='mensagem-text'
-                                    defaultValue={''}
-                                />
+                                <textarea className='form-control' id='mensagem-text' />
                             </div>
                         </form>
                     </div>
+
                     <div className='modal-footer'>
-                        <button type='button' className='btn btn-primary'>
+                        <button
+                            type='button'
+                            className='btn btn-primary'
+                            onClick={() => {
+                                // coloque aqui a lógica que quiser executar
+                                console.log("Mensagem enviada!");
+
+                                // fechar modal
+                                const modal = bootstrap.Modal.getInstance(
+                                    document.getElementById("exampleModal")
+                                );
+                                modal.hide();
+                            }}
+                        >
                             Enviar
                         </button>
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
+
     </>)
 }
