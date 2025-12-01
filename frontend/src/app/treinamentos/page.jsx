@@ -58,39 +58,6 @@ export default function Treinamentos() {
     // Treinamentos exibidos conforme a opção
     const lista = exibir === "Realizados" ? treinamentosRealizados : treinamentosOfertados;
 
-
-    // Função para lidar com o metodo DELETE
-    async function handleDelete(id) {
-        const confirmar = confirm("Tem certeza que deseja excluir este treinamento?");
-        if (!confirmar) return;
-
-        try {
-            const res = await fetch(`http://localhost:3000/api/treinamentos/${id}`, {
-                method: "DELETE",
-                headers: {
-                    "Authorization": "Bearer " + sessionStorage.getItem("token")
-                }
-            });
-
-            const data = await res.json();
-
-            if (data.sucesso) {
-                // Remover da lista visível
-                if (exibir === "Realizados") {
-                    setTreinamentosRealizados(prev => prev.filter(t => t.id !== id));
-                } else {
-                    setTreinamentosOfertados(prev => prev.filter(t => t.id !== id));
-                }
-            } else {
-                alert("Erro ao excluir: " + data.mensagem);
-            }
-
-        } catch (error) {
-            console.error(error);
-            alert("Erro ao conectar ao servidor.");
-        }
-    }
-
     return (
         <div className='container h-100 py-4 d-flex flex-column'>
             <div className='d-flex flex-column justify-content-between mb-3'>
@@ -149,7 +116,7 @@ export default function Treinamentos() {
                                 {lista.map((tr) => (
                                     <tr key={tr.id}>
                                         <td>
-                                            <a href={`/treinamento/${tr.id}`} className='user-link'>
+                                            <a href={`${usuario.tipo}/treinamento/${tr.id}`} className='user-link'>
                                                 {tr.nome}
                                             </a>
                                         </td>
@@ -162,7 +129,7 @@ export default function Treinamentos() {
                                         </td>
 
                                         <td style={{ width: '20%' }}>
-                                            <a href={`/ft/treinamento/${tr.id}`} className='btn btn-azulGM'>
+                                            <a href={`${usuario.tipo}/treinamento/${tr.id}`} className='btn btn-azulGM'>
                                                 <span className='fa-stack'>
                                                     {/* <i className='fa fa-square fa-stack-2x' /> */}
                                                     <i className='fa fa-search-plus fa-stack-1x fa-inverse' />
