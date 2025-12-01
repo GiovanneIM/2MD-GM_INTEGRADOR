@@ -315,7 +315,7 @@ export default function Treinamento() {
                             {
                                 treinamento.estado === 'Em andamento' &&
                                 <div>
-                                    <button className='btn btn-success' onClick={concluirTreinamento}>
+                                    <button className='btn btn-success' onClick={concluirTreinamento}> 
                                         Concluir Treinamento
                                     </button>
                                 </div>
