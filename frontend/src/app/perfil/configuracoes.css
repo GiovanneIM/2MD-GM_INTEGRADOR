@@ -47,13 +47,17 @@
     margin-left: -3.5em;
 }
 
-.activity-item {
-    border-left: 2px solid #e9ecef;
-    padding-left: 20px;
+/* ATIVIDADES RECENTES */
+
+.activities {
+    /* border-left: 2px solid #e9ecef; */
+}
+
+.activity {
     position: relative;
 }
 
-.activity-item::before {
+.activity::before {
     content: '';
     width: 12px;
     height: 12px;
@@ -62,8 +66,4 @@
     position: absolute;
     left: -7px;
     top: 5px;
-}
-
-.row{
-    justify-content: center;
 }

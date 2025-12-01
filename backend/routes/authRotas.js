@@ -2,6 +2,9 @@ import express from 'express';
 import AuthController from '../controllers/AuthController.js';
 import { authMiddleware, adminMiddleware } from '../middlewares/authMiddleware.js';
 
+// ADICIONADO PELO GPT
+import { cookieToAuthHeader } from '../middlewares/authMiddleware.js';
+
 const router = express.Router();
 
 // Rotas públicas de autenticação
@@ -9,7 +12,7 @@ router.post('/login', AuthController.login);
 router.post('/registrar', AuthController.registrar);
 
 // Rotas protegidas (precisam de autenticação)
-router.get('/perfil', authMiddleware, AuthController.obterPerfil);
+router.get('/perfil', cookieToAuthHeader, authMiddleware, AuthController.obterPerfil);
 
 // Rotas OPTIONS para CORS (preflight requests)
 router.options('/login', (req, res) => {

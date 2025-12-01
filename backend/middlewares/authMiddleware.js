@@ -1,6 +1,22 @@
 import jwt from 'jsonwebtoken';
 import { JWT_CONFIG } from '../config/jwt.js';
 
+
+
+// Adicionado pelo Chat GPT
+const cookieToAuthHeader = (req, res, next) => {
+    const token = req.cookies?.token;
+
+    if (token) {
+        // Simular header Authorization
+        req.headers.authorization = `Bearer ${token}`;
+    }
+
+    next();
+};
+
+
+
 // Middleware de autenticação JWT
 const authMiddleware = (req, res, next) => {
     try {
@@ -69,5 +85,5 @@ const adminMiddleware = (req, res, next) => {
     next();
 };
 
-export { authMiddleware, adminMiddleware };
+export { authMiddleware, adminMiddleware        , cookieToAuthHeader};
 
