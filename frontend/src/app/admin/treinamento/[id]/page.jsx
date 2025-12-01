@@ -14,35 +14,35 @@ import Sessoes from '@/components/ft/sessoes';
 import Swal from 'sweetalert2';
 
 
-export default function VerTreinamento() {
+export default function Treinamento() {
     const { id } = useParams()
 
     const [treinamento, setTreinamento] = useState({});
     const [sessoes, setSessoes] = useState(null);
     const [usuario, setUsuario] = useState({});
 
+    /* Função para carregar o treinamento */
+    async function carregarTreinamento() {
+        try {
+            const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}`);
+            const data = await res.json();
+
+            if (data.sucesso) {
+                setTreinamento(data.dados[0]);
+
+                /* Carregando as sessões do treinamento */
+                carregarSessoes();
+            } else {
+                console.log(data.mensagem);
+            }
+        } catch (err) {
+            console.error('Erro ao carregar treinamento:', err);
+        }
+
+    }
 
     /* Carregando o treinamento */
     useEffect(() => {
-        async function carregarTreinamento() {
-            try {
-                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}`);
-                const data = await res.json();
-
-                if (data.sucesso) {
-                    setTreinamento(data.dados[0]);
-
-                    /* Carregando as sessões do treinamento */
-                    carregarSessoes();
-                } else {
-                    console.log(data.mensagem);
-                }
-            } catch (err) {
-                console.error('Erro ao carregar treinamento:', err);
-            }
-
-        }
-
         carregarTreinamento();
     }, []);
 
@@ -85,32 +85,7 @@ export default function VerTreinamento() {
     }
 
     // Função para criar uma nova sessão no treinamento
-    function registrarSessao(novaSessaoDados) {
-        novaSessaoDados = {
-            ...novaSessaoDados,
-            idTreinamento: id
-        }
-
-        console.log(novaSessaoDados);
-
-        fetch(`http://127.0.0.1:3000/api/treinamentos/treinamento/${id}/criarSessao`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(novaSessaoDados)
-        }).then(res => res.json()
-        ).then(data => {
-            if (data.sucesso) {
-                carregarSessoes()
-            }
-            else {
-                console.log(data.mensagem);
-            }
-        }).catch(err =>
-            console.error(err)
-        )
-    }
+    function registrarSessao() { }
 
     function formatarData(data) {
         if (!data) return "--/--/---- - --:--";
@@ -127,6 +102,8 @@ export default function VerTreinamento() {
         return `${dia}/${mes}/${ano} às ${horas}:${minutos}`;
     }
 
+
+    /* Modal para cancelar treinamento */
     function cancelarTreinamento() {
         Swal.fire({
             title: 'Confirmar Exclusão',
@@ -137,11 +114,62 @@ export default function VerTreinamento() {
 
             showCancelButton: true,
             cancelButtonText: 'Cancelar',
-            cancelButtonColor: '#0956FF',
-        })
+            cancelButtonColor: '#adb5bd',
+
+            preConfirm: async () => {
+                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/atualizarEstado`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ estado: 'Cancelado' })
+                });
+                const data = await res.json();
+                
+                return data.sucesso;
+            }
+
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log("Treinamento cancelado!");
+                carregarTreinamento()
+            }
+        });
     }
 
-    function concluirTreinamento() {}
+    /* Modal para aprovar treinamento */
+    function aprovarTreinamento() {
+        Swal.fire({
+            title: 'Confirmar Aprovação',
+            html: `Deseja confirmar a aprovação do treinamento "${treinamento.nome}"?`,
+
+            confirmButtonText: 'Confirmar',
+            confirmButtonColor: '#0dcaf0',
+
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            cancelButtonColor: '#adb5bd',
+
+            preConfirm: async () => {
+                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/atualizarEstado`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ estado: 'Em andamento' })
+                });
+                const data = await res.json();
+
+                return data.sucesso;
+            }
+
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log("Treinamento aprovado!");
+                carregarTreinamento()
+            }
+        });
+    }
 
     if (treinamento && sessoes) return (<>
         <div className='container h-100 py-4 d-flex flex-column'>
@@ -227,10 +255,10 @@ export default function VerTreinamento() {
                             }
 
                             {
-                                treinamento.estado === 'Em andamento' &&
+                                treinamento.estado === 'Pendente' &&
                                 <div>
-                                    <button className='btn btn-success' onClick={concluirTreinamento}>
-                                        Concluir Treinamento
+                                    <button className='btn btn-info text-white' onClick={aprovarTreinamento}>
+                                        Aprovar Treinamento
                                     </button>
                                 </div>
                             }
@@ -243,9 +271,9 @@ export default function VerTreinamento() {
 
                 {/* Sessões */}
                 {
-                    treinamento.estado != 'Pendente' &&
+                    (treinamento.estado === 'Em andamento' || treinamento.estado === 'Concluido') &&
                     <div className='col-12 bg-white p-3 rounded shadow-sm d-flex flex-wrap row-gap-3'>
-                        <Sessoes treinamento={treinamento} sessoes={sessoes} registrarSessao={registrarSessao} />
+                        <Sessoes treinamento={treinamento} sessoes={sessoes} criador={treinamento.idCriador === usuario.id} registrarSessao={registrarSessao} />
                     </div>
                 }
             </div>

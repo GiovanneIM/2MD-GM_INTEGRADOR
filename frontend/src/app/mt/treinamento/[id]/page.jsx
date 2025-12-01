@@ -5,7 +5,7 @@
   Nesta página podemos trocar o nome, descrição e status dos treinamentos 
 */
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 
 import LogoGM from '@/components/LogoGM';
@@ -13,70 +13,37 @@ import EstadoTreinamento from '@/components/EstadoTreinamento/page';
 import Sessoes from '@/components/ft/sessoes';
 import Swal from 'sweetalert2';
 
-import ModalVerPart from '@/components/ModalVerPart';
 
-
-
-    
 export default function Treinamento() {
-    const ModalRef = useRef();
-
-    function mostrarModal() {
-        ModalRef.current.open();  // AGORA FUNCIONA DE VERDADE
-    }
-
     const { id } = useParams()
 
     const [treinamento, setTreinamento] = useState({});
     const [sessoes, setSessoes] = useState(null);
     const [usuario, setUsuario] = useState({});
-    const [participantes, setParticipantes] = useState(null);
 
-    /* Função para carregar o treinamento */
-    async function carregarTreinamento() {
-        try {
-            const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}`);
-            const data = await res.json();
-
-            if (data.sucesso) {
-                setTreinamento(data.dados[0]);
-
-                /* Carregando as sessões do treinamento */
-                carregarSessoes();
-            } else {
-                console.log(data.mensagem);
-            }
-        } catch (err) {
-            console.error('Erro ao carregar treinamento:', err);
-        }
-
-    }
 
     /* Carregando o treinamento */
     useEffect(() => {
-        carregarTreinamento();
-    }, []);
-
-    /* Carregando o participantes */
-    useEffect(() => {
-        async function carregarParticipantes() {
+        async function carregarTreinamento() {
             try {
-                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/participantes`);
+                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}`);
                 const data = await res.json();
 
                 if (data.sucesso) {
-                    console.log(data.dados)
-                    setParticipantes(data.dados);
+                    setTreinamento(data.dados[0]);
+
+                    /* Carregando as sessões do treinamento */
+                    carregarSessoes();
                 } else {
                     console.log(data.mensagem);
                 }
             } catch (err) {
-                console.error('Erro ao carregar participantes:', err);
+                console.error('Erro ao carregar treinamento:', err);
             }
 
         }
 
-        carregarParticipantes();
+        carregarTreinamento();
     }, []);
 
     /* Carregando o usuário logado */
@@ -160,72 +127,6 @@ export default function Treinamento() {
         return `${dia}/${mes}/${ano} às ${horas}:${minutos}`;
     }
 
-    /* Modal para cancelar treinamento */
-    function cancelarTreinamento() {
-        Swal.fire({
-            title: 'Confirmar Exclusão',
-            html: `Deseja confirmar a exclusão do treinamento "${treinamento.nome}"?`,
-
-            confirmButtonText: 'Confirmar',
-            confirmButtonColor: '#dc3545',
-
-            showCancelButton: true,
-            cancelButtonText: 'Cancelar',
-            cancelButtonColor: '#adb5bd',
-
-            preConfirm: async () => {
-                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/atualizarEstado`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ estado: 'Cancelado' })
-                });
-                const data = await res.json();
-
-                return data.sucesso;
-            }
-
-        }).then((result) => {
-            if (result.isConfirmed) {
-                console.log("Treinamento cancelado!");
-                carregarTreinamento()
-            }
-        });
-    }
-
-    function concluirTreinamento() {
-        Swal.fire({
-            title: 'Confirmar Conclusão',
-            html: `Deseja confirmar a conclusão do treinamento "${treinamento.nome}"?`,
-
-            confirmButtonText: 'Confirmar',
-            confirmButtonColor: '#198754',
-
-            showCancelButton: true,
-            cancelButtonText: 'Cancelar',
-            cancelButtonColor: '#adb5bd',
-
-            preConfirm: async () => {
-                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/atualizarEstado`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ estado: 'Concluido' })
-                });
-                const data = await res.json();
-
-                return data.sucesso;
-            }
-
-        }).then((result) => {
-            if (result.isConfirmed) {
-                console.log("Treinamento Concluído!");
-                carregarTreinamento()
-            }
-        });
-    }
 
     if (treinamento && sessoes) return (<>
         <div className='container h-100 py-4 d-flex flex-column'>
@@ -278,14 +179,12 @@ export default function Treinamento() {
 
                     <div className='col-12 col-lg-6 d-flex flex-column gap-3 border-lg border-bottom border p-3'>
                         {/* Participantes */}
-                        <div className='btn btn-White d-flex border d-flex align-items-center' onClick={mostrarModal}>
+                        <button className='btn btn-White d-flex border d-flex align-items-center'>
                             <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' className='bi bi-arrow-right-short' viewBox='0 0 16 16'>
                                 <path fillRule='evenodd' d='M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8' />
                             </svg>
-                            {/* Modal vindo de outro arquivo */}
-                            <ModalVerPart ref={ModalRef} participantes={participantes ?? []}/>
                             <div>Ver Participantes</div>
-                        </div>
+                        </button>
 
                         {/* Alterar dados */}
                         <button className='btn btn-White d-flex border '>
@@ -302,24 +201,6 @@ export default function Treinamento() {
                             <a href='/treinamentos' className='btn btn-azulGM'>
                                 <i className='bi bi-arrow-left-short'></i> Voltar aos treinamentos
                             </a>
-
-                            {
-                                treinamento.estado === 'Pendente' &&
-                                <div>
-                                    <button className='btn btn-danger' onClick={cancelarTreinamento}>
-                                        Cancelar Treinamento
-                                    </button>
-                                </div>
-                            }
-
-                            {
-                                treinamento.estado === 'Em andamento' &&
-                                <div>
-                                    <button className='btn btn-success' onClick={concluirTreinamento}>
-                                        Concluir Treinamento
-                                    </button>
-                                </div>
-                            }
                         </div>
 
                         {/* Logo GM */}
