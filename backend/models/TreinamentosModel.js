@@ -38,7 +38,7 @@ class TreinamentoModel {
 
             try {
                 const sql = `
-                    SELECT t.nome, t.descricao, t.data_criacao, t.data_atualizacao, t.numSessoes, t.estado, u.nome as criador FROM treinamentos t 
+                    SELECT t.nome, t.idCriador, t.descricao, t.data_criacao, t.data_atualizacao, t.numSessoes, t.estado, u.nome as criador FROM treinamentos t 
                     INNER JOIN usuarios u on u.id = t.idCriador
                     WHERE t.id = ${id};
                 `;
