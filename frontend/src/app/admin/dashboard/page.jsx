@@ -6,21 +6,20 @@
 		• Exibir os treinamentos (OK)
 */
 
-import './adminDashboard.css';
 import { useState, useEffect } from 'react';
 
 
 // Componentes
-import TreinamentosLista from '@/components/TreinamentosLista';
 import AcoesRapidas from '@/components/admin/AcoesRapidas';
 import AcessoRestrito from '@/components/Sweetalert/AcessoRestrito';
-import GraficoEstados from '@/components/Graficos/GraficoEstados';
+import EstadoTreinamento from '@/components/EstadoTreinamento/page';
 
 
 export default function Dashboard() {
 	const [usuario, setUsuario] = useState([]);
 	const [treinamentos, setTreinamentos] = useState([]);
 	const [acesso, setAcesso] = useState(null);
+
 	const [treinamentosExibidos, setTreinamentosExibidos] = useState([]);
 	const [opcaoExibir, setOpcaoExibir] = useState('Realizados');
 
@@ -127,33 +126,87 @@ export default function Dashboard() {
 
 					{/* Ações Rápidas */}
 					<div className='col-lg-12'>
-						{/* Ações Rápidas (literalmente) */}
-						<div className='col-12 pb-2'>
+						{/* Ações Rápidas */}
+						<div className='col-12 p-2'>
 							< AcoesRapidas />
 						</div>
 					</div>
 
-					<div className='d-flex pt-3'>
-						<div className='col-4 px-2'>
-							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1">
-								<div className='tre col-12 fs-4 p-2 text-center'>Treinamentos Pendentes</div>
+					<div className='d-flex flex-wrap pt-3 row-gap-3'>
+						<div className='col-12 col-md-6 col-lg-4 px-2'>
+							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1 top-bordaAzulGM bordaAzulGM">
+								<div className='d-flex flex-column col-12 h-100'>
+									<div className='col-12 fs-4 p-2 text-center'>Treinamentos pendentes</div>
+									<div className='p-3 flex-grow-1 overflow-y-scroll'>
+										{treinamentos && treinamentos.filter((tr) => tr.estado === 'Pendente').map((tr) =>
+											<div key={tr.id} className='d-flex align-items-center gap-3 border rounded p-2 mb-3'>
+												<EstadoTreinamento estado={tr.estado} />
+												<div className='flex-grow-1'>
+													<div className='fw-bold'>{tr.nome}</div>
+													<div>{tr.criador}</div>
+												</div>
+												<a className='btn btn-White' href={`/admin/treinamento/${tr.id}`}>
+													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
+														<path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+													</svg>
+												</a>
+											</div>
+										)}
+									</div>
+								</div>
 							</div>
 						</div>
 
-						<div className='col-4 px-2'>
-							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1">
-								<div className='tre col-12 fs-4 p-2 text-center'>Treinamentos Em andamento</div>
+						<div className='col-12 col-md-6 col-lg-4 px-2'>
+							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1 top-bordaAzulGM bordaAzulGM">
+								<div className='d-flex flex-column col-12 h-100'>
+									<div className='col-12 fs-4 p-2 text-center'>Treinamentos em andamento</div>
+									<div className='p-3 flex-grow-1 overflow-y-scroll'>
+										{treinamentos && treinamentos.filter((tr) => tr.estado === 'Em andamento').map((tr) =>
+											<div key={tr.id} className='d-flex align-items-center gap-3 border rounded p-2 mb-3'>
+												<EstadoTreinamento estado={tr.estado} />
+												<div className='flex-grow-1'>
+													<div className='fw-bold'>{tr.nome}</div>
+													<div>{tr.criador}</div>
+												</div>
+												<a className='btn btn-White' href={`/admin/treinamento/${tr.id}`}>
+													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
+														<path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+													</svg>
+												</a>
+											</div>
+										)}
+									</div>
+								</div>
 							</div>
 						</div>
 
-						<div className='col-4 px-2'>
-							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1">
-								<div className='tre col-12 fs-4 p-2 text-center'>Treinamentos Concluídos</div>
+						<div className='col-12 col-md-6 col-lg-4 px-2'>
+							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1 top-bordaAzulGM bordaAzulGM">
+								<div className='d-flex flex-column col-12 h-100'>
+									<div className='col-12 fs-4 p-2 text-center'>Treinamentos concluídos</div>
+									<div className='p-3 flex-grow-1 overflow-y-scroll'>
+										{treinamentos && treinamentos.filter((tr) => (tr.estado === 'Concluido') || (tr.estado === 'Cancelado')).map((tr) =>
+											<div key={tr.id} className='d-flex align-items-center gap-3 border rounded p-2 mb-3'>
+												<EstadoTreinamento estado={tr.estado} />
+												<div className='flex-grow-1'>
+													<div className='fw-bold'>{tr.nome}</div>
+													<div>{tr.criador}</div>
+												</div>
+												<a className='btn btn-White' href={`/admin/treinamento/${tr.id}`}>
+													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
+														<path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+													</svg>
+												</a>
+											</div>
+										)}
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>				
+			</div>
 		</>
 	);
 }

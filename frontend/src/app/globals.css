@@ -102,6 +102,11 @@ a {
 	border-bottom: 2px solid #0956FF !important;
 }
 
+.top-bordaAzulGM {
+	border-top: 8px solid #0956FF !important;
+}
+
+
 .btn-azulGM {
 	background-color: #0956FF !important;
 	color: white !important;

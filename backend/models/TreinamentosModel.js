@@ -11,7 +11,10 @@ class TreinamentoModel {
             const connection = await getConnection();
 
             try {
-                const sql = 'SELECT * FROM treinamentos ORDER BY id DESC';
+                const sql = `
+                    SELECT t.*, u.nome as criador FROM treinamentos t 
+                    INNER JOIN usuarios u on u.id = t.idCriador;
+                `;
 
                 const [treinamentos] = await connection.query(sql);
 
@@ -102,7 +105,7 @@ class TreinamentoModel {
             throw error;
         }
     }
-    
+
     /*  OBTER O Nº DE TREINAMENTOS EM QUE UM USUÁRIO FOI INSCRITO NOS ÚLTIMOS 6 MESES separados por mês e estado */
     static async listarTrParticipanteSeisMeses(idUsuario) {
         try {
@@ -233,7 +236,7 @@ class TreinamentoModel {
                 hora: `${horas}:${minutos}`
             };
         }
-        
+
 
         try {
             const connection = await getConnection();
@@ -269,7 +272,7 @@ class TreinamentoModel {
     /* CRIAR UMA NOVA SESSÃO */
     static async criarSessao(dadosSessao) {
         try {
-             const sessao = {
+            const sessao = {
                 localidade: dadosSessao.localidade,
                 idTreinamento: dadosSessao.idTreinamento,
                 dia: dadosSessao.dia,
@@ -279,7 +282,7 @@ class TreinamentoModel {
 
             const idSessao = await create('sessoes', sessao);
             return idSessao;
-            
+
         } catch (error) {
             console.error('Erro ao criar sessão:', error);
             throw error;
@@ -320,7 +323,7 @@ class TreinamentoModel {
             const connection = await getConnection();
 
             try {
-                return await update('treinamentos', {estado: estado}, `id = ${idTreinamento}`);
+                return await update('treinamentos', { estado: estado }, `id = ${idTreinamento}`);
             } finally {
                 connection.release();
             }
