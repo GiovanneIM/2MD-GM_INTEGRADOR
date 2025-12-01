@@ -49,6 +49,28 @@ class TreinamentoController {
         }
     }
 
+    static async listarParticipantes(req, res) {
+        try {
+            const id = parseInt(req.params.id);
+
+            const resultado = await TreinamentoModel.listarParticipantes(id);
+
+            res.status(200).json({
+                sucesso: true,
+                dados: resultado.participantes
+            });
+
+        } catch (error) {
+            console.error('Erro ao listar participantes:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível listar os participantes'
+            });
+        }
+    }
+
+
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
     /* ROTAS RELACIONAS À TREINAMENTOS EM QUE UM USUÁRIO OFERECE OU PARTICIPA */
 

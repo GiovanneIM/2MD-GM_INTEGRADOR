@@ -13,6 +13,8 @@ router.get('/', TreinamentoController.listarTodos)
 // Listar treinamentos específico
 router.get('/treinamento/:id', TreinamentoController.listarTreinamento)
 
+// Listar participantes de um treinamentos específico
+router.get('/treinamento/:id/participantes', TreinamentoController.listarParticipantes)
 
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 

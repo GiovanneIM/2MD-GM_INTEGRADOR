@@ -5,7 +5,7 @@
   Nesta página podemos trocar o nome, descrição e status dos treinamentos 
 */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
 
 import LogoGM from '@/components/LogoGM';
@@ -13,13 +13,24 @@ import EstadoTreinamento from '@/components/EstadoTreinamento/page';
 import Sessoes from '@/components/ft/sessoes';
 import Swal from 'sweetalert2';
 
+import ModalVerPart from '@/components/ModalVerPart';
+
 
 export default function VerTreinamento() {
+
+
+    const ModalRef = useRef();
+
+    function mostrarModal() {
+        ModalRef.current.open();  // AGORA FUNCIONA DE VERDADE
+    }
+
     const { id } = useParams()
 
     const [treinamento, setTreinamento] = useState({});
     const [sessoes, setSessoes] = useState(null);
     const [usuario, setUsuario] = useState({});
+    const [participantes, setParticipantes] = useState(null);
 
 
     /* Carregando o treinamento */
@@ -44,6 +55,28 @@ export default function VerTreinamento() {
         }
 
         carregarTreinamento();
+    }, []);
+
+    /* Carregando o participantes */
+    useEffect(() => {
+        async function carregarParticipantes() {
+            try {
+                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/participantes`);
+                const data = await res.json();
+
+                if (data.sucesso) {
+                    console.log(data.dados)
+                    setParticipantes(data.dados);
+                } else {
+                    console.log(data.mensagem);
+                }
+            } catch (err) {
+                console.error('Erro ao carregar participantes:', err);
+            }
+
+        }
+
+        carregarParticipantes();
     }, []);
 
     /* Carregando o usuário logado */
@@ -141,7 +174,7 @@ export default function VerTreinamento() {
         })
     }
 
-    function concluirTreinamento() {}
+    function concluirTreinamento() { }
 
     if (treinamento && sessoes) return (<>
         <div className='container h-100 py-4 d-flex flex-column'>
@@ -194,12 +227,14 @@ export default function VerTreinamento() {
 
                     <div className='col-12 col-lg-6 d-flex flex-column gap-3 border-lg border-bottom border p-3'>
                         {/* Participantes */}
-                        <button className='btn btn-White d-flex border d-flex align-items-center'>
+                        <div className='btn btn-White d-flex border d-flex align-items-center' onClick={mostrarModal}>
                             <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' className='bi bi-arrow-right-short' viewBox='0 0 16 16'>
                                 <path fillRule='evenodd' d='M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8' />
                             </svg>
+                            {/* Modal vindo de outro arquivo */}
+                            <ModalVerPart ref={ModalRef} participantes={participantes ?? []}/>
                             <div>Ver Participantes</div>
-                        </button>
+                        </div>
 
                         {/* Alterar dados */}
                         <button className='btn btn-White d-flex border '>

@@ -57,6 +57,32 @@ class TreinamentoModel {
         }
     }
 
+    /* LISTAR TREINAMENTO ESPECÍFICO */
+    static async listarParticipantes(idTreinamento) {
+        try {
+            const connection = await getConnection();
+
+            try {
+                const sql = `
+                    select * from participacoes p
+                    inner join usuarios u on p.idParticipante = u.id
+                    where p.idTreinamento =  ${idTreinamento};
+                `;
+                const [participantes] = await connection.query(sql);
+
+                return {
+                    participantes
+                };
+            } finally {
+                connection.release();
+            }
+
+        } catch (error) {
+            console.error('Erro ao listar participantes:', error);
+            throw error;
+        }
+    }
+
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
     /* ROTAS RELACIONAS À TREINAMENTOS EM QUE UM USUÁRIO OFERECE OU PARTICIPA */
 
