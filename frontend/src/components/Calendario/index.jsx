@@ -21,7 +21,7 @@ const localizer = dateFnsLocalizer({
 })
 
 
-export default function Calendario({ sessoes = [] }) {
+export default function Calendario({ sessoes = [], treinamento }) {
     /* Função para montar os eventos */
     function eventos() {
         const eventos = [];
@@ -78,7 +78,7 @@ export default function Calendario({ sessoes = [] }) {
                         <tbody>
                             <div>
                                 <div class='fw-bold'>Treinamento</div>
-                                <div>${sessao?.treinamento ?? 'Nome do treinamento'}</div>
+                                <div>${treinamento?.nome ?? 'Nome do treinamento'}</div>
                             </div>
 
                             <div class='mt-3'>

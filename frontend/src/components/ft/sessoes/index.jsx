@@ -156,7 +156,7 @@ export default function Sessoes({
         </div>
 
         <div className="col-12 col-lg-6 pb-3 pb-lg-0 ps-md-2 d-flex flex-column gap-3">
-            <Calendario sessoes={sessoes} />
+            <Calendario sessoes={sessoes} treinamento={treinamento} />
         </div>
     </>)
 }
