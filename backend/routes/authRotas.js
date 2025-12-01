@@ -33,6 +33,22 @@ router.options('/perfil', (req, res) => {
     res.sendStatus(200);
 });
 
+// Rota para atualizar perfil do usuário logado
+router.put(
+    '/atualizarPerfil',
+    authMiddleware,
+    AuthController.atualizarPerfil
+);
+
+
+// Preflight para CORS
+router.options('/atualizarPerfil', (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'PUT, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.sendStatus(200);
+});
+
 export default router;
 
 

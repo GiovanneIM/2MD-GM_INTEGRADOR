@@ -531,7 +531,36 @@ class AuthController {
             });
         }
     }
+
+    // Atualizar perfil
+    static async atualizarPerfil(req, res) {
+        try {
+            const idUsuario = req.usuario.id; // ID do usuário logado via authMiddleware
+            const dados = req.body;
+
+            // Evita que campos não permitidos sejam alterados
+            delete dados.id;
+            delete dados.tipo;
+            delete dados.senha; // só altere senha em rota separada
+
+            await UsuarioModel.atualizar(idUsuario, dados);
+
+            res.status(200).json({
+                sucesso: true,
+                mensagem: 'Perfil atualizado com sucesso!',
+                dados: { ...dados, id: idUsuario }
+            });
+
+        } catch (error) {
+            console.error('Erro ao atualizar perfil:', error);
+            res.status(500).json({
+                sucesso: false,
+                mensagem: 'Erro ao atualizar o perfil'
+            });
+        }
+    }
 }
+
 
 export default AuthController;
 
