@@ -13,6 +13,8 @@ router.post('/registrar', AuthController.registrar);
 
 // Rotas protegidas (precisam de autenticação)
 router.get('/perfil', authMiddleware, AuthController.obterPerfil);
+// Rota com o middleware do GPT
+//router.get('/perfil', cookieToAuthHeader, authMiddleware, AuthController.obterPerfil);
 
 // Rotas OPTIONS para CORS (preflight requests)
 router.options('/login', (req, res) => {
