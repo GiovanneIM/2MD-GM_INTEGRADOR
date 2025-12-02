@@ -55,7 +55,7 @@ export default function Dashboard() {
 
 	/* Função para cerragar os treinamentos realizados pelo usuário */
 	async function carregarTreinamentosRealizados() {
-		const res = await fetch(`http://localhost:3000/api/treinamentos/${usuario.id}`);
+		const res = await fetch(`http://localhost:3000/api/treinamentos/participante/${usuario.id}/${pagina}`);
 		const data = await res.json();
 
 		if (data.sucesso) {

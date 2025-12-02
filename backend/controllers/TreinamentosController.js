@@ -77,9 +77,10 @@ class TreinamentoController {
     /* LISTAR TODOS OS TREINAMENTOS DE UM PARTICIPANTE */
     static async listarTrParticipante(req, res) {
         try {
-            const id = parseInt(req.params.id);
+            const idUsuario = parseInt(req.params.idUsuario);
+            const pagina = parseInt(req.params.pagina);
 
-            const resultado = await TreinamentoModel.listarTrParticipante(id);
+            const resultado = await TreinamentoModel.listarTrParticipante(idUsuario, 10, (pagina - 1) * 10);
 
             res.status(200).json({
                 sucesso: true,
@@ -96,13 +97,13 @@ class TreinamentoController {
         }
     }
 
-    /* LISTAR TODOS OS TREINAMENTOS OFERECIDOS */
+    /* LISTAR TODOS OS TREINAMENTOS OFERECIDOS POR UM USUÁRIO */
     static async listarTrOferecidos(req, res) {
         try {
-            const id = parseInt(req.params.id);
+            const idUsuario = parseInt(req.params.idUsuario);
             const pagina = parseInt(req.params.pagina);
 
-            const resultado = await TreinamentoModel.listarTrOferecidos(id, 10, (pagina - 1) * 10);
+            const resultado = await TreinamentoModel.listarTrOferecidos(idUsuario, 10, (pagina - 1) * 10);
 
             res.status(200).json({
                 sucesso: true,

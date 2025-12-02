@@ -87,14 +87,21 @@ class TreinamentoModel {
     /* ROTAS RELACIONAS À TREINAMENTOS EM QUE UM USUÁRIO OFERECE OU PARTICIPA */
 
     /* LISTAR TODOS OS TREINAMENTOS DE UM PARTICIPANTE */
-    static async listarTrParticipante(id) {
+    static async listarTrParticipante(idUsuario, limite, offset) {
         try {
             const connection = await getConnection();
 
             try {
-                const sql = `SELECT * FROM treinamentos t INNER JOIN participacoes p on p.idTreinamento = t.id WHERE p.idParticipante = ${id} ORDER BY t.id DESC`;
+                const sql = `
+                    SELECT * FROM treinamentos t
+                    INNER JOIN participacoes p on p.idTreinamento = t.id 
+                    WHERE p.idParticipante = ?
+                    ORDER BY t.id DESC
+                    LIMIT ?
+                    OFFSET ?
+                `;
 
-                const [treinamentos] = await connection.query(sql);
+                const [treinamentos] = await connection.query(sql, [idUsuario, limite, offset]);
 
                 return {
                     treinamentos

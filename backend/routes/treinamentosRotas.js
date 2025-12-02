@@ -21,10 +21,10 @@ router.get('/treinamento/:id/participantes', TreinamentoController.listarPartici
 /* ROTAS RELACIONAS À TREINAMENTOS EM QUE UM USUÁRIO OFERECE OU PARTICIPA */
 
 // Listar treinamentos realizados por usuario
-router.get('/:id', TreinamentoController.listarTrParticipante)
+router.get('/participante/:idUsuario/:pagina', TreinamentoController.listarTrParticipante)
 
 // Listar treinamentos oferecidos por um usuario
-router.get('/criador/:id/:pagina', TreinamentoController.listarTrOferecidos)
+router.get('/criador/:idUsuario/:pagina', TreinamentoController.listarTrOferecidos)
 
 
 // Listar o número de treinamentos em que um usuario foi inscrito nos últimos 6 meses por estado

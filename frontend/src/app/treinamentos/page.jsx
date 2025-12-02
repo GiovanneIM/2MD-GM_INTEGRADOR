@@ -30,6 +30,8 @@ export default function Treinamentos() {
 
             const data = await res.json();
             if (data.sucesso) {
+                console.log(usuario);
+                
                 setUsuario(data.dados);
             }
         }
@@ -44,7 +46,7 @@ export default function Treinamentos() {
         async function carregarTreinamentos() {
 
             // Treinamentos realizados
-            const resRealizados = await fetch(`http://localhost:3000/api/treinamentos/${usuario.id}`);
+            const resRealizados = await fetch(`http://localhost:3000/api/treinamentos/participante/${usuario.id}/${pagina}`);
             const dadosRealizados = await resRealizados.json();
             if (dadosRealizados.sucesso) setTreinamentosRealizados(dadosRealizados.dados);
 
@@ -92,7 +94,7 @@ export default function Treinamentos() {
     // Treinamentos exibidos conforme a opção
     const lista = exibir === "Realizados" ? treinamentosRealizados : treinamentosOfertados;
 
-    return (
+    if (usuario) return (
         <div className='container h-100 py-4 d-flex flex-column'>
             <div className='d-flex flex-column justify-content-between mb-3'>
                 <div className='bottom-bordaAzulGM ps-3 col-12'>
@@ -119,6 +121,7 @@ export default function Treinamentos() {
                             <button
                                 className={`col-12 col-sm-6 btn border rounded-0 btn-filtro ${exibir === 'Ofertados' ? 'active' : ''}`}
                                 onClick={() => setExibir("Ofertados")}
+                                disabled={usuario.tipo === 'mt'}
                             >
                                 Ofertados
                             </button>

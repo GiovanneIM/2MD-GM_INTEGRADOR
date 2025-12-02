@@ -19,8 +19,3 @@ SELECT * FROM certificados;
 
 SELECT * FROM treinamentos WHERE idCriador = 2
 ORDER BY id DESC;
-
-SELECT * FROM treinamentos WHERE idCriador = 2
-ORDER BY id DESC 
-LIMIT 10
-OFFSET 0;
