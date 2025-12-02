@@ -6,7 +6,7 @@ import path from 'path';                //
 import { fileURLToPath } from 'url';    // 
 
 // Adicionado pelo chat GPT
-import cookieParser from "cookie-parser";
+// import cookieParser from "cookie-parser";
 
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
@@ -42,7 +42,7 @@ app.use(helmet()); // Segurança HTTP headers
 
 // Configurar CORS para permitir que rotas OPTIONS específicas sejam processadas
 app.use(cors({
-    origin: 'http://localhost:3001',                        // Permitindo acesso de qualquer endereço (Alterar para o endereço do Frontend)
+    origin: '*',                        // Permitindo acesso de qualquer endereço (Alterar para o endereço do Frontend)
     // credentials: true,      // ADICIONADO PELO GPT
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],   // Metódos permitidos
     allowedHeaders: ['Content-Type', 'Authorization'],      // Headers permmitidos

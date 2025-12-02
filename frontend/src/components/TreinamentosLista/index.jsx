@@ -124,7 +124,7 @@ export default function TreinamentosLista({
                     style={{ height: '500px' }}
                 >
                     {trExibir.length > 0 ? (
-                        trExibir.map(tr => <TreinamentosItem tr={tr} key={tr.id} />)
+                        trExibir.map(tr => <TreinamentosItem tr={tr} tipoUsuario={tipoUsuario} key={tr.id} />)
                     ) : (
                         <div className='h-100 gap-3 d-flex flex-column justify-content-center align-items-center'>
                             <p className='text-muted'>Sem treinamentos</p>

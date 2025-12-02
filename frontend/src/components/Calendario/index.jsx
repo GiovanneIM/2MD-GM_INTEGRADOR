@@ -108,9 +108,10 @@ export default function Calendario({ sessoes = [], treinamento }) {
 
                 <div class='mt-3'>
                     <button id="btnFecharSwal" class="swal2-confirm swal2-styled border btn-White">Fechar</button>
-                    <button id="btnIrSessao" class="swal2-cancel swal2-styled btn-azulGM">Ver sessão</button>
+                    
                 </div>
             `,
+            // <button id="btnIrSessao" class="swal2-cancel swal2-styled btn-azulGM">Ver sessão</button>
             showConfirmButton: false,
 
             didOpen: () => {
@@ -118,8 +119,8 @@ export default function Calendario({ sessoes = [], treinamento }) {
                     Swal.close();
                 });
 
-                document.getElementById("btnIrSessao").addEventListener("click", () => {
-                });
+                // document.getElementById("btnIrSessao").addEventListener("click", () => {
+                // });
             }
         })
     }

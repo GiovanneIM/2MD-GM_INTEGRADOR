@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-export default function TreinamentosItem({ tr }) {
+export default function TreinamentosItem({ tr, tipoUsuario }) {
     const [tempo, setTempo] = useState('');
 
     const Status = {
@@ -56,10 +56,20 @@ export default function TreinamentosItem({ tr }) {
                 <i className={`fas ${Status[tr.estado][1]} text-${Status[tr.estado][0]}`} />
             </div>
 
-            <div className='flex-grow-1 ms-3'>
-                <h6 className='mb-1'>{tr.nome}</h6>
-                <p className='text-muted small mb-0'>{tempo}</p>
-            </div>
-        </div>
+            <div className='flex-grow-1 ms-3 d-flex justify-content-between'>
+                <div>
+                    <h6 className='mb-1'>{tr.nome}</h6>
+                    <p className='text-muted small mb-0'>{tempo}</p>
+                </div>
+
+                <div>
+                    <a className='btn btn-White' href={`/${tipoUsuario}/treinamento/${tr.id}`}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
+                            <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+                        </svg>
+                    </a>
+                </div>
+            </div >
+        </div >
     );
 }
