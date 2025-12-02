@@ -1,6 +1,4 @@
 import EquipesModel from '../models/EquipesModel.js'
-import { fileURLToPath } from 'url';
-import path from 'path';
 
 
 class EquipesController {
@@ -8,12 +6,13 @@ class EquipesController {
     /* LISTAR TODAS AS EQUIPES */
     static async listarTodos(req, res) {
         try {
+            // Chamando o model para fazer a consulta
+            const resultado = await EquipesModel.listarTodos();
 
-            const resultado = await EquipesModel.listarTodos(); // <-- MUDANÇA AQUI
-
+            // Respondendo a requisição com as equipes
             res.status(200).json({
                 sucesso: true,
-                dados: resultado.equipes
+                dados: { equipes: resultado.equipes }
             });
             
         } catch (error) {
@@ -29,13 +28,16 @@ class EquipesController {
     /* LISTAR UMA EQUIPE ESPECÍFICA */
     static async listarEquipe(req, res) {
         try {
+            // Obtendo o id da equipe
             const idEquipe = parseInt(req.params.id)
 
+            // Chamando o model para fazer a consulta
             const resultado = await EquipesModel.listarEquipe(idEquipe);
 
+            // Retornando a equipe
             res.status(200).json({
                 sucesso: true,
-                dados: resultado.equipe
+                dados: { equipe: resultado.equipe },
             });
             
         } catch (error) {
@@ -51,13 +53,19 @@ class EquipesController {
     /* LISTAR MEMBROS DE UMA EQUIPE ESPECÍFICA */
     static async listarMembros(req, res) {
         try {
+            // Obtendo o id da equipe
             const idEquipe = parseInt(req.params.id)
 
+            // Chamando o model para fazer a consulta
             const resultado = await EquipesModel.listarMembros(idEquipe);
 
+            // Retornando os membros
             res.status(200).json({
                 sucesso: true,
-                dados: resultado.membros
+                dados: {
+                    FT: resultado.FT,
+                    MT: resultado.MT,
+                }
             });
 
         } catch (error){
@@ -66,50 +74,6 @@ class EquipesController {
                 sucesso: false,
                 erro: 'Erro interno do servidor',
                 mensagem: 'Não foi possível listar os membros da equipe'
-            });
-        }
-    }
-
-    /* LISTAR FTs DE UMA EQUIPE ESPECÍFICA */
-    static async listarFTs(req, res) {
-        try {
-            const idEquipe = parseInt(req.params.id)
-
-            const resultado = await EquipesModel.listarFTs(idEquipe);
-
-            res.status(200).json({
-                sucesso: true,
-                dados: resultado.membros
-            });
-
-        } catch (error){
-            console.error('Erro ao listar os membros da equipe:', error);
-            res.status(500).json({
-                sucesso: false,
-                erro: 'Erro interno do servidor',
-                mensagem: 'Não foi possível listar os FTs da equipe'
-            });
-        }
-    }
-
-    /* LISTAR MTs DE UMA EQUIPE ESPECÍFICA */
-    static async listarMTs(req, res) {
-        try {
-            const idEquipe = parseInt(req.params.id)
-
-            const resultado = await EquipesModel.listarMTs(idEquipe);
-
-            res.status(200).json({
-                sucesso: true,
-                dados: resultado.membros
-            });
-
-        } catch (error){
-            console.error('Erro ao listar os membros da equipe:', error);
-            res.status(500).json({
-                sucesso: false,
-                erro: 'Erro interno do servidor',
-                mensagem: 'Não foi possível listar os MTs da equipe'
             });
         }
     }
