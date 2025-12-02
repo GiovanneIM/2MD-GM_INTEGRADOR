@@ -60,6 +60,18 @@ class AuthController {
                 { expiresIn: JWT_CONFIG.expiresIn }
             );
 
+
+
+            // ADICIONADO PELO GPT
+            // res.cookie("token", token, {
+            //     httpOnly: true,
+            //     secure: process.env.NODE_ENV === "production",
+            //     sameSite: "lax",
+            //     maxAge: 1000 * 60 * 60 * 6
+            // });
+
+
+
             res.status(200).json({
                 sucesso: true,
                 mensagem: 'Login realizado com sucesso',

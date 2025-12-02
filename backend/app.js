@@ -5,6 +5,9 @@ import dotenv from 'dotenv';            // Variáveis de ambiente - Utilizado pa
 import path from 'path';                // 
 import { fileURLToPath } from 'url';    // 
 
+// Adicionado pelo chat GPT
+// import cookieParser from "cookie-parser";
+
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 // IMPORTANDO AS ROTAS 
@@ -39,11 +42,13 @@ app.use(helmet()); // Segurança HTTP headers
 
 // Configurar CORS para permitir que rotas OPTIONS específicas sejam processadas
 app.use(cors({
-    origin: '*',                                            // Permitindo acesso de qualquer endereço (Alterar para o endereço do Frontend)
+    origin: '*',                        // Permitindo acesso de qualquer endereço (Alterar para o endereço do Frontend)
+    // credentials: true,      // ADICIONADO PELO GPT
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],   // Metódos permitidos
     allowedHeaders: ['Content-Type', 'Authorization'],      // Headers permmitidos
     preflightContinue: false,                               // Deixa as rotas OPTIONS específicas serem processadas
-    optionsSuccessStatus: 200                               // Retorna 200 para OPTIONS em vez de 204
+    optionsSuccessStatus: 200,                              // Retorna 200 para OPTIONS em vez de 204
+
 }));
 
 app.use(express.json());
@@ -55,6 +60,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Middleware para log de requisições (salva no banco de dados)
 app.use(logMiddleware);
 
+// ADICIONADO PELO GPT
+// app.use(cookieParser());
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 // ATIVANDO AS ROTAS 
