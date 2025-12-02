@@ -230,33 +230,47 @@ export default function Treinamento() {
         Swal.fire({
             width: 500,
             background: '#f4f6f8',
-            customClass: {
-                htmlContainer: 'swal-custom-html'
-            },
+            // customClass: {
+            //     htmlContainer: 'swal-custom-html'
+            // },
             html: `
             <div class='gm-container'>
-                <div>
-                    <h1>Alterar informações</h1>
-                </div>
+                <div class='fs-3 fw-bold'>Alterar informações</div>
                 
                 <form class='gm-card'>
-                    <div>
-                        <label class='fs-6 fw-semibold'>Alterar nome</label>
-                    </div>
-                    <div class='gm-input'>
-                        <input id="inputNome" type="text" value="${''}"/>
+                    <div class='mb-3'>               
+                        <div class='text-start'>
+                            <label class='fs-6 fw-semibold'>Alterar nome</label>
+                        </div>
+                        <div class='gm-input'>
+                            <input id="inputNome" type="text" value="${''}"/>
+                        </div>
                     </div>
                     
                     <div>
-                        <label class='fs-6 fw-semibold'>Alterar descrição</label>
+                        <div class='text-start'>
+                            <label class='fs-6 fw-semibold'>Alterar descrição</label>
+                        </div>
+                        <div class='gm-input2'>
+                            <textarea id="inputDescricao">${''}</textarea>
+                        </div>
                     </div>
-                    <div class='gm-input2'>
-                        <textarea id="inputDescricao">${''}</textarea>
-                    </div>
+
+                    
                 </form>
             
             </div>
             `,
+
+            // <div className='position-relative'>
+            //             <textarea
+            //                 className="form-control" style="minHeight:120px; resize:none"
+            //             />
+
+            //             <div className='position-absolute bottom-0 end-0 me-2'>
+            //                 <small style={{ color: "#666" }}>{novosDados.bio?.length ?? 0}/200</small>
+            //             </div>
+            //         </div>
 
             showConfirmButton: true,
             confirmButtonColor: '#0956FF',

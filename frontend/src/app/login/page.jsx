@@ -83,16 +83,11 @@ export default function Login() {
                             <input type='email' className='form-control bordaCinza' id='floatingInput' placeholder='E-mail' value={email} onChange={(e) => { setEmail(e.target.value) }} required />
                             <label htmlFor='floatingInput'>E-mail</label>
                         </div>
+                        
                         {/* Input - Senha */}
                         <div className='form-floating'>
                             <input type='password' className='form-control bordaCinza' id='floatingPassword' placeholder='Senha' value={senha} onChange={(e) => { setSenha(e.target.value) }} required />
                             <label htmlFor='floatingPassword'>Senha</label>
-                        </div>
-
-                        {/* Lembre de mim */}
-                        <div className='form-check text-start my-3'>
-                            <input className='form-check-input bordaCinza' type='checkbox' defaultValue='remember-me' id='checkDefault' />
-                            <label className='form-check-label' htmlFor='checkDefault'>Lembre de mim</label>
                         </div>
 
                         {/* Botão entrar */}

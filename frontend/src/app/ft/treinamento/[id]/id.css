@@ -1,18 +1,12 @@
 /* Estiliza o popup do swal */
+/* .swal-custom-popup {
+} */
 
 /* Estiliza o conteúdo HTML do swal */
-.swal-custom-html {
-    padding: 20px;
-}
+/* .swal-custom-html {
+} */
 
 /* SEU CONTEÚDO INTERNO */
-.gm-container h1 {
-    font-size: 22px;
-    margin-bottom: 15px;
-    color: #333;
-    text-align: center;
-}
-
 .gm-card {
     background: #fff;
     padding: 15px;
@@ -20,10 +14,6 @@
     margin-top: 10px;
 }
 
-.gm-card h4 {
-    margin: 15px 0 5px 0;
-    font-size: 16px;
-}
 
 .gm-input input,
 .gm-input2 textarea {

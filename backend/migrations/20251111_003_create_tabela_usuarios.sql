@@ -23,6 +23,7 @@ CREATE TABLE if not exists usuarios (
     email				VARCHAR(255) UNIQUE NOT NULL,
     senha				VARCHAR(255) NOT NULL,
     telefone            VARCHAR(255) UNIQUE NOT NULL,
+    bio					VARCHAR(200),
     tipo				ENUM('admin', 'ft', 'mt') NOT NULL DEFAULT 'mt',
     data_criacao		DATETIME DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao	DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
