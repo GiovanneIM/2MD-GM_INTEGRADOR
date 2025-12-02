@@ -53,6 +53,9 @@ router.post('/', TreinamentoController.criarTreinamento)
 // Atualizar estado de um treinamento
 router.post('/treinamento/:idTreinamento/atualizarEstado', TreinamentoController.atualizarEstado)
 
+// Atualizar informações de um treinamento
+router.post('/treinamento/:idTreinamento/atualizarInfos', TreinamentoController.atualizarInfos)
+
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 export default router;

@@ -271,7 +271,28 @@ class TreinamentoController {
             res.status(500).json({
                 sucesso: false,
                 erro: 'Erro interno do servidor',
-                mensagem: 'Não foi possível criar a sessão'
+                mensagem: 'Não foi possível atualizar o estado do treinamento'
+            });
+        }
+    }
+
+    static async atualizarInfos(req, res) {
+        try {
+            const idTreinamento = parseInt(req.params.idTreinamento);
+            const { nome, descricao } = req.body;
+
+            const resultado = await TreinamentoModel.atualizarInfos(idTreinamento, nome, descricao);
+
+            res.status(200).json({
+                sucesso: true,
+                mensagem: 'Informações atualizado'
+            });
+        } catch (error) {
+            console.error('Erro ao criar sessão:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível atualizar as informações do treinamento'
             });
         }
     }

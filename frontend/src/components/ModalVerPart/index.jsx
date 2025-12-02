@@ -29,7 +29,7 @@ const ModalVerPart = forwardRef(({ participantes = [] }, ref) => {
     return (
         <div ref={modalRef} className="modal fade" tabIndex="-1">
             <div className="modal-dialog">
-                <div className="modal-content">
+                <div className="modal-content col-8">
                     <div className="modal-header">
                         <h5 className="modal-title">Participantes</h5>
                         <button

@@ -15,8 +15,6 @@ import GraficoSessoes from '@/components/Graficos/GraficoSessoes';
 export default function Dashboard() {
 	const [usuario, setUsuario] = useState([]);
 
-	// const [treinamentosOferecidos, setTreinamentosOferecidos] = useState([]);
-	// const [treinamentosRealizados, setTreinamentosRealizados] = useState([]);
 	const [treinamentosExibidos, setTreinamentosExibidos] = useState([]);
 
 	const [opcaoExibir, setOpcaoExibir] = useState('Realizados');
@@ -49,7 +47,6 @@ export default function Dashboard() {
 		const data = await res.json();
 
 		if (data.sucesso) {
-			// setTreinamentosOferecidos(data.dados);
 			setTreinamentosExibidos(data.dados);
 		}
 		else {
@@ -63,7 +60,6 @@ export default function Dashboard() {
 		const data = await res.json();
 
 		if (data.sucesso) {
-			// setTreinamentosRealizados(data.dados);
 			setTreinamentosExibidos(data.dados);
 		}
 		else {
@@ -80,9 +76,7 @@ export default function Dashboard() {
 		} else {
 			carregarTreinamentosOferecidos();
 		}
-
-		console.log(treinamentosExibidos);
-
+		
 	}, [usuario.id, pagina, opcaoExibir]);
 
 	useEffect(() => { setPagina(1); }, [opcaoExibir]);

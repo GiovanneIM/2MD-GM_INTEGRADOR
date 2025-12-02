@@ -73,7 +73,7 @@ export default function Times() {
 		return <p className='text-muted mt-5 text-center'>Carregando equipe...</p>;
 	}
 	return (
-		<div className='container'>
+		<div className='container py-5'>
 			
 			{/* Nome e descrição da equipe */}
 			<div className='text-center mb-4'>

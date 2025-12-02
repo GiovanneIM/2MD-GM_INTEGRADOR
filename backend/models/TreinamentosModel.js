@@ -349,12 +349,30 @@ class TreinamentoModel {
         }
     }
 
+    /* */
     static async atualizarEstado(idTreinamento, estado) {
         try {
             const connection = await getConnection();
 
             try {
                 return await update('treinamentos', { estado: estado }, `id = ${idTreinamento}`);
+            } finally {
+                connection.release();
+            }
+
+        } catch (error) {
+            console.error('Erro ao atualizar o estado do treinamentos:', error);
+            throw error;
+        }
+    }
+
+    /* */
+    static async atualizarInfos(idTreinamento, nome, descricao) {
+        try {
+            const connection = await getConnection();
+
+            try {
+                return await update('treinamentos', { nome: nome, descricao: descricao }, `id = ${idTreinamento}`);
             } finally {
                 connection.release();
             }

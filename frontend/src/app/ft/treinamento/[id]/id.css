@@ -1,8 +1,4 @@
 /* Estiliza o popup do swal */
-.swal-custom-popup {
-    border-radius: 12px;
-    padding: 0 !important;
-}
 
 /* Estiliza o conteúdo HTML do swal */
 .swal-custom-html {

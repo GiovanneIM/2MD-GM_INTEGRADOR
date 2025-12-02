@@ -54,9 +54,7 @@ export default function Treinamento() {
     }
 
     /* Carregando o treinamento */
-    useEffect(() => {
-        carregarTreinamento();
-    }, []);
+    useEffect(() => { carregarTreinamento(); }, []);
 
     /* Carregando o participantes */
     useEffect(() => {
@@ -232,33 +230,68 @@ export default function Treinamento() {
         Swal.fire({
             width: 500,
             background: '#f4f6f8',
-            showConfirmButton: false,
             customClass: {
-                popup: 'swal-custom-popup',
                 htmlContainer: 'swal-custom-html'
             },
             html: `
-                <div class='gm-container'>
-                    <div>
-                        <h1>Alterar informações</h1>
-                    </div>
-    
-                    <div class='gm-card'>
-                        <h4>Alterar nome:</h4>
-                        <div class='gm-input'>
-                            <input type="text" />
-                        </div>
-    
-                        <h4>Alterar descrição:</h4>
-                        <div class='gm-input2'>
-                            <textarea></textarea>
-                        </div>
-                    </div>
+            <div class='gm-container'>
+                <div>
+                    <h1>Alterar informações</h1>
                 </div>
-            `
-        });
+                
+                <form class='gm-card'>
+                    <div>
+                        <label class='fs-6 fw-semibold'>Alterar nome</label>
+                    </div>
+                    <div class='gm-input'>
+                        <input id="inputNome" type="text" value="${''}"/>
+                    </div>
+                    
+                    <div>
+                        <label class='fs-6 fw-semibold'>Alterar descrição</label>
+                    </div>
+                    <div class='gm-input2'>
+                        <textarea id="inputDescricao">${''}</textarea>
+                    </div>
+                </form>
+            
+            </div>
+            `,
+
+            showConfirmButton: true,
+            confirmButtonColor: '#0956FF',
+            confirmButtonText: 'Confirmar Alterações',
+
+            showCancelButton: true,
+            cancelButtonColor: '#adb5bd',
+            cancelButtonText: 'Cancelar',
+
+            preConfirm: async () => {
+                const novoNome = document.getElementById("inputNome").value;
+                const novaDescricao = document.getElementById("inputDescricao").value;
+
+
+                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/atualizarInfos`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        nome: novoNome ?? treinamento.nome,
+                        descricao: novaDescricao ?? treinamento.descricao
+                    })
+                });
+                const data = await res.json();
+
+                return data.sucesso;
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log("Alterações concluídas!");
+                carregarTreinamento()
+            }
+        });;
     }
-    
 
     if (treinamento && sessoes) return (<>
         <div className='container h-100 py-4 d-flex flex-column'>
