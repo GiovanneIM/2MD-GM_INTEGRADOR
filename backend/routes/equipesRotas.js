@@ -3,12 +3,20 @@ import EquipesController from '../controllers/EquipesController.js';
 
 const router = express.Router();
 
-router.get('/', EquipesController.listarTodos)      // Listar TODAS as equipes
-router.get('/:id', EquipesController.listarEquipe)      // Listar uma equipe ESPECÍFICA
+// Listar TODAS as equipes
+router.get('/', EquipesController.listarTodos)
 
-router.get('/:id/membros', EquipesController.listarMembros)    // Listar os MEMBROS de uma equipe ESPECÍFICA
-router.get('/:id/ft', EquipesController.listarFTs)    // Listar os MEMBROS de uma equipe ESPECÍFICA
-router.get('/:id/mt', EquipesController.listarMTs)    // Listar os MEMBROS de uma equipe ESPECÍFICA
+// Listar uma equipe ESPECÍFICA
+router.get('/:id', EquipesController.listarEquipe)
+
+// Listar os MEMBROS de uma equipe ESPECÍFICA
+router.get('/:id/membros', EquipesController.listarMembros)    
+
+// Listar os FTs de uma equipe ESPECÍFICA
+router.get('/:id/ft', EquipesController.listarFTs)
+
+// Listar os MTs de uma equipe ESPECÍFICA
+router.get('/:id/mt', EquipesController.listarMTs)
 
 
 export default router;
