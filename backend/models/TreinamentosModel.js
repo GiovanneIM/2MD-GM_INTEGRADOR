@@ -5,22 +5,39 @@ class TreinamentoModel {
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
     /* ROTAS RELACIONAS À LISTAGEM DE TREINAMENTOS */
 
-    /* LISTAR TODOS OS TREINAMENTOS */
-    static async listarTodos() {
+    /* LISTAR TODOS OS TREINAMENTOS (Com paginação) */
+    static async listarTodos(limite, offset) {
         try {
             const connection = await getConnection();
 
             try {
-                const sql = `
-                    SELECT t.*, u.nome as criador FROM treinamentos t 
-                    INNER JOIN usuarios u on u.id = t.idCriador;
-                `;
+                // Comando para obter os treinamentos e os nomes dos criadores
+                const sqlTreinamentos = `
+                    SELECT 
+                        t.*, 
+                        u.nome AS criador
+                    FROM treinamentos t 
+                    INNER JOIN usuarios u ON u.id = t.idCriador
+                    ORDER BY t.id DESC 
+                    LIMIT ? OFFSET ?
+                ;`;
 
-                const [treinamentos] = await connection.query(sql);
+                // Comando para obter o total de treinamentos
+                const sqlTotal = `
+                    SELECT COUNT(*) AS total
+                    FROM treinamentos
+                ;`;
 
+                // Fazendo as consultas
+                const [[totalResult]] = await connection.query(sqlTotal);
+                const [treinamentos] = await connection.query(sqlTreinamentos, [limite, offset]);
+
+                // Retornando o total e os treinamentos da página
                 return {
-                    treinamentos
+                    total: totalResult.total,
+                    treinamentos,
                 };
+
             } finally {
                 connection.release();
             }
@@ -37,16 +54,22 @@ class TreinamentoModel {
             const connection = await getConnection();
 
             try {
+                // Comando para obter o treinamento e o nome de seu criador
                 const sql = `
-                    SELECT t.nome, t.idCriador, t.descricao, t.data_criacao, t.data_atualizacao, t.numSessoes, t.estado, u.nome as criador FROM treinamentos t 
-                    INNER JOIN usuarios u on u.id = t.idCriador
+                    SELECT 
+                        t.*, 
+                        u.nome AS criador
+                    FROM treinamentos t 
+                    INNER JOIN usuarios u ON u.id = t.idCriador
                     WHERE t.id = ${id};
                 `;
+
+                // Fazendo a consulta
                 const [treinamento] = await connection.query(sql);
 
-                return {
-                    treinamento
-                };
+                // Retornando o treinamento
+                return { treinamento };
+
             } finally {
                 connection.release();
             }
@@ -57,22 +80,29 @@ class TreinamentoModel {
         }
     }
 
-    /* LISTAR TREINAMENTO ESPECÍFICO */
+    /* LISTAR OS PARTICIPANTES DE UM TREINAMENTO ESPECÍFICO */
     static async listarParticipantes(idTreinamento) {
         try {
             const connection = await getConnection();
 
             try {
+                // Comando para obter os participantes do treinamento
                 const sql = `
-                    select * from participacoes p
-                    inner join usuarios u on p.idParticipante = u.id
-                    where p.idTreinamento =  ${idTreinamento};
+                    SELECT u.*
+                    FROM participacoes p
+                    INNER JOIN usuarios u ON p.idParticipante = u.id
+                    WHERE p.idTreinamento = ${idTreinamento};
                 `;
+
+                // Fazendo a consulta
                 const [participantes] = await connection.query(sql);
 
-                return {
-                    participantes
-                };
+                // Tirando a senha dos participantes
+                const participantesSemSenha = participantes.map(({ senha, ...resto }) => resto);
+
+                // Retornando os participantes
+                return { participantesSemSenha };
+
             } finally {
                 connection.release();
             }
@@ -83,28 +113,116 @@ class TreinamentoModel {
         }
     }
 
-    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-    /* ROTAS RELACIONAS À TREINAMENTOS EM QUE UM USUÁRIO OFERECE OU PARTICIPA */
 
-    /* LISTAR TODOS OS TREINAMENTOS DE UM PARTICIPANTE */
-    static async listarTrParticipante(idUsuario, limite, offset) {
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    /* ROTAS RELACIONADAS AO CICLO DE VIDA DE UM TREINAMENTO */
+
+    /* CRIAR UM NOVO TREINAMENTO */
+    static async criarTreinamento(dadosTreinamento) {
+        try {
+            // Separando os dados do treinamento
+            const treinamento = {
+                nome: dadosTreinamento.nome,
+                descricao: dadosTreinamento.descricao,
+                idCriador: dadosTreinamento.idCriador,
+                numSessoes: 0
+            }
+
+            // Inserindo o treinamento na tabela treinamentos
+            const idTreinamento = await create('treinamentos', treinamento);
+
+            // Inserindo as participações do treinamento na tabela participacoes
+            dadosTreinamento.participantes.map((idParticipante) => {
+                const participacao = { idTreinamento, idParticipante }
+                create('participacoes', participacao)
+            })
+
+            return idTreinamento;
+        } catch (error) {
+            console.error('Erro ao criar treinamento:', error);
+            throw error;
+        }
+    }
+
+    /* ATUALIZAR O ESTADO DE UM TREINAMENTO */
+    static async atualizarEstado(idTreinamento, estado) {
         try {
             const connection = await getConnection();
 
             try {
-                const sql = `
-                    SELECT * FROM treinamentos t
-                    INNER JOIN participacoes p on p.idTreinamento = t.id 
+                // Fazendo a alteração do estado do treinamento
+                const treinamento = await update('treinamentos', { estado: estado }, `id = ${idTreinamento}`);
+
+                // Retornando o treinamento atualizado
+                return { treinamento }
+            } finally {
+                connection.release();
+            }
+
+        } catch (error) {
+            console.error('Erro ao atualizar o estado do treinamentos:', error);
+            throw error;
+        }
+    }
+
+    /* ATUALIZANDO OS DADOS DE UM TREINAMENTO */
+    static async atualizarInfos(idTreinamento, nome, descricao) {
+        try {
+            const connection = await getConnection();
+
+            try {
+                // Fazendo a alteração dos dados do treinamentos
+                const treinamento = await update('treinamentos', { nome: nome, descricao: descricao }, `id = ${idTreinamento}`);
+
+                // Retornando o treinamento atualizado
+                return { treinamento }
+            } finally {
+                connection.release();
+            }
+
+        } catch (error) {
+            console.error('Erro ao atualizar o estado do treinamentos:', error);
+            throw error;
+        }
+    }
+
+
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    /* ROTAS RELACIONAS À TREINAMENTOS EM QUE UM USUÁRIO OFERECE OU PARTICIPA */
+
+    /* LISTAR TODOS OS TREINAMENTOS DE UM PARTICIPANTE */
+    static async listarTrParticipados(idUsuario, limite, offset) {
+        try {
+            const connection = await getConnection();
+
+            try {
+                // Comando para obter os treinamentos nos quais um usuário está participando
+                const sqlTreinamentos = `
+                    SELECT 
+                        t.*,
+                        u.nome AS criador,
+                    FROM treinamentos t
+                    INNER JOIN participacoes p on p.idTreinamento = t.id
+                    INNER JOIN usuarios u ON u.id = t.idCriador
                     WHERE p.idParticipante = ?
                     ORDER BY t.id DESC
-                    LIMIT ?
-                    OFFSET ?
+                    LIMIT ? OFFSET ?
                 `;
 
-                const [treinamentos] = await connection.query(sql, [idUsuario, limite, offset]);
+                // Comando para obter o total de treinamentos
+                const sqlTotal = `
+                    SELECT COUNT(*) AS total
+                    FROM treinamentos
+                ;`;
 
+                // Fazendo as consultas
+                const [[totalResult]] = await connection.query(sqlTotal);
+                const [treinamentos] = await connection.query(sqlTreinamentos, [idUsuario, limite, offset]);
+
+                // Retornando o total e os treinamentos da página
                 return {
-                    treinamentos
+                    total: totalResult.total,
+                    treinamentos,
                 };
             } finally {
                 connection.release();
@@ -122,17 +240,32 @@ class TreinamentoModel {
             const connection = await getConnection();
 
             try {
-                const sql = `
-                    SELECT * FROM treinamentos WHERE idCriador = ?
-                    ORDER BY id DESC 
-                    LIMIT ?
-                    OFFSET ?
+                // Comando para obter os treinamentos que o usuário criou
+                const sqlTreinamentos = `
+                    SELECT 
+                        t.*,
+                        u.nome AS criador,
+                    FROM treinamentos t
+                    INNER JOIN usuarios u ON u.id = t.idCriador
+                    WHERE t.idCriador = ?
+                    ORDER BY t.id DESC
+                    LIMIT ? OFFSET ?
                 `;
 
-                const [treinamentos] = await connection.query(sql, [idUsuario, limite, offset]);
+                // Comando para obter o total de treinamentos
+                const sqlTotal = `
+                    SELECT COUNT(*) AS total
+                    FROM treinamentos
+                ;`;
 
+                // Fazendo as consultas
+                const [[totalResult]] = await connection.query(sqlTotal);
+                const [treinamentos] = await connection.query(sqlTreinamentos, [idUsuario, limite, offset]);
+
+                // Retornando o total e os treinamentos da página
                 return {
-                    treinamentos
+                    total: totalResult.total,
+                    treinamentos,
                 };
             } finally {
                 connection.release();
@@ -145,43 +278,44 @@ class TreinamentoModel {
     }
 
     /*  OBTER O Nº DE TREINAMENTOS EM QUE UM USUÁRIO FOI INSCRITO NOS ÚLTIMOS 6 MESES separados por mês e estado */
-    static async listarTrParticipanteSeisMeses(idUsuario) {
+    static async listarTrParticipadosSeisMeses(idUsuario) {
         try {
             const connection = await getConnection();
 
             try {
+                // Comando para obter o número de treinamentos por estados
                 const sql = `
-                -- Criando uma lista com os últimos 6 meses
-                WITH RECURSIVE ultimos_meses AS (
-                    SELECT 
-                        DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m-01') AS data_base
-                    UNION ALL
-                    SELECT 
-                        DATE_ADD(data_base, INTERVAL 1 MONTH)
-                    FROM ultimos_meses
-                    WHERE data_base < DATE_FORMAT(CURDATE(), '%Y-%m-01')
-                )
+                    -- Criando uma lista com os últimos 6 meses
+                    WITH RECURSIVE ultimos_meses AS (
+                        SELECT 
+                            DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m-01') AS data_base
+                        UNION ALL
+                        SELECT 
+                            DATE_ADD(data_base, INTERVAL 1 MONTH)
+                        FROM ultimos_meses
+                        WHERE data_base < DATE_FORMAT(CURDATE(), '%Y-%m-01')
+                    )
 
-                -- Coletando os treinamentos iniciados nos últimos 6 meses
-                SELECT
-                    DATE_FORMAT(um.data_base, '%b') AS mes,
-                    COALESCE(t.estado, 'Sem treinamentos') AS estado,
-                    COUNT(CASE WHEN p.idParticipante = 2 THEN 1 END) AS total
-                FROM ultimos_meses um
-                LEFT JOIN treinamentos t
-                    ON MONTH(t.data_criacao) = MONTH(um.data_base)
-                AND YEAR(t.data_criacao) = YEAR(um.data_base)
-                LEFT JOIN participacoes p
-                    ON p.idTreinamento = t.id
-                GROUP BY um.data_base, estado
-                ORDER BY um.data_base, estado;
-                `
+                    -- Coletando os treinamentos iniciados nos últimos 6 meses
+                    SELECT
+                        DATE_FORMAT(um.data_base, '%b') AS mes,
+                        COALESCE(t.estado, 'Sem treinamentos') AS estado,
+                        COUNT(CASE WHEN p.idParticipante = 2 THEN 1 END) AS total
+                    FROM ultimos_meses um
+                    LEFT JOIN treinamentos t
+                        ON MONTH(t.data_criacao) = MONTH(um.data_base)
+                    AND YEAR(t.data_criacao) = YEAR(um.data_base)
+                    LEFT JOIN participacoes p
+                        ON p.idTreinamento = t.id
+                    GROUP BY um.data_base, estado
+                    ORDER BY um.data_base, estado
+                ;`
 
+                // Fazendo a consulta
                 const [treinamentos] = await connection.query(sql);
 
-                return {
-                    treinamentos
-                };
+                // Retornando os treinamentos
+                return { treinamentos };
             } finally {
                 connection.release();
             }
@@ -198,6 +332,7 @@ class TreinamentoModel {
             const connection = await getConnection();
 
             try {
+                // Comando para obter o número de treinamentos por estados
                 const sql = `
                     -- Criando uma lista com os últimos 6 meses
                     WITH RECURSIVE ultimos_meses AS (
@@ -221,14 +356,14 @@ class TreinamentoModel {
                         AND YEAR(t.data_criacao) = YEAR(um.data_base)
                         AND t.idCriador = ${idUsuario}
                     GROUP BY mes, estado, um.data_base
-                    ORDER BY um.data_base, estado;
-                `
+                    ORDER BY um.data_base, estado
+                ;`
 
+                // Fazendo a consulta
                 const [treinamentos] = await connection.query(sql);
 
-                return {
-                    treinamentos
-                };
+                // Retornando os treinamentos
+                return { treinamentos };
             } finally {
                 connection.release();
             }
@@ -239,10 +374,11 @@ class TreinamentoModel {
         }
     }
 
+
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
     /* ROTAS RELACIONAS À SESSÕES DE UM TREINAMENTO */
 
-    /* LISTAR TREINAMENTO ESPECÍFICO */
+    /* LISTAR AS SESSÕES DE UM ESPECÍFICO */
     static async listarSessoes(idTreinamento) {
 
         function formatarData(data) {
@@ -280,9 +416,14 @@ class TreinamentoModel {
             const connection = await getConnection();
 
             try {
+                // Comando para obter as sessões de um treinamento
                 const sql = `
-                    SELECT * FROM sessoes WHERE idTreinamento = ${idTreinamento} ORDER BY dia, hora_inicio;
+                    SELECT * FROM sessoes 
+                    WHERE idTreinamento = ${idTreinamento} 
+                    ORDER BY dia, hora_inicio;
                 `;
+
+                // Fazendo a consulta
                 const [sessoes] = await connection.query(sql);
 
                 // Ajeitando os dados
@@ -294,9 +435,8 @@ class TreinamentoModel {
                     s.hora_fim = formatarHora(s.hora_fim);
                 })
 
-                return {
-                    sessoes
-                };
+                // Retornando as sessões
+                return { sessoes  };
             } finally {
                 connection.release();
             }
@@ -310,6 +450,7 @@ class TreinamentoModel {
     /* CRIAR UMA NOVA SESSÃO */
     static async criarSessao(dadosSessao) {
         try {
+            // Criando o objeto com os dados da sessão
             const sessao = {
                 localidade: dadosSessao.localidade,
                 idTreinamento: dadosSessao.idTreinamento,
@@ -318,7 +459,10 @@ class TreinamentoModel {
                 hora_fim: dadosSessao.hora_fim,
             }
 
+            // Inserindo a sessão na tabela
             const idSessao = await create('sessoes', sessao);
+
+            // Retornando o id da sessão
             return idSessao;
 
         } catch (error) {
@@ -327,68 +471,6 @@ class TreinamentoModel {
         }
     }
 
-    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-    /* ROTAS RELACIONADAS AO CICLO DE VIDA DE UM TREINAMENTO */
-
-    /* CRIAR UM NOVO TREINAMENTO */
-    static async criarTreinamento(dadosTreinamento) {
-        try {
-            const treinamento = {
-                nome: dadosTreinamento.nome,
-                descricao: dadosTreinamento.descricao,
-                idCriador: dadosTreinamento.idCriador,
-                numSessoes: 0
-            }
-
-            // return await create('treinamentos', dadosTreinamento);
-            const idTreinamento = await create('treinamentos', treinamento);
-
-            dadosTreinamento.participantes.map((idParticipante) => {
-                const participacao = { idTreinamento, idParticipante }
-
-                create('participacoes', participacao)
-            })
-
-            return idTreinamento;
-        } catch (error) {
-            console.error('Erro ao criar treinamento:', error);
-            throw error;
-        }
-    }
-
-    /* */
-    static async atualizarEstado(idTreinamento, estado) {
-        try {
-            const connection = await getConnection();
-
-            try {
-                return await update('treinamentos', { estado: estado }, `id = ${idTreinamento}`);
-            } finally {
-                connection.release();
-            }
-
-        } catch (error) {
-            console.error('Erro ao atualizar o estado do treinamentos:', error);
-            throw error;
-        }
-    }
-
-    /* */
-    static async atualizarInfos(idTreinamento, nome, descricao) {
-        try {
-            const connection = await getConnection();
-
-            try {
-                return await update('treinamentos', { nome: nome, descricao: descricao }, `id = ${idTreinamento}`);
-            } finally {
-                connection.release();
-            }
-
-        } catch (error) {
-            console.error('Erro ao atualizar o estado do treinamentos:', error);
-            throw error;
-        }
-    }
 
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 }

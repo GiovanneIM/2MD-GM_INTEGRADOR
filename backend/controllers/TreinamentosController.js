@@ -9,12 +9,24 @@ class TreinamentoController {
     /* LISTAR TODOS OS TREINAMENTOS */
     static async listarTodos(req, res) {
         try {
+            // Obtendo e validando os valores da paginação
+            const pagina = Math.max(1, parseInt(req.query.pagina) || 1);
+            const limite = Math.max(1, Math.min(50, parseInt(req.query.limite) || 10));
 
-            const resultado = await TreinamentoModel.listarTodos();
+            // Calculando o offset (Ponto de partida)
+            const offset = (pagina - 1) * limite;
 
+            // Chamando o model para fazer a consulta
+            const resultado = await TreinamentoModel.listarTodos(limite, offset);
+
+            // Respondendo a requisição
             res.status(200).json({
                 sucesso: true,
-                dados: resultado.treinamentos
+                dados: {
+                    total: resultado.total,
+                    totalPaginas: Math.ceil(resultado.total / limite),
+                    treinamentos: resultado.treinamentos,
+                },
             });
 
         } catch (error) {
@@ -30,13 +42,18 @@ class TreinamentoController {
     /* LISTAR TREINAMENTO ESPECÍFICO */
     static async listarTreinamento(req, res) {
         try {
-            const id = parseInt(req.params.id);
+            // Obtendo o id do treinamento
+            const idTreinamento = parseInt(req.params.idTreinamento);
 
-            const resultado = await TreinamentoModel.listarTreinamento(id);
+            // Chamando o model para fazer a consulta
+            const resultado = await TreinamentoModel.listarTreinamento(idTreinamento);
 
+            // Respondendo a requisição
             res.status(200).json({
                 sucesso: true,
-                dados: resultado.treinamento
+                dados: {
+                    treinamento: resultado.treinamento,
+                },
             });
 
         } catch (error) {
@@ -44,20 +61,26 @@ class TreinamentoController {
             res.status(500).json({
                 sucesso: false,
                 erro: 'Erro interno do servidor',
-                mensagem: 'Não foi possível listar os treinamento'
+                mensagem: 'Não foi possível listar o treinamento'
             });
         }
     }
 
+    /* LISTAR OS PARTICIPANTES DE UM TREINAMENTO ESPECÍFICO */
     static async listarParticipantes(req, res) {
         try {
-            const id = parseInt(req.params.id);
+            // Obtendo o id do treinamento
+            const idTreinamento = parseInt(req.params.idTreinamento);
 
-            const resultado = await TreinamentoModel.listarParticipantes(id);
+            // Chamando o model para fazer a consulta
+            const resultado = await TreinamentoModel.listarParticipantes(idTreinamento);
 
+            // Respondendo a requisição
             res.status(200).json({
                 sucesso: true,
-                dados: resultado.participantes
+                dados: {
+                    participantes: resultado.participantes
+                },
             });
 
         } catch (error) {
@@ -70,29 +93,137 @@ class TreinamentoController {
         }
     }
 
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    /* ROTAS RELACIONADAS AO CICLO DE VIDA DE UM TREINAMENTO */
+
+    /* CRIAR UM NOVO TREINAMENTO */
+    static async criarTreinamento(req, res) {
+        try {
+            // Obtendo os dados do treinamento
+            const { nome, descricao, participantes, idCriador } = req.body;
+
+            // Preparando os dados do treinamento
+            const dadosTreinamento = {
+                nome: nome.trim(),
+                descricao: descricao ? descricao.trim() : '',
+                idCriador: idCriador,
+                participantes: participantes,
+            };
+
+            // Chamando o model para fazer a inserção dos dados
+            const produtoId = await TreinamentoModel.criarTreinamento(dadosTreinamento);
+
+            // Retornando os dados do treinamento
+            res.status(201).json({
+                sucesso: true,
+                mensagem: 'Treinamento criado com sucesso',
+                dados: {
+                    id: produtoId,
+                    ...dadosTreinamento
+                }
+            });
+
+        } catch (error) {
+            console.error('Erro ao criar treinamento:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível criar o treinamento'
+            });
+        }
+    }
+
+    /* ATUALIZAR O ESTADO DE UM TREINAMENTO */
+    static async atualizarEstado(req, res) {
+        try {
+            // Obtendo o id do treinamento
+            const idTreinamento = parseInt(req.params.idTreinamento);
+
+            // Obtendo o estado para qual o treinamento deve ser alterado
+            const { estado } = req.body;
+
+            // Chamando o model para fazer alteração do estado
+            const resultado = await TreinamentoModel.atualizarEstado(idTreinamento, estado);
+
+            // Respondendo a requisição
+            res.status(200).json({
+                sucesso: true,
+                mensagem: 'Estado atualizado',
+                dados: { treinamento: resultado.treinamento, },
+            });
+        } catch (error) {
+            console.error('Erro ao criar sessão:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível atualizar o estado do treinamento'
+            });
+        }
+    }
+
+    /* ATUALIZANDO OS DADOS DE UM TREINAMENTO */
+    static async atualizarInfos(req, res) {
+        try {
+            // Obtendo o id do treinamento
+            const idTreinamento = parseInt(req.params.idTreinamento);
+
+            // Obtendo os novos dados do treinamento
+            const { nome, descricao } = req.body;
+
+            // Chamando o model para fazer a requisição
+            const resultado = await TreinamentoModel.atualizarInfos(idTreinamento, nome, descricao);
+
+            // Respondendo a requisição
+            res.status(200).json({
+                sucesso: true,
+                mensagem: 'Informações atualizado',
+                dados: { treinamento: resultado.treinamento, },
+            });
+        } catch (error) {
+            console.error('Erro ao criar sessão:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível atualizar as informações do treinamento'
+            });
+        }
+    }
 
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
     /* ROTAS RELACIONAS À TREINAMENTOS EM QUE UM USUÁRIO OFERECE OU PARTICIPA */
 
     /* LISTAR TODOS OS TREINAMENTOS DE UM PARTICIPANTE */
-    static async listarTrParticipante(req, res) {
+    static async listarTrParticipados(req, res) {
         try {
+            // Obtendo o id do usuário
             const idUsuario = parseInt(req.params.idUsuario);
-            const pagina = parseInt(req.params.pagina);
 
-            const resultado = await TreinamentoModel.listarTrParticipante(idUsuario, 10, (pagina - 1) * 10);
+            // Obtendo e validando os valores da paginação
+            const pagina = Math.max(1, parseInt(req.query.pagina) || 1);
+            const limite = Math.max(1, Math.min(50, parseInt(req.query.limite) || 10));
 
+            // Calculando o offset (Ponto de partida)
+            const offset = (pagina - 1) * limite;
+
+            // Chamando o model para fazer a consulta
+            const resultado = await TreinamentoModel.listarTrParticipados(idUsuario, limite, offset);
+
+            // Respondendo a requisição
             res.status(200).json({
                 sucesso: true,
-                dados: resultado.treinamentos
+                dados: {
+                    total: resultado.total,
+                    totalPaginas: Math.ceil(resultado.total / limite),
+                    treinamentos: resultado.treinamentos,
+                },
             });
 
         } catch (error) {
-            console.error('Erro ao listar treinamentos participados:', error);
+            console.error('Erro ao listar treinamentos participados pelo usuário:', error);
             res.status(500).json({
                 sucesso: false,
                 erro: 'Erro interno do servidor',
-                mensagem: 'Não foi possível listar os treinamentos participados'
+                mensagem: 'Não foi possível listar os treinamentos participados pelo usuário'
             });
         }
     }
@@ -100,14 +231,27 @@ class TreinamentoController {
     /* LISTAR TODOS OS TREINAMENTOS OFERECIDOS POR UM USUÁRIO */
     static async listarTrOferecidos(req, res) {
         try {
+            // Obtendo o id do usuário
             const idUsuario = parseInt(req.params.idUsuario);
-            const pagina = parseInt(req.params.pagina);
 
-            const resultado = await TreinamentoModel.listarTrOferecidos(idUsuario, 10, (pagina - 1) * 10);
+            // Obtendo e validando os valores da paginação
+            const pagina = Math.max(1, parseInt(req.query.pagina) || 1);
+            const limite = Math.max(1, Math.min(50, parseInt(req.query.limite) || 10));
 
+            // Calculando o offset (Ponto de partida)
+            const offset = (pagina - 1) * limite;
+
+            // Chamando o model para fazer a consulta
+            const resultado = await TreinamentoModel.listarTrOferecidos(idUsuario, limite, offset);
+
+            // Respondendo a requisição
             res.status(200).json({
                 sucesso: true,
-                dados: resultado.treinamentos
+                dados: {
+                    total: resultado.total,
+                    totalPaginas: Math.ceil(resultado.total / limite),
+                    treinamentos: resultado.treinamentos,
+                },
             });
 
         } catch (error) {
@@ -121,15 +265,20 @@ class TreinamentoController {
     }
 
     /*  OBTER O Nº DE TREINAMENTOS EM QUE UM USUÁRIO FOI INSCRITO NOS ÚLTIMOS 6 MESES separados por mês e estado */
-    static async listarTrParticipanteSeisMeses(req, res) {
+    static async listarTrParticipadosSeisMeses(req, res) {
         try {
-            const id = parseInt(req.params.id);
+            // Obtendo o id do usuário
+            const idUsuario = parseInt(req.params.idUsuario);
 
-            const resultado = await TreinamentoModel.listarTrParticipanteSeisMeses(id);
+            // Chamando o model para fazer a consulta
+            const resultado = await TreinamentoModel.listarTrParticipadosSeisMeses(idUsuario);
 
+            // Respondendo a requisição
             res.status(200).json({
                 sucesso: true,
-                dados: resultado.treinamentos
+                dados: {
+                    treinamentos: resultado.treinamentos
+                },
             });
 
         } catch (error) {
@@ -145,13 +294,18 @@ class TreinamentoController {
     /*  OBTER O Nº DE TREINAMENTOS QUE UM USUÁRIO CRIOU NOS ÚLTIMOS 6 MESES separados por mês e estado */
     static async listarTrOferecidosSeisMeses(req, res) {
         try {
-            const id = parseInt(req.params.id);
+            // Obtendo o id do usuário
+            const idUsuario = parseInt(req.params.idUsuario);
 
-            const resultado = await TreinamentoModel.listarTrOferecidosSeisMeses(id);
+            // Chamando o model para fazer a consulta
+            const resultado = await TreinamentoModel.listarTrOferecidosSeisMeses(idUsuario);
 
+            // Respondendo a requisição
             res.status(200).json({
                 sucesso: true,
-                dados: resultado.treinamentos
+                dados: {
+                    treinamentos: resultado.treinamentos
+                },
             });
 
         } catch (error) {
@@ -167,13 +321,16 @@ class TreinamentoController {
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
     /* ROTAS RELACIONAS À SESSÕES DE UM TREINAMENTO */
 
-    /* LISTAR TREINAMENTO ESPECÍFICO */
+    /* LISTAR AS SESSÕES DE UM ESPECÍFICO */
     static async listarSessoes(req, res) {
         try {
+            // Obtendo o id do treinamento
             const idTreinamento = parseInt(req.params.idTreinamento);
 
+            // Chamando o model para fazer a consulta
             const resultado = await TreinamentoModel.listarSessoes(idTreinamento);
 
+            // Respondendo a requisição
             res.status(200).json({
                 sucesso: true,
                 dados: resultado.sessoes
@@ -195,11 +352,13 @@ class TreinamentoController {
             // Obtendo dados da sessão
             const { dia, hora_inicio, hora_fim, localidade, idTreinamento } = req.body;
 
-            // Preparar dados do treinamento
+            // Preparando dados do treinamento
             const dadosSessao = { dia, hora_inicio, hora_fim, localidade, idTreinamento };
 
+            // Chamando o model para fazer o insert
             const sessaoId = await TreinamentoModel.criarSessao(dadosSessao);
 
+            // Retornando as informações da sessão
             res.status(201).json({
                 sucesso: true,
                 mensagem: 'Sessão criada com sucesso',
@@ -220,85 +379,7 @@ class TreinamentoController {
     }
 
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-    /* ROTAS RELACIONADAS AO CICLO DE VIDA DE UM TREINAMENTO */
 
-    /* CRIAR UM NOVO TREINAMENTO */
-    static async criarTreinamento(req, res) {
-        try {
-            const { nome, descricao, participantes, idCriador } = req.body;
-
-            // Preparar dados do treinamento
-            const dadosTreinamento = {
-                nome: nome.trim(),
-                descricao: descricao ? descricao.trim() : '',
-                participantes: participantes,
-                idCriador: idCriador
-            };
-
-            const produtoId = await TreinamentoModel.criarTreinamento(dadosTreinamento);
-
-            res.status(201).json({
-                sucesso: true,
-                mensagem: 'Treinamento criado com sucesso',
-                dados: {
-                    id: produtoId,
-                    ...dadosTreinamento
-                }
-            });
-
-        } catch (error) {
-            console.error('Erro ao criar treinamento:', error);
-            res.status(500).json({
-                sucesso: false,
-                erro: 'Erro interno do servidor',
-                mensagem: 'Não foi possível criar o treinamento'
-            });
-        }
-    }
-
-    static async atualizarEstado(req, res) {
-        try {
-            const idTreinamento = parseInt(req.params.idTreinamento);
-            const { estado } = req.body;
-
-            const resultado = await TreinamentoModel.atualizarEstado(idTreinamento, estado);
-
-            res.status(200).json({
-                sucesso: true,
-                mensagem: 'Estado atualizado'
-            });
-        } catch (error) {
-            console.error('Erro ao criar sessão:', error);
-            res.status(500).json({
-                sucesso: false,
-                erro: 'Erro interno do servidor',
-                mensagem: 'Não foi possível atualizar o estado do treinamento'
-            });
-        }
-    }
-
-    static async atualizarInfos(req, res) {
-        try {
-            const idTreinamento = parseInt(req.params.idTreinamento);
-            const { nome, descricao } = req.body;
-
-            const resultado = await TreinamentoModel.atualizarInfos(idTreinamento, nome, descricao);
-
-            res.status(200).json({
-                sucesso: true,
-                mensagem: 'Informações atualizado'
-            });
-        } catch (error) {
-            console.error('Erro ao criar sessão:', error);
-            res.status(500).json({
-                sucesso: false,
-                erro: 'Erro interno do servidor',
-                mensagem: 'Não foi possível atualizar as informações do treinamento'
-            });
-        }
-    }
-
-    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 }
 
 export default TreinamentoController;
