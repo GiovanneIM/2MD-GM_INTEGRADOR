@@ -127,15 +127,16 @@ export default function NovoTreinamento() {
                                         </div>
                                         <div>
                                             <div class='fw-bold mt-3'>Descrição</div>
-                                            <div>${data.dados.descricao}</div>
+                                            <div class='overflow-y-scroll' style='height:300px; word-break:break-word'>${data.dados.descricao}</div>
                                         </div>
                                     </tbody>
                                 </table>
                             </div>
                         `,
                     icon: 'success',
-                    confirmButtonText: 'Fechar',
-                    confirmButtonColor: '#0956FF'
+                    showConfirmButton: false,
+                    // confirmButtonText: 'Fechar',
+                    // confirmButtonColor: '#0956FF'
                 });
             }
             else {

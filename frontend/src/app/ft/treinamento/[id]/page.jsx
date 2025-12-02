@@ -350,7 +350,7 @@ export default function Treinamento() {
                         {/* Descrição */}
                         <div>
                             <div className='mb-0 fs-5'>Descrição</div>
-                            <div className='ms-3 p-2 rounded' style={{ minHeight: '200px' }}>
+                            <div className='ms-3 p-2 rounded' style={{ minHeight: '200px', wordBreak:'break-word' }}>
                                 {treinamento?.descricao ?? 'Sem Descrição'}
                             </div>
                         </div>
