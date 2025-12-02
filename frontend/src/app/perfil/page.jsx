@@ -5,29 +5,46 @@ import { useState, useEffect } from 'react';
 import LogoGM from '@/components/LogoGM'
 import './configuracoes.css'
 
-export default function Configuracoes() {
+export default function Perfil() {
+
+    const atividadesRecentes = [
+        {
+            atividade: 'Realização - Sessão de "Treinamento Power Apps"',
+            data: '30/11/2025'
+        },
+        {
+            atividade: 'Agendamento - Sessão de "Treinamento Power Apps"',
+            data: '25/11/2025'
+        },
+        {
+            atividade: 'Criação - Treinamento Power Apps',
+            data: '20/11/2025'
+        },
+    ]
+
 
     const [usuario, setUsuario] = useState({});
-    const [editandoUsuario, setEditandoUsuario] = useState({});
-    const [editando, setEditando] = useState(false);
+    const [novosDados, setNovosDados] = useState({});
+    const [editar, setEditar] = useState(false);
+
+    /* Função para carregar usuário */
+    async function carregarUsuario() {
+        const res = await fetch('http://localhost:3000/api/auth/perfil', {
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+            }
+        });
+        const data = await res.json();
+
+        if (data.sucesso) {
+            sessionStorage.setItem('usuario', JSON.stringify(data.dados));
+            setUsuario(data.dados);
+            setNovosDados(data.dados);
+        }
+    }
 
     /* Carregando o usuário logado */
     useEffect(() => {
-        async function carregarUsuario() {
-            const res = await fetch('http://localhost:3000/api/auth/perfil', {
-                headers: {
-                    'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-                }
-            });
-            const data = await res.json();
-
-            if (data.sucesso) {
-                sessionStorage.setItem('usuario', JSON.stringify(data.dados));
-                setUsuario(data.dados);
-                setEditandoUsuario(data.dados);
-            }
-        }
-
         carregarUsuario();
     }, [])
 
@@ -39,14 +56,15 @@ export default function Configuracoes() {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + sessionStorage.getItem('token')
             },
-            body: JSON.stringify(editandoUsuario)
+            body: JSON.stringify(novosDados)
         });
 
         const data = await res.json();
 
         if (data.sucesso) {
-            setUsuario(editandoUsuario);
-            setEditando(false);
+            carregarUsuario();
+            setEditar(false);
+            setNovosDados({});
             alert("Perfil atualizado com sucesso!");
         } else {
             alert("Erro ao atualizar o perfil!");
@@ -54,7 +72,7 @@ export default function Configuracoes() {
     }
 
     return (<>
-        <div className='container py-5'>
+        <div className='container py-4'>
 
             {/* Cabeçalho */}
             <div className='col-12 mb-4'>
@@ -93,7 +111,7 @@ export default function Configuracoes() {
                     }</p>
 
                     {/* Botão mensagem */}
-                    <div className='d-flex justify-content-center gap-2 mb-4'>
+                    {/* <div className='d-flex justify-content-center gap-2 mb-4'>
                         <button
                             className='btn btn-azulGM'
                             type='button'
@@ -103,135 +121,101 @@ export default function Configuracoes() {
                             <i className='fas fa-envelope me-2' />
                             Enviar mensagem
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
             {/* Conteúdo Principal */}
-            <div className='col-12 d-flex flex-column flex-md-row row-gap-3'>
+            <div className='col-12 d-flex flex-wrap row-gap-3'>
 
                 {/* Informações pessoais */}
-                <div className='col-12 col-md-6 pe-md-2'>
-                    <div className='col-12 d-flex flex-column bg-white shadow rounded p-3'>
+                <div className='col-12 col-lg-6 h-100 pe-lg-2'>
+                    <div className='col-12 h-100 d-flex flex-column bg-white shadow rounded p-3'>
 
                         <div className="d-flex justify-content-between mb-3">
-                            <h5>Informações Pessoais</h5>
+                            <h5 className='mb-4 fs-4'>Informações Pessoais</h5>
                         </div>
 
                         <div className='row g-3'>
 
                             {/* Nome */}
-                            <div className='col-md-6'>
+                            <div className='col-12'>
                                 <div>Nome</div>
 
-                                {!editando ? (
-                                    <div style={{ height: '24px' }}>
-                                        {usuario.nome}
-                                    </div>
-                                ) : (
-                                    <input
-                                        className="form-control"
-                                        value={editandoUsuario.nome}
-                                        onChange={e =>
-                                            setEditandoUsuario({ ...editandoUsuario, nome: e.target.value })
-                                        }
-                                    />
-                                )}
+                                {!editar
+                                    ? (<div style={{ height: '38px' }}>{usuario.nome}</div>)
+                                    : (<input className="form-control" value={novosDados.nome} onChange={e => setNovosDados({ ...novosDados, nome: e.target.value })} />)
+                                }
                             </div>
-
-                            <div className='col-md-6'></div>
 
                             {/* Email */}
                             <div className='col-md-6'>
                                 <div>Email</div>
 
-                                {!editando ? (
-                                    <div style={{ height: '24px' }}>
-                                        {usuario.email}
-                                    </div>
-                                ) : (
-                                    <input
-                                        className="form-control"
-                                        value={editandoUsuario.email}
-                                        onChange={e =>
-                                            setEditandoUsuario({ ...editandoUsuario, email: e.target.value })
-                                        }
-                                    />
-                                )}
+                                {!editar
+                                    ? (<div style={{ height: '38px' }}>{usuario.email}</div>)
+                                    : (<input className="form-control" value={novosDados.email} onChange={e => setNovosDados({ ...novosDados, email: e.target.value })} />)
+                                }
                             </div>
 
                             {/* Telefone */}
                             <div className='col-md-6'>
                                 <div>Telefone</div>
 
-                                {!editando ? (
-                                    <div style={{ height: '24px' }}>
-                                        {usuario.telefone}
-                                    </div>
-                                ) : (
-                                    <input
-                                        className="form-control"
-                                        value={editandoUsuario.telefone}
-                                        onChange={e =>
-                                            setEditandoUsuario({ ...editandoUsuario, telefone: e.target.value })
-                                        }
-                                    />
-                                )}
+                                {!editar
+                                    ? (<div style={{ height: '38px' }}>{usuario.telefone}</div>)
+                                    : (<input className="form-control" value={novosDados.telefone} onChange={e => setNovosDados({ ...novosDados, telefone: e.target.value })} />)
+                                }
                             </div>
 
                             {/* Bio */}
                             <div className='col-12'>
                                 <div>Bio</div>
 
-                                {!editando ? (
-                                    <div className='border rounded p-2' style={{ minHeight: '120px' }}>
-                                        {usuario.bio}
-                                    </div>
-                                ) : (
-                                    <textarea
-                                        className="form-control"
-                                        style={{ minHeight: '120px' }}
-                                        value={editandoUsuario.bio}
-                                        onChange={e =>
-                                            setEditandoUsuario({ ...editandoUsuario, bio: e.target.value })
-                                        }
-                                    />
-                                )}
+                                {!editar
+                                    ? (<div className='border rounded p-2' style={{ minHeight: '120px' }}>{usuario.bio}</div>)
+                                    : (
+                                        <div className='position-relative'>
+                                            <textarea
+                                                className="form-control" style={{ minHeight: '120px', resize: 'none' }}
+                                                value={novosDados.bio}
+                                                onChange={e => setNovosDados({ ...novosDados, bio: e.target.value.length <= 200 ? e.target.value : e.target.value.subtring(0, 200) })}
+                                            />
+
+                                            <div className='position-absolute bottom-0 end-0 me-2'>
+                                                <small style={{ color: "#666" }}>{novosDados.bio?.length ?? 0}/200</small>
+                                            </div>
+                                        </div>
+                                    )
+                                }
                             </div>
 
-                            {!editando ? (
-                                <button className="btn btn-primary col-2" onClick={() => setEditando(true)}>
-                                    Editar
-                                </button>
-                            ) : (
-                                <button className="btn btn-success col-2" onClick={salvarAlteracoes}>
-                                    Salvar
-                                </button>
-                            )}
+                            <div className='text-center'>
+                                {!editar
+                                    ? (<button className="btn btn-primary col-2" onClick={() => setEditar(true)}>Editar</button>)
+                                    : (<button className="btn btn-success col-2" onClick={salvarAlteracoes}>Salvar</button>)
+                                }
+                            </div>
 
                         </div>
 
                     </div>
                 </div>
 
-                {/* Atividade recente */}
-                <div className='col-12 col-md-6 ps-md-2'>
-                    <div className='col-12 d-flex flex-column bg-white shadow rounded p-3'>
-                        <h5 className='mb-5'>Atividade Recente</h5>
+                {/* Atividades recentes */}
+                <div className='col-12 col-lg-6 flex-grow-1 ps-lg-2'>
+                    <div className='col-12 h-100 d-flex flex-column bg-white shadow rounded p-3'>
+                        <h5 className='mb-4 fs-4'>Atividade Recente</h5>
 
-                        <div className='activity-item mb-3'>
-                            <h6 className='mb-1'>#Atividade</h6>
-                            <p className='text-muted small mb-0'>#Tempo</p>
-                        </div>
-
-                        <div className='activity-item mb-3'>
-                            <h6 className='mb-1'>#Atividade</h6>
-                            <p className='text-muted small mb-0'>#Tempo</p>
-                        </div>
-
-                        <div className='activity-item'>
-                            <h6 className='mb-1'>#Atividade</h6>
-                            <p className='text-muted small mb-0'>#Tempo</p>
+                        <div className='border rounded flex-grow-1 p-3 overflow-y-scroll' style={{ minHeight: '300px' }}>
+                            <div className='border-start mt-3 d-flex flex-column gap-3'>
+                                {atividadesRecentes && atividadesRecentes.map((ar, index) =>
+                                    <div className='activity ps-3' key={index}>
+                                        <div className='fs-6'>{ar.atividade}</div>
+                                        <div className='text-muted small mb-0'>{ar.data}</div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
