@@ -1,0 +1,45 @@
+/* Estiliza o popup do swal */
+.swal-custom-popup {
+    border-radius: 12px;
+    padding: 0 !important;
+}
+
+/* Estiliza o conteúdo HTML do swal */
+.swal-custom-html {
+    padding: 20px;
+}
+
+/* SEU CONTEÚDO INTERNO */
+.gm-container h1 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
+.gm-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.gm-card h4 {
+    margin: 15px 0 5px 0;
+    font-size: 16px;
+}
+
+.gm-input input,
+.gm-input2 textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.gm-input2 textarea {
+    min-height: 80px;
+    resize: none;
+}
