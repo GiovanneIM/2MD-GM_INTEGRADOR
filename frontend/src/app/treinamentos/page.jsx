@@ -6,9 +6,12 @@ import { useEffect, useState } from 'react';
 export default function Treinamentos() {
 
     const [usuario, setUsuario] = useState(null);
+
     const [treinamentosRealizados, setTreinamentosRealizados] = useState([]);
     const [treinamentosOfertados, setTreinamentosOfertados] = useState([]);
     const [exibir, setExibir] = useState("Realizados");
+
+    const [pagina, setPagina] = useState(1);
 
     const Status = {
         'Pendente': ['primary', 'fa-question-circle'],
@@ -17,7 +20,6 @@ export default function Treinamentos() {
         'Cancelado': ['danger', 'fa-xmark'],
     };
 
-    // 1. Buscar usuário logado
     useEffect(() => {
         async function carregarUsuario() {
             const res = await fetch("http://localhost:3000/api/auth/perfil", {
@@ -35,7 +37,7 @@ export default function Treinamentos() {
         carregarUsuario();
     }, []);
 
-    // 2. Buscar treinamentos realizados + ofertados
+    /* Buscando os treinamentos do usuário */
     useEffect(() => {
         if (!usuario?.id) return;
 
@@ -47,13 +49,45 @@ export default function Treinamentos() {
             if (dadosRealizados.sucesso) setTreinamentosRealizados(dadosRealizados.dados);
 
             // Treinamentos ofertados (criados pelo usuário)
-            const resOfertados = await fetch(`http://localhost:3000/api/treinamentos/criador/${usuario.id}`);
+            const resOfertados = await fetch(`http://localhost:3000/api/treinamentos/criador/${usuario.id}/${pagina}`);
             const dadosOfertados = await resOfertados.json();
             if (dadosOfertados.sucesso) setTreinamentosOfertados(dadosOfertados.dados);
         }
 
         carregarTreinamentos();
     }, [usuario]);
+
+    /* Buscando os treinamentos do usuário ao mudar a página */
+    useEffect(() => {
+        if (!usuario?.id) return;
+
+        async function carregarTreinamentos() {
+
+            // Treinamentos realizados
+            if (exibir === 'Realizados') {
+                const resRealizados = await fetch(`http://localhost:3000/api/treinamentos/${usuario.id}`);
+                const dadosRealizados = await resRealizados.json();
+                if (dadosRealizados.sucesso) setTreinamentosRealizados(dadosRealizados.dados);
+            }
+            else {
+                // Treinamentos ofertados (criados pelo usuário)
+                const resOfertados = await fetch(`http://localhost:3000/api/treinamentos/criador/${usuario.id}/${pagina}`);
+                const dadosOfertados = await resOfertados.json();
+                if (dadosOfertados.sucesso) setTreinamentosOfertados(dadosOfertados.dados);
+            }
+        }
+
+        carregarTreinamentos();
+    }, [pagina]);
+
+    /* Controlando o valor da página */
+    useEffect(() => {
+        // Impedindo que o usuário vá para páginas antes de 1
+        if (pagina < 1) {
+            setPagina(1)
+        }
+    }, [pagina])
+
 
     // Treinamentos exibidos conforme a opção
     const lista = exibir === "Realizados" ? treinamentosRealizados : treinamentosOfertados;
@@ -70,25 +104,38 @@ export default function Treinamentos() {
 
                 <div className='bg-white shadow-sm p-3 rounded flex-grow-1 d-flex flex-column gap-3'>
 
-                    {/* Cabeçalho e botões */}
-                    <div className='card-header bg-white border-0 px-0 d-flex flex-wrap'>
-                        <div className='col-12 col-md-6'>
-                            <h5 className='mb-0 fs-5'>Treinamentos</h5>
+                    {/* Botões */}
+                    <div className='card-header bg-white border-0 px-0 d-flex flex-wrap row-gap-2'>
+
+                        {/* Botões Realizados/Oferecidos */}
+                        <div className='col-12 col-md-6 pe-md-2'>
+                            <button
+                                className={`col-12 col-sm-6 btn border rounded-0 btn-filtro ${exibir === 'Realizados' ? 'active' : ''}`}
+                                onClick={() => setExibir("Realizados")}
+                            >
+                                Realizados
+                            </button>
+
+                            <button
+                                className={`col-12 col-sm-6 btn border rounded-0 btn-filtro ${exibir === 'Ofertados' ? 'active' : ''}`}
+                                onClick={() => setExibir("Ofertados")}
+                            >
+                                Ofertados
+                            </button>
                         </div>
 
-                        <button
-                            className={`col-12 col-sm-6 col-md-3 btn border rounded-0 btn-filtro ${exibir === 'Realizados' ? 'active' : ''}`}
-                            onClick={() => setExibir("Realizados")}
-                        >
-                            Realizados
-                        </button>
+                        {/* Botões paginação */}
+                        <div className='col-12 col-md-6 d-flex justify-content-md-end justify-content-center'>
+                            <button className="btn border rounded-0" onClick={e => setPagina(pagina - 1)} disabled={pagina === 1}>Anterior</button>
+                            <button className="btn border rounded-0" onClick={e => setPagina(1)} style={{ width: '3rem' }}>1</button>
+                            <button className="btn border rounded-0" onClick={e => setPagina(2)} style={{ width: '3rem' }}>2</button>
+                            <button className="btn border rounded-0" onClick={e => setPagina(3)} style={{ width: '3rem' }}>3</button>
+                            <button className="btn border rounded-0" onClick={e => setPagina(4)} style={{ width: '3rem' }}>4</button>
+                            <button className="btn border rounded-0" onClick={e => setPagina(5)} style={{ width: '3rem' }}>5</button>
+                            <button className="btn border rounded-0" onClick={e => setPagina(pagina + 1)} disabled={lista.length < 10}>Próximo</button>
+                        </div>
 
-                        <button
-                            className={`col-12 col-sm-6 col-md-3 btn border rounded-0 btn-filtro ${exibir === 'Ofertados' ? 'active' : ''}`}
-                            onClick={() => setExibir("Ofertados")}
-                        >
-                            Ofertados
-                        </button>
+
                     </div>
 
                     {/* Tabela */}

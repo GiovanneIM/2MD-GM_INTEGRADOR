@@ -8,6 +8,8 @@ import './trLista.css';
 export default function TreinamentosLista({
     treinamentosExibidos,
     setOpcaoExibir,
+    setPagina,
+    pagina,
     tipoUsuario
 }) {
     const [filtroRO, setFiltroRO] = useState('Realizados');
@@ -39,123 +41,134 @@ export default function TreinamentosLista({
 
 
     return (
-        
-            <div className='h-100 col-12 card border-0 shadow-sm p-3'>
 
-                {/* Div superior */}
-                <div className='card-header bg-white border-0 px-0 d-flex flex-wrap'>
-                    {/* Título */}
-                    <div className='col-12 col-md-6'>
-                        <h5 className='mb-0 fs-5'>Treinamentos</h5>
-                    </div>
+        <div className='h-100 col-12 card border-0 shadow-sm p-3'>
 
-                    {/* Botão para exibir os treinamentos realizados */}
-                    <button
-                        className={`col-12 col-sm-6 col-md-3 btn border rounded-0 btn-filtro ${filtroRO === 'Realizados' ? 'btn-ativo' : ''}`}
-                        onClick={() => {
-                            setOpcaoExibir('Realizados');
-                            setFiltroRO('Realizados');
-                            setFiltro('');
-                        }}
-                    >
-                        Realizados
-                    </button>
-
-                    {/* Botão para exibir os treinamentos ofertados */}
-                    {
-                        tipoUsuario === 'mt' ? (
-                            // Botão desativado caso seja MT
-                            <button
-                                className={`col-12 col-sm-6 col-md-3 btn border rounded-0 bg-secondary bg-opacity-50`}
-                                disabled
-                            >Ofertados
-                            </button>
-                        ) : (
-                            <button
-                                className={`col-12 col-sm-6 col-md-3 btn border rounded-0 btn-filtro ${filtroRO === 'Ofertados' ? 'btn-ativo' : ''}`}
-                                onClick={() => {
-                                    setOpcaoExibir('Ofertados');
-                                    setFiltroRO('Ofertados');
-                                    setFiltro('');
-                                }}
-                            >
-                                Ofertados
-                            </button>
-                        )
-                    }
-
+            {/* Div superior */}
+            <div className='card-header bg-white border-0 px-0 d-flex flex-wrap'>
+                {/* Título */}
+                <div className='col-12 col-md-6'>
+                    <h5 className='mb-0 fs-5'>Treinamentos</h5>
                 </div>
 
-                {/* Botões de filtro */}
-                <div className='col-12 d-flex flex-wrap'>{
-                    // Criando 1 botão para cada estado
-                    Object.keys(Status).map((estado) => {
-                        // Verificando se o filtro está ativo para esse botão
-                        const ativo = filtro === estado;
+                {/* Botão para exibir os treinamentos realizados */}
+                <button
+                    className={`col-12 col-sm-6 col-md-3 btn border rounded-0 btn-filtro ${filtroRO === 'Realizados' ? 'btn-ativo' : ''}`}
+                    onClick={() => {
+                        setOpcaoExibir('Realizados');
+                        setFiltroRO('Realizados');
+                        setFiltro('');
+                    }}
+                >
+                    Realizados
+                </button>
 
-                        // Classes do botão
-                        const classes = 'btn btn-filtro border rounded-0 col-12 col-sm-6 col-md-3';
-                        const classeAtivo = ativo ? `border-${Status[estado][0]} bg-${Status[estado][0]} bg-opacity-10` : '';
+                {/* Botão para exibir os treinamentos ofertados */}
+                {
+                    tipoUsuario === 'mt' ? (
+                        // Botão desativado caso seja MT
+                        <button
+                            className={`col-12 col-sm-6 col-md-3 btn border rounded-0 bg-secondary bg-opacity-50`}
+                            disabled
+                        >Ofertados
+                        </button>
+                    ) : (
+                        <button
+                            className={`col-12 col-sm-6 col-md-3 btn border rounded-0 btn-filtro ${filtroRO === 'Ofertados' ? 'btn-ativo' : ''}`}
+                            onClick={() => {
+                                setOpcaoExibir('Ofertados');
+                                setFiltroRO('Ofertados');
+                                setFiltro('');
+                            }}
+                        >
+                            Ofertados
+                        </button>
+                    )
+                }
+
+            </div>
+
+            {/* Botões de filtro */}
+            <div className='col-12 d-flex flex-wrap'>{
+                // Criando 1 botão para cada estado
+                Object.keys(Status).map((estado) => {
+                    // Verificando se o filtro está ativo para esse botão
+                    const ativo = filtro === estado;
+
+                    // Classes do botão
+                    const classes = 'btn btn-filtro border rounded-0 col-12 col-sm-6 col-md-3';
+                    const classeAtivo = ativo ? `border-${Status[estado][0]} bg-${Status[estado][0]} bg-opacity-10` : '';
+
+                    // Criando o botão
+                    return (
+                        <button
+                            key={estado}
+                            className={classes + ' ' + classeAtivo}
+                            onClick={() => {
+                                const novoEstado = ativo ? '' : estado;
+                                setFiltro(novoEstado);
+                                FiltrarTreinamentos(novoEstado);
+                            }}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            {estado}
+                        </button>
+                    );
+                })
+            }</div>
+
+            {/* Lista */}
+            <div
+                className={
+                    'card-body border overflow-y-scroll ' +
+                    (filtro ? `border-${Status[filtro][0]} bg-${Status[filtro][0]} bg-opacity-10` : '')
+                }
+                style={{ height: '500px' }}
+            >
+                {trExibir.length > 0 ? (
+                    trExibir.map(tr => <TreinamentosItem tr={tr} tipoUsuario={tipoUsuario} key={tr.id} />)
+                ) : (
+                    <div className='h-100 gap-3 d-flex flex-column justify-content-center align-items-center'>
+                        <p className='text-muted'>Sem treinamentos</p>
+                    </div>
+                )}
+            </div>
+
+            {/* Botões paginação */}
+            <div className='col-12 d-flex justify-content-center mt-2'>
+                <button className="btn border rounded-0" onClick={e => setPagina(pagina - 1)} disabled={pagina === 1}>Anterior</button>
+                <button className="btn border rounded-0" onClick={e => setPagina(1)} style={{width: '3rem'}}>1</button>
+                <button className="btn border rounded-0" onClick={e => setPagina(2)} style={{width: '3rem'}}>2</button>
+                <button className="btn border rounded-0" onClick={e => setPagina(3)} style={{width: '3rem'}}>3</button>
+                <button className="btn border rounded-0" onClick={e => setPagina(4)} style={{width: '3rem'}}>4</button>
+                <button className="btn border rounded-0" onClick={e => setPagina(5)} style={{width: '3rem'}}>5</button>
+                <button className="btn border rounded-0" onClick={e => setPagina(pagina + 1)} disabled={treinamentosExibidos.length < 10}>Próximo</button>
+            </div>
+
+            {/* Total de treinamentos de cada estado */}
+            <div className='d-flex flex-wrap row-gap-3 mt-3'>
+                {
+                    Object.keys(Status).map((estado, index) => {
+                        // Calculando o número de treinamentos com o estado determinado
+                        const numeroTreinamentos = treinamentos.filter(tr => tr.estado === estado).length;
 
                         // Criando o botão
                         return (
-                            <button
-                                key={estado}
-                                className={classes + ' ' + classeAtivo}
-                                onClick={() => {
-                                    const novoEstado = ativo ? '' : estado;
-                                    setFiltro(novoEstado);
-                                    FiltrarTreinamentos(novoEstado);
-                                }}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                {estado}
-                            </button>
+                            <div key={index} className='col-md-6 d-flex gap-2 align-items-center'>
+                                <div className={`bg-${Status[estado][0]} bg-opacity-10 rounded d-flex justify-content-center align-items-center`} style={{ height: '2.5rem', width: '2.5rem' }}>
+                                    <i className={`fas ${Status[estado][1]} text-${Status[estado][0]}`} />
+                                </div>
+                                <div>
+                                    {numeroTreinamentos}
+                                    {numeroTreinamentos === 1 ? ' treinamento ' : ' treinamentos '}
+                                    {numeroTreinamentos === 1 ? estado.toLowerCase() : estado.toLowerCase() + 's'}
+                                </div>
+                            </div>
                         );
                     })
-                }</div>
-
-                {/* Lista */}
-                <div
-                    className={
-                        'card-body border overflow-y-scroll ' +
-                        (filtro ? `border-${Status[filtro][0]} bg-${Status[filtro][0]} bg-opacity-10` : '')
-                    }
-                    style={{ height: '500px' }}
-                >
-                    {trExibir.length > 0 ? (
-                        trExibir.map(tr => <TreinamentosItem tr={tr} tipoUsuario={tipoUsuario} key={tr.id} />)
-                    ) : (
-                        <div className='h-100 gap-3 d-flex flex-column justify-content-center align-items-center'>
-                            <p className='text-muted'>Sem treinamentos</p>
-                        </div>
-                    )}
-                </div>
-
-                {/* Total de treinamentos de cada estado */}
-                <div className='d-flex flex-wrap row-gap-3 mt-3'>
-                    {
-                        Object.keys(Status).map((estado, index) => {
-                            // Calculando o número de treinamentos com o estado determinado
-                            const numeroTreinamentos = treinamentos.filter(tr => tr.estado === estado).length;
-
-                            // Criando o botão
-                            return (
-                                <div key={index} className='col-md-6 d-flex gap-2 align-items-center'>
-                                    <div className={`bg-${Status[estado][0]} bg-opacity-10 rounded d-flex justify-content-center align-items-center`} style={{ height: '2.5rem', width: '2.5rem' }}>
-                                        <i className={`fas ${Status[estado][1]} text-${Status[estado][0]}`} />
-                                    </div>
-                                    <div>
-                                        {numeroTreinamentos}
-                                        {numeroTreinamentos === 1 ? ' treinamento ' : ' treinamentos '}
-                                        {numeroTreinamentos === 1 ? estado.toLowerCase() : estado.toLowerCase() + 's'}
-                                    </div>
-                                </div>
-                            );
-                        })
-                    }
-                </div>
-
+                }
             </div>
+
+        </div>
     );
 }

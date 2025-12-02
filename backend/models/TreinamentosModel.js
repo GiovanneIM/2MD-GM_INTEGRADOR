@@ -110,14 +110,19 @@ class TreinamentoModel {
     }
 
     /* LISTAR TODOS OS TREINAMENTOS OFERECIDOS */
-    static async listarTrOferecidos(id) {
+    static async listarTrOferecidos(idUsuario, limite, offset) {
         try {
             const connection = await getConnection();
 
             try {
-                const sql = `SELECT * FROM treinamentos WHERE idCriador = ${id} ORDER BY id DESC`;
+                const sql = `
+                    SELECT * FROM treinamentos WHERE idCriador = ?
+                    ORDER BY id DESC 
+                    LIMIT ?
+                    OFFSET ?
+                `;
 
-                const [treinamentos] = await connection.query(sql);
+                const [treinamentos] = await connection.query(sql, [idUsuario, limite, offset]);
 
                 return {
                     treinamentos

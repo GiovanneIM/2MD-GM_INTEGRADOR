@@ -24,7 +24,7 @@ router.get('/treinamento/:id/participantes', TreinamentoController.listarPartici
 router.get('/:id', TreinamentoController.listarTrParticipante)
 
 // Listar treinamentos oferecidos por um usuario
-router.get('/criador/:id', TreinamentoController.listarTrOferecidos)
+router.get('/criador/:id/:pagina', TreinamentoController.listarTrOferecidos)
 
 
 // Listar o número de treinamentos em que um usuario foi inscrito nos últimos 6 meses por estado

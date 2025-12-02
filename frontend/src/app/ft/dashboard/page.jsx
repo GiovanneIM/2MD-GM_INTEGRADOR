@@ -14,10 +14,13 @@ import GraficoSessoes from '@/components/Graficos/GraficoSessoes';
 
 export default function Dashboard() {
 	const [usuario, setUsuario] = useState([]);
-	const [treinamentosOferecidos, setTreinamentosOferecidos] = useState([]);
-	const [treinamentosRealizados, setTreinamentosRealizados] = useState([]);
+
+	// const [treinamentosOferecidos, setTreinamentosOferecidos] = useState([]);
+	// const [treinamentosRealizados, setTreinamentosRealizados] = useState([]);
 	const [treinamentosExibidos, setTreinamentosExibidos] = useState([]);
+
 	const [opcaoExibir, setOpcaoExibir] = useState('Realizados');
+	const [pagina, setPagina] = useState(1);
 
 	/* Carregando o usuário logado */
 	useEffect(() => {
@@ -32,6 +35,7 @@ export default function Dashboard() {
 			// Verificando se há um usuário logado
 			if (data.sucesso) {
 				sessionStorage.setItem('usuario', JSON.stringify(data.dados));
+				console.log(data.dados);
 				setUsuario(data.dados);
 			}
 		}
@@ -39,68 +43,49 @@ export default function Dashboard() {
 		carregarUsuario();
 	}, [])
 
-	/* Carregando os treinamentos oferecidos pelo usuário*/
-	useEffect(() => {
-		if (usuario.id) {
-			try {
-				async function carregarTreinamentos() {
-					const res = await fetch(`http://localhost:3000/api/treinamentos/criador/${usuario.id}`);
-					const data = await res.json();
+	/* Função para carregar os treinamentos oferecidos pelo usuário */
+	async function carregarTreinamentosOferecidos() {
+		const res = await fetch(`http://localhost:3000/api/treinamentos/criador/${usuario.id}/${pagina}`);
+		const data = await res.json();
 
-					if (data.sucesso) {
-						// console.log(data.dados);
-
-						setTreinamentosOferecidos(data.dados);
-					}
-					else {
-						console.log(data.mensagem);
-					}
-				}
-
-				carregarTreinamentos()
-			}
-			catch {
-				/* Erro caso a API esteja desligada */
-			}
-		}
-	}, [usuario])
-
-	/* Carregando os treinamentos realizados pelo usuário*/
-	useEffect(() => {
-		if (usuario.id) {
-			try {
-				async function carregarTreinamentos() {
-					const res = await fetch(`http://localhost:3000/api/treinamentos/${usuario.id}`);
-					const data = await res.json();
-
-					if (data.sucesso) {
-						// console.log(data.dados);
-
-						setTreinamentosRealizados(data.dados);
-						setTreinamentosExibidos(data.dados);
-					}
-					else {
-						console.log(data.mensagem);
-					}
-				}
-
-				carregarTreinamentos()
-			}
-			catch {
-				/* Erro caso a API esteja desligada */
-			}
-		}
-	}, [usuario])
-
-	/* Controle para o filtro de quais treinamentos estão sendo exibidos (Inscritos ou Ofertados) */
-	useEffect(() => {
-		if (opcaoExibir === 'Realizados') {
-			setTreinamentosExibidos(treinamentosRealizados);
+		if (data.sucesso) {
+			// setTreinamentosOferecidos(data.dados);
+			setTreinamentosExibidos(data.dados);
 		}
 		else {
-			setTreinamentosExibidos(treinamentosOferecidos);
+			console.log(data.mensagem);
 		}
-	}, [opcaoExibir])
+	}
+
+	/* Função para cerragar os treinamentos realizados pelo usuário */
+	async function carregarTreinamentosRealizados() {
+		const res = await fetch(`http://localhost:3000/api/treinamentos/${usuario.id}`);
+		const data = await res.json();
+
+		if (data.sucesso) {
+			// setTreinamentosRealizados(data.dados);
+			setTreinamentosExibidos(data.dados);
+		}
+		else {
+			console.log(data.mensagem);
+		}
+	}
+
+	/* Controlador para carregar os treinamentos ao atualizar a página ou a opção de exibição */
+	useEffect(() => {
+		if (!usuario.id) return;
+
+		if (opcaoExibir === 'Realizados') {
+			carregarTreinamentosRealizados();
+		} else {
+			carregarTreinamentosOferecidos();
+		}
+
+		console.log(treinamentosExibidos);
+
+	}, [usuario.id, pagina, opcaoExibir]);
+
+	useEffect(() => { setPagina(1); }, [opcaoExibir]);
 
 
 	return (
@@ -121,6 +106,8 @@ export default function Dashboard() {
 							<TreinamentosLista
 								treinamentosExibidos={treinamentosExibidos ?? []}
 								setOpcaoExibir={setOpcaoExibir}
+								setPagina={setPagina}
+								pagina={pagina}
 								tipoUsuario={usuario.tipo}
 							/>
 						</div>

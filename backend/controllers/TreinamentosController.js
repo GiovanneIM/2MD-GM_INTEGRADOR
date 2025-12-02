@@ -100,8 +100,9 @@ class TreinamentoController {
     static async listarTrOferecidos(req, res) {
         try {
             const id = parseInt(req.params.id);
+            const pagina = parseInt(req.params.pagina);
 
-            const resultado = await TreinamentoModel.listarTrOferecidos(id);
+            const resultado = await TreinamentoModel.listarTrOferecidos(id, 10, (pagina - 1) * 10);
 
             res.status(200).json({
                 sucesso: true,
