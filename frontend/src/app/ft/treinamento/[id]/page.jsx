@@ -5,6 +5,7 @@
   Nesta página podemos trocar o nome, descrição e status dos treinamentos 
 */
 
+import './id.css'
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
 
@@ -40,7 +41,7 @@ export default function Treinamento() {
 
             if (data.sucesso) {
                 setTreinamento(data.dados[0]);
-                
+
                 /* Carregando as sessões do treinamento */
                 carregarSessoes();
             } else {
@@ -227,6 +228,38 @@ export default function Treinamento() {
         });
     }
 
+    function modalInfos() {
+        Swal.fire({
+            width: 500,
+            background: '#f4f6f8',
+            showConfirmButton: false,
+            customClass: {
+                popup: 'swal-custom-popup',
+                htmlContainer: 'swal-custom-html'
+            },
+            html: `
+                <div class='gm-container'>
+                    <div>
+                        <h1>Alterar informações</h1>
+                    </div>
+    
+                    <div class='gm-card'>
+                        <h4>Alterar nome:</h4>
+                        <div class='gm-input'>
+                            <input type="text" />
+                        </div>
+    
+                        <h4>Alterar descrição:</h4>
+                        <div class='gm-input2'>
+                            <textarea></textarea>
+                        </div>
+                    </div>
+                </div>
+            `
+        });
+    }
+    
+
     if (treinamento && sessoes) return (<>
         <div className='container h-100 py-4 d-flex flex-column'>
             {/* Titulo da página*/}
@@ -288,7 +321,7 @@ export default function Treinamento() {
                         </div>
 
                         {/* Alterar dados */}
-                        <button className='btn btn-White d-flex border '>
+                        <button className='btn btn-White d-flex border' onClick={modalInfos}>
                             <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' className='bi bi-arrow-right-short' viewBox='0 0 16 16'>
                                 <path fillRule='evenodd' d='M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8' />
                             </svg>
@@ -315,7 +348,7 @@ export default function Treinamento() {
                             {
                                 treinamento.estado === 'Em andamento' &&
                                 <div>
-                                    <button className='btn btn-success' onClick={concluirTreinamento}> 
+                                    <button className='btn btn-success' onClick={concluirTreinamento}>
                                         Concluir Treinamento
                                     </button>
                                 </div>
