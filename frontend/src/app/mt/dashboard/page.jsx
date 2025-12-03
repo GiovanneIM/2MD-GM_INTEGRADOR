@@ -42,11 +42,11 @@ export default function Dashboard() {
 
 	/* Função para carregar os treinamentos oferecidos pelo usuário */
 	async function carregarTreinamentosOferecidos() {
-		const res = await fetch(`http://localhost:3000/api/treinamentos/criador/${usuario.id}/${pagina}`);
+		const res = await fetch(`http://localhost:3000/api/treinamentos/criador/${usuario.id}?pagina=${pagina}`);
 		const data = await res.json();
 
 		if (data.sucesso) {
-			setTreinamentosExibidos(data.dados);
+			setTreinamentosExibidos(data.dados.treinamentos);
 		}
 		else {
 			console.log(data.mensagem);
@@ -55,11 +55,11 @@ export default function Dashboard() {
 
 	/* Função para cerragar os treinamentos realizados pelo usuário */
 	async function carregarTreinamentosRealizados() {
-		const res = await fetch(`http://localhost:3000/api/treinamentos/participante/${usuario.id}/${pagina}`);
+		const res = await fetch(`http://localhost:3000/api/treinamentos/participante/${usuario.id}?pagina=${pagina}`);
 		const data = await res.json();
 
 		if (data.sucesso) {
-			setTreinamentosExibidos(data.dados);
+			setTreinamentosExibidos(data.dados.treinamentos);
 		}
 		else {
 			console.log(data.mensagem);
