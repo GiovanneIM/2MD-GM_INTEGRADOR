@@ -32,12 +32,6 @@
     position: relative;
 }
 
-.navbar__link span {
-    /* Espaçamento */
-    margin-left: 1rem;
-    padding: calc(var(--spacer) * 0.75);
-}
-
 .navbar__link:hover {
     color: white;
     background-color: var(--primary);
@@ -71,6 +65,55 @@
     opacity: 1;
     transform: translate(0);
 }
+
+/* Sair */
+.navbar__logout {
+    width: 3rem;
+    height: 3rem;
+
+    text-decoration: none;
+    color: var(--text);
+    transition: var(--transition);
+
+    position: relative;
+}
+
+.navbar__logout:hover {
+    color: white;
+    background-color: black;
+}
+
+.navbar__logout span {
+    position: absolute;
+    left: 100%;
+
+    opacity: 0;
+
+    color: #fff;
+    background: var(--primary);
+
+    margin-left: 1rem;
+    padding: calc(var(--spacer) * 0.75);
+
+    /* O Span só torna clicável quando está com visibility = visible */
+    visibility: hidden;
+    pointer-events: visible;
+    /* Quebra em ' ' */
+    white-space: wrap;
+
+    transition: var(--transition);
+    transform: translate(calc(-1 * var(--spacer) * 3));
+}
+
+.navbar__logout:hover span,
+.navbar:not(:hover) .navbar__logout:focus span {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(0);
+}
+
+
+
 
 /* ===== CELULAR ===== */
 
