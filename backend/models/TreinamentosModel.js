@@ -212,11 +212,13 @@ class TreinamentoModel {
                 // Comando para obter o total de treinamentos
                 const sqlTotal = `
                     SELECT COUNT(*) AS total
-                    FROM treinamentos
+                    FROM treinamentos t
+                    INNER JOIN participacoes p on p.idTreinamento = t.id
+                    WHERE p.idParticipante = ?
                 ;`;
 
                 // Fazendo as consultas
-                const [[totalResult]] = await connection.query(sqlTotal);
+                const [[totalResult]] = await connection.query(sqlTotal, [idUsuario]);
                 const [treinamentos] = await connection.query(sqlTreinamentos, [idUsuario, limite, offset]);
 
                 // Retornando o total e os treinamentos da página
@@ -255,11 +257,12 @@ class TreinamentoModel {
                 // Comando para obter o total de treinamentos
                 const sqlTotal = `
                     SELECT COUNT(*) AS total
-                    FROM treinamentos
+                    FROM treinamentos t
+                    WHERE t.idCriador = ?
                 ;`;
 
                 // Fazendo as consultas
-                const [[totalResult]] = await connection.query(sqlTotal);
+                const [[totalResult]] = await connection.query(sqlTotal, [idUsuario]);
                 const [treinamentos] = await connection.query(sqlTreinamentos, [idUsuario, limite, offset]);
 
                 // Retornando o total e os treinamentos da página

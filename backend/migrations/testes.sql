@@ -33,3 +33,9 @@ UPDATE treinamentos t SET t.estado = 'Pendente' WHERE t.id = 1;
 SELECT id, nome, email, telefone, tipo, id_equipe 
 FROM usuarios u 
 WHERE u.id_equipe = 1;
+
+
+SELECT COUNT(*) AS total
+FROM treinamentos t
+INNER JOIN participacoes p on p.idTreinamento = t.id
+WHERE p.idParticipante = 2;

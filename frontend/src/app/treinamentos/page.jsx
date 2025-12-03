@@ -12,6 +12,7 @@ export default function Treinamentos() {
     const [exibir, setExibir] = useState("Realizados");
 
     const [pagina, setPagina] = useState(1);
+    const [totalPaginas, setTotalPaginas] = useState(1)
 
     const Status = {
         'Pendente': ['primary', 'fa-question-circle'],
@@ -44,15 +45,19 @@ export default function Treinamentos() {
 
             // Treinamentos realizados
             const resRealizados = await fetch(`http://localhost:3000/api/treinamentos/participante/${usuario.id}?pagina=${pagina}`);
-            const dadosRealizados = await resRealizados.json();
-            if (dadosRealizados.sucesso) 
-                setTreinamentosRealizados(dadosRealizados.dados.treinamentos);
+            const dataRealizados = await resRealizados.json();
+            if (dataRealizados.sucesso) {
+                setTreinamentosRealizados(dataRealizados.dados.treinamentos);
+                setTotalPaginas(dataRealizados.dados.totalPaginas);
+            }
 
             // Treinamentos ofertados (criados pelo usuário)
             const resOfertados = await fetch(`http://localhost:3000/api/treinamentos/criador/${usuario.id}?pagina=${pagina}`);
-            const dadosOfertados = await resOfertados.json();
-            if (dadosOfertados.sucesso) 
-                setTreinamentosOfertados(dadosOfertados.dados.treinamentos);
+            const dataOfertados = await resOfertados.json();
+            if (dataOfertados.sucesso) {
+                setTreinamentosOfertados(dataOfertados.dados.treinamentos);
+                setTotalPaginas(dataRealizados.dados.totalPaginas);
+            }
         }
 
         if (usuario)
@@ -68,21 +73,25 @@ export default function Treinamentos() {
             // Treinamentos realizados
             if (exibir === 'Realizados') {
                 const resRealizados = await fetch(`http://localhost:3000/api/treinamentos/participante/${usuario.id}?pagina=${pagina}`);
-                const dadosRealizados = await resRealizados.json();
-                if (dadosRealizados.sucesso) 
-                    setTreinamentosRealizados(dadosRealizados.dados.treinamentos);
+                const dataRealizados = await resRealizados.json();
+                if (dataRealizados.sucesso) {
+                    setTreinamentosRealizados(dataRealizados.dados.treinamentos);
+                    setTotalPaginas(dataRealizados.dados.totalPaginas);
+                }
             }
             else {
                 // Treinamentos ofertados (criados pelo usuário)
                 const resOfertados = await fetch(`http://localhost:3000/api/treinamentos/criador/${usuario.id}?pagina=${pagina}`);
-                const dadosOfertados = await resOfertados.json();
-                if (dadosOfertados.sucesso) 
-                    setTreinamentosOfertados(dadosOfertados.dados.treinamentos);
+                const dataOfertados = await resOfertados.json();
+                if (dataOfertados.sucesso) {
+                    setTreinamentosOfertados(dataOfertados.dados.treinamentos);
+                    setTotalPaginas(dataOfertados.dados.totalPaginas);
+                }
             }
         }
 
         carregarTreinamentos();
-    }, [pagina]);
+    }, [pagina, exibir]);
 
     /* Controlando o valor da página */
     useEffect(() => {
@@ -90,11 +99,61 @@ export default function Treinamentos() {
         if (pagina < 1) {
             setPagina(1)
         }
+
+        // Impedindo que o valor vá para páginas maiores que a página final
+        if (pagina > totalPaginas) {
+            setPagina(totalPaginas)
+        }
     }, [pagina])
 
 
     // Treinamentos exibidos conforme a opção
     const lista = exibir === "Realizados" ? treinamentosRealizados : treinamentosOfertados;
+
+    function botoesPaginacao() {
+        const botoes = [];
+
+        let inicio, fim;
+
+        if (pagina <= 3 || totalPaginas === 0) {
+            inicio = 1;
+            fim = 5;
+        } else {
+            inicio = (pagina - 2) <= (totalPaginas - 4) ? (pagina - 2) : (totalPaginas - 4);
+            fim = (pagina + 2) <= totalPaginas ? (pagina + 2) : totalPaginas;
+        }
+
+        if (fim > totalPaginas) fim = totalPaginas;
+        if (inicio < 1) inicio = 1;
+
+
+        botoes.push(<button key={'anterior'} className="btn border rounded-0 btnPaginacao" onClick={e => setPagina(pagina - 1)}
+            disabled={(pagina === 1) || (totalPaginas === 0)}
+        >
+            Anterior
+        </button>)
+
+        for (let i = inicio; i <= fim; i++) {
+            botoes.push(
+                <button
+                    key={i}
+                    className={`btn border rounded-0 ${(i === pagina) ? 'bg-secondary-subtle' : ''} btnPaginacao`}
+                    onClick={() => setPagina(i)}
+                    style={{ width: '3rem' }}
+                >
+                    {i}
+                </button>
+            );
+        }
+
+        botoes.push(<button key={'proximo'} className="btn border rounded-0 btnPaginacao" onClick={e => setPagina(pagina + 1)}
+            disabled={(pagina === totalPaginas) || (totalPaginas === 0)}>
+            Próximo
+        </button>)
+
+        return botoes;
+    }
+
 
     if (usuario) return (
         <div className='container h-100 py-4 d-flex flex-column'>
@@ -114,14 +173,14 @@ export default function Treinamentos() {
                         {/* Botões Realizados/Oferecidos */}
                         <div className='col-12 col-md-6 pe-md-2'>
                             <button
-                                className={`col-12 col-sm-6 btn border rounded-0 btn-filtro ${exibir === 'Realizados' ? 'active' : ''}`}
+                                className={`col-12 col-sm-6 btn border rounded-0 btn-filtro btnPaginacao ${exibir === 'Realizados' ? 'active' : ''}`}
                                 onClick={() => setExibir("Realizados")}
                             >
                                 Realizados
                             </button>
 
                             <button
-                                className={`col-12 col-sm-6 btn border rounded-0 btn-filtro ${exibir === 'Ofertados' ? 'active' : ''}`}
+                                className={`col-12 col-sm-6 btn border rounded-0 btn-filtro btnPaginacao ${exibir === 'Ofertados' ? 'active' : ''}`}
                                 onClick={() => setExibir("Ofertados")}
                                 disabled={usuario.tipo === 'mt'}
                             >
@@ -129,18 +188,12 @@ export default function Treinamentos() {
                             </button>
                         </div>
 
-                        {/* Botões paginação */}
+
+
+                        {/* PAGINAÇÃO */}
                         <div className='col-12 col-md-6 d-flex justify-content-md-end justify-content-center'>
-                            <button className="btn border rounded-0" onClick={e => setPagina(pagina - 1)} disabled={pagina === 1}>Anterior</button>
-                            <button className="btn border rounded-0" onClick={e => setPagina(1)} style={{ width: '3rem' }}>1</button>
-                            <button className="btn border rounded-0" onClick={e => setPagina(2)} style={{ width: '3rem' }}>2</button>
-                            <button className="btn border rounded-0" onClick={e => setPagina(3)} style={{ width: '3rem' }}>3</button>
-                            <button className="btn border rounded-0" onClick={e => setPagina(4)} style={{ width: '3rem' }}>4</button>
-                            <button className="btn border rounded-0" onClick={e => setPagina(5)} style={{ width: '3rem' }}>5</button>
-                            <button className="btn border rounded-0" onClick={e => setPagina(pagina + 1)} disabled={lista.length < 10}>Próximo</button>
+                            {botoesPaginacao()}
                         </div>
-
-
                     </div>
 
                     {/* Tabela */}

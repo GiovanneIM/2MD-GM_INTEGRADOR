@@ -9,6 +9,7 @@ export default function TreinamentosLista({
     treinamentosExibidos,
     setOpcaoExibir,
     setPagina,
+    totalPaginas,
     pagina,
     tipoUsuario
 }) {
@@ -39,6 +40,62 @@ export default function TreinamentosLista({
             : setTrExibir(treinamentos);
     }
 
+    function botoesPaginacao() {
+        const botoes = [];
+
+        let inicio, fim;
+
+        if (pagina <= 3 || totalPaginas === 0) {
+            inicio = 1;
+            fim = 5;
+        } else {
+            inicio = (pagina - 2) <= (totalPaginas - 4) ? (pagina - 2) : (totalPaginas - 4);
+            fim = (pagina + 2) <= totalPaginas ? (pagina + 2) : totalPaginas;
+        }
+
+        if (fim > totalPaginas) fim = totalPaginas;
+        if (inicio < 1) inicio = 1;
+
+
+        botoes.push(<button
+            key={'anterior'}
+            className="btn border rounded-0 btnPaginacao" 
+            onClick={e => {
+                setPagina(pagina - 1)
+                setFiltro('')
+            }}
+            disabled={(pagina === 1) || (totalPaginas === 0)}
+        >
+            Anterior
+        </button>)
+
+        for (let i = inicio; i <= fim; i++) {
+            botoes.push(
+                <button
+                    key={i}
+                    className={`btn border rounded-0 ${(i === pagina) ? 'bg-secondary-subtle' : ''} btnPaginacao`}
+                    onClick={e => {
+                        setPagina(i)
+                        setFiltro('')
+                    }}
+                    style={{ width: '3rem' }}
+                >
+                    {i}
+                </button>
+            );
+        }
+
+        botoes.push(<button key={'proximo'} className="btn border rounded-0 btnPaginacao" 
+            onClick={e => {
+                setPagina(pagina + 1) 
+                setFiltro('')
+            }}
+            disabled={(pagina === totalPaginas) || (totalPaginas === 0)}>
+            Próximo
+        </button>)
+
+        return botoes;
+    }
 
     return (
 
@@ -136,13 +193,7 @@ export default function TreinamentosLista({
 
             {/* Botões paginação */}
             <div className='col-12 d-flex justify-content-center mt-2'>
-                <button className="btn border rounded-0" onClick={e => setPagina(pagina - 1)} disabled={pagina === 1}>Anterior</button>
-                <button className="btn border rounded-0" onClick={e => setPagina(1)} style={{width: '3rem'}}>1</button>
-                <button className="btn border rounded-0" onClick={e => setPagina(2)} style={{width: '3rem'}}>2</button>
-                <button className="btn border rounded-0" onClick={e => setPagina(3)} style={{width: '3rem'}}>3</button>
-                <button className="btn border rounded-0" onClick={e => setPagina(4)} style={{width: '3rem'}}>4</button>
-                <button className="btn border rounded-0" onClick={e => setPagina(5)} style={{width: '3rem'}}>5</button>
-                <button className="btn border rounded-0" onClick={e => setPagina(pagina + 1)} disabled={treinamentosExibidos.length < 10}>Próximo</button>
+                {botoesPaginacao()}
             </div>
 
             {/* Total de treinamentos de cada estado */}

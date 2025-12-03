@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 
 import TreinamentosLista from '@/components/TreinamentosLista';
 import AcoesRapidas from '@/components/ft/AcoesRapidas';
-import Calendario from '@/components/Calendario';
 
 // Gráficos
 import GraficoEstados from '@/components/Graficos/GraficoEstados';
@@ -18,6 +17,7 @@ export default function Dashboard() {
 	const [treinamentosExibidos, setTreinamentosExibidos] = useState([]);
 
 	const [opcaoExibir, setOpcaoExibir] = useState('Realizados');
+	const [totalPaginas, setTotalPaginas] = useState(1);
 	const [pagina, setPagina] = useState(1);
 
 	/* Carregando o usuário logado */
@@ -46,11 +46,8 @@ export default function Dashboard() {
 		const data = await res.json();
 
 		if (data.sucesso) {
-			// console.log(data);
-			
 			setTreinamentosExibidos(data.dados.treinamentos);
-			// console.log(data.dados.treinamentos);
-			
+			setTotalPaginas(data.dados.totalPaginas)
 		}
 		else {
 			console.log(data.mensagem);
@@ -64,7 +61,7 @@ export default function Dashboard() {
 
 		if (data.sucesso) {
 			setTreinamentosExibidos(data.dados.treinamentos);
-			// console.log(data.dados.treinamentos);
+			setTotalPaginas(data.dados.totalPaginas)
 		}
 		else {
 			console.log(data.mensagem);
@@ -106,6 +103,7 @@ export default function Dashboard() {
 								setOpcaoExibir={setOpcaoExibir}
 								setPagina={setPagina}
 								pagina={pagina}
+								totalPaginas={totalPaginas}
 								tipoUsuario={usuario.tipo}
 							/>
 						</div>
