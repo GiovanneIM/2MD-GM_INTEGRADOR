@@ -17,6 +17,7 @@ export default function Dashboard() {
 	const [treinamentosExibidos, setTreinamentosExibidos] = useState([]);
 
 	const [opcaoExibir, setOpcaoExibir] = useState('Realizados');
+	const [totalPaginas, setTotalPaginas] = useState(1);
 	const [pagina, setPagina] = useState(1);
 
 	/* Carregando o usuário logado */
@@ -47,6 +48,7 @@ export default function Dashboard() {
 
 		if (data.sucesso) {
 			setTreinamentosExibidos(data.dados.treinamentos);
+			setTotalPaginas(data.dados.totalPaginas);
 		}
 		else {
 			console.log(data.mensagem);
@@ -60,6 +62,7 @@ export default function Dashboard() {
 
 		if (data.sucesso) {
 			setTreinamentosExibidos(data.dados.treinamentos);
+			setTotalPaginas(data.dados.totalPaginas);
 		}
 		else {
 			console.log(data.mensagem);
@@ -102,6 +105,7 @@ export default function Dashboard() {
 								setOpcaoExibir={setOpcaoExibir}
 								setPagina={setPagina}
 								pagina={pagina}
+								totalPaginas={totalPaginas}
 								tipoUsuario={usuario.tipo}
 							/>
 						</div>

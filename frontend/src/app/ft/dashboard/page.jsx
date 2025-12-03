@@ -47,7 +47,7 @@ export default function Dashboard() {
 
 		if (data.sucesso) {
 			setTreinamentosExibidos(data.dados.treinamentos);
-			setTotalPaginas(data.dados.totalPaginas)
+			setTotalPaginas(data.dados.totalPaginas);
 		}
 		else {
 			console.log(data.mensagem);
