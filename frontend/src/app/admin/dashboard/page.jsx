@@ -67,9 +67,7 @@ export default function Dashboard() {
 				const data = await res.json();
 
 				if (data.sucesso) {
-					console.log(data.dados);
-
-					setTreinamentos(data.dados);
+					setTreinamentos(data.dados.treinamentos);
 				}
 				else {
 					console.log(data.mensagem);
