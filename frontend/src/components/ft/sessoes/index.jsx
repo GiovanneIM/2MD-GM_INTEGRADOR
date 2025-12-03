@@ -1,6 +1,3 @@
-
-import { useState } from "react";
-
 import Calendario from '@/components/Calendario';
 
 import Swal from 'sweetalert2';
@@ -8,7 +5,7 @@ import withReactContent from 'sweetalert2-react-content';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 const MySwal = withReactContent(Swal);
 
@@ -26,25 +23,25 @@ export default function Sessoes({
         let dia = null;
         let horaInicio = null;
         let horaFim = null;
-        let localidade = "";
+        let localidade = '';
 
         MySwal.fire({
             scrollbarPadding: false,
             heightAuto: false,
 
-            title: "Nova sessão",
+            title: 'Nova sessão',
             showConfirmButton: false,
             html: (
-                <div className='text-start p-3 border rounded' style={{ background: "#f8f9fa" }}>
-                    <div className="d-flex flex-wrap">
+                <div className='text-start p-3 border rounded' style={{ background: '#f8f9fa' }}>
+                    <div className='d-flex flex-wrap'>
 
-                        <div className="col-12 mb-3">
-                            <label className="col-12 fw-bold">Dia</label>
+                        <div className='col-12 mb-3'>
+                            <label className='col-12 fw-bold'>Dia</label>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
-                                    label="Escolha o dia"
-                                    format="DD/MM/YYYY"
-                                    minDate={dayjs().add(1, "day")}
+                                    label='Escolha o dia'
+                                    format='DD/MM/YYYY'
+                                    minDate={dayjs().add(1, 'day')}
                                     onChange={(value) => {
                                         dia = value;
                                     }}
@@ -53,11 +50,11 @@ export default function Sessoes({
                             </LocalizationProvider>
                         </div>
 
-                        <div className="col-12 col-md-6 pe-md-2 mb-3">
-                            <label className="fw-bold">Início às</label>
+                        <div className='col-12 col-md-6 pe-md-2 mb-3'>
+                            <label className='fw-bold'>Início às</label>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <TimePicker
-                                    label="Horário de início"
+                                    label='Horário de início'
                                     onChange={(value) => {
                                         horaInicio = value;
                                     }}
@@ -66,11 +63,11 @@ export default function Sessoes({
                             </LocalizationProvider>
                         </div>
 
-                        <div className="col-12 col-md-6 ps-md-2 mb-3">
-                            <label className="fw-bold">Término às</label>
+                        <div className='col-12 col-md-6 ps-md-2 mb-3'>
+                            <label className='fw-bold'>Término às</label>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <TimePicker
-                                    label="Horário de término"
+                                    label='Horário de término'
                                     onChange={(value) => {
                                         horaFim = value;
                                     }}
@@ -79,33 +76,33 @@ export default function Sessoes({
                             </LocalizationProvider>
                         </div>
 
-                        <div className="col-12">
-                            <label htmlFor="localidade" className="fw-bold">Local</label>
+                        <div className='col-12'>
+                            <label htmlFor='localidade' className='fw-bold'>Local</label>
                             <input
                                 id='localidade'
-                                className="form-control"
-                                placeholder="Local da sessão"
+                                className='form-control'
+                                placeholder='Local da sessão'
                                 onChange={(e) => (localidade = e.target.value)}
                             />
                         </div>
                     </div>
 
-                    <div className="mt-3 text-center">
-                        <button id="btnFecharSwal" className="swal2-confirm swal2-styled border btn-White">Fechar</button>
-                        <button id="btnMarcarSessao" className="swal2-cancel swal2-styled btn-azulGM">Marcar sessão</button>
+                    <div className='mt-3 text-center'>
+                        <button id='btnFecharSwal' className='swal2-confirm swal2-styled border btn-White'>Fechar</button>
+                        <button id='btnMarcarSessao' className='swal2-cancel swal2-styled btn-azulGM'>Marcar sessão</button>
                     </div>
                 </div>
             ),
             didOpen: () => {
-                document.getElementById("btnFecharSwal").addEventListener("click", () => {
+                document.getElementById('btnFecharSwal').addEventListener('click', () => {
                     Swal.close();
                 });
 
-                document.getElementById("btnMarcarSessao").addEventListener("click", () => {
+                document.getElementById('btnMarcarSessao').addEventListener('click', () => {
                     registrarSessao({
-                        dia: dia ? dia.format("YYYY-MM-DD") : null,
-                        hora_inicio: horaInicio ? horaInicio.format("HH:mm:ss") : null,
-                        hora_fim: horaFim ? horaFim.format("HH:mm:ss") : null,
+                        dia: dia ? dia.format('YYYY-MM-DD') : null,
+                        hora_inicio: horaInicio ? horaInicio.format('HH:mm:ss') : null,
+                        hora_fim: horaFim ? horaFim.format('HH:mm:ss') : null,
                         localidade: localidade,
                     });
 
@@ -116,7 +113,7 @@ export default function Sessoes({
     }
 
     if (sessoes) return (<>
-        <div className="col-12 col-lg-6 pb-3 pb-lg-0 pe-md-2 d-flex flex-column gap-3 " style={{ height: 600 }}>
+        <div className='col-12 col-lg-6 pb-3 pb-lg-0 pe-md-2 d-flex flex-column gap-3 ' style={{ height: 600 }}>
             {/* Div superior */}
             <div className='col-12 d-flex justify-content-between border-bottom pb-3 px-3'>
                 <div className='mb-0 fs-4'>Sessões</div>
@@ -124,8 +121,8 @@ export default function Sessoes({
                 {/* Botão para adicionar sessão */}
                 {criador ?
                     <button className='btn btn-secondary btn-sm' onClick={novaSessao}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus" viewBox="0 0 16 16">
-                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' className='bi bi-plus' viewBox='0 0 16 16'>
+                            <path d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4' />
                         </svg>
                         Nova sessão
                     </button>
@@ -138,25 +135,25 @@ export default function Sessoes({
 
                 {sessoes.map((s) =>
                     <div className='border p-3' key={s.indice}>
-                        <div className="d-flex flex-wrap row-gap-2 mb-2">
-                            <div className="col-12 fw-bold">Sessão {s.indice}</div>
-                            <div className="col-12 col-sm-6">Data: {s.dia}</div>
-                            <div className="col-12 col-sm-6">Horário: Das {s.hora_inicio} às {s.hora_fim}</div>
+                        <div className='d-flex flex-wrap row-gap-2 mb-2'>
+                            <div className='col-12 fw-bold'>Sessão {s.indice}</div>
+                            <div className='col-12 col-sm-6'>Data: {s.dia}</div>
+                            <div className='col-12 col-sm-6'>Horário: Das {s.hora_inicio} às {s.hora_fim}</div>
                             <div>Local: {s.localidade}</div>
                         </div>
 
                         {criador ??
-                            <div className="d-flex gap-3">
-                                <button className="btn btn-danger">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">
-                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                            <div className='d-flex gap-3'>
+                                <button className='btn btn-danger'>
+                                    <svg xmlns='http://www.w3.org/2000/svg' width='26' height='26' fill='currentColor' className='bi bi-x' viewBox='0 0 16 16'>
+                                        <path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708' />
                                     </svg>
                                     Cancelar sessão
                                 </button>
 
-                                <button className="btn btn-success" disabled>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check" viewBox="0 0 16 16">
-                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
+                                <button className='btn btn-success' disabled>
+                                    <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' className='bi bi-check' viewBox='0 0 16 16'>
+                                        <path d='M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z' />
                                     </svg>
                                     Marcar realização
                                 </button>
@@ -168,7 +165,7 @@ export default function Sessoes({
             </div>
         </div>
 
-        <div className="col-12 col-lg-6 pb-3 pb-lg-0 ps-md-2 d-flex flex-column gap-3">
+        <div className='col-12 col-lg-6 pb-3 pb-lg-0 ps-md-2 d-flex flex-column gap-3'>
             <Calendario sessoes={sessoes} treinamento={treinamento} />
         </div>
     </>)

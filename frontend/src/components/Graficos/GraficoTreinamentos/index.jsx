@@ -17,23 +17,24 @@ ChartJS.register(
 	Tooltip,
 );
 
-export default function GraficoTreinamentos({ opcaoExibir }) {
+export default function GraficoTreinamentos({ opcaoExibir, idUsuario }) {
 	const [data, setData] = useState({ labels: [], datasets: [{}] })
 
 	/* Carregando os treinamentos */
 	useEffect(() => {
 		setData({ labels: [], datasets: [{}] });
 
+		// Função para carregar os treinamentos
 		async function carregar() {
 			// Carregando os treinamentos realizados
 			if (opcaoExibir === 'Realizados') {
-				const res = await fetch('http://localhost:3000/api/treinamentos/participante/2/seisMeses')
+				const res = await fetch(`http://localhost:3000/api/treinamentos/participante/${idUsuario}/seisMeses`)
 				const data = await res.json()
 				setData(formatarDadosParaChart(data.dados.treinamentos))
 			}
 			// Carregando os treinamentos criados
 			else {
-				const res = await fetch('http://localhost:3000/api/treinamentos/criador/2/seisMeses')
+				const res = await fetch(`http://localhost:3000/api/treinamentos/criador/${idUsuario}/seisMeses`)
 				const data = await res.json()
 				setData(formatarDadosParaChart(data.dados.treinamentos))
 			}
@@ -45,22 +46,10 @@ export default function GraficoTreinamentos({ opcaoExibir }) {
 	/* Função para formatar os dados da API para a formatação do Data do Chart.js */
 	function formatarDadosParaChart(registros) {
 		const estados = [
-			{
-				estado: 'Pendente',
-				cor: '#0d6efd',
-			},
-			{
-				estado: 'Em andamento',
-				cor: '#ffc107',
-			},
-			{
-				estado: 'Concluido',
-				cor: '#198754',
-			},
-			{
-				estado: 'Cancelado',
-				cor: '#dc3545'
-			}
+			{ estado: 'Pendente', cor: '#0d6efd' },
+			{ estado: 'Em andamento', cor: '#ffc107' },
+			{ estado: 'Concluido', cor: '#198754' },
+			{ estado: 'Cancelado', cor: '#dc3545' }
 		];
 
 		// Obtendo os meses
@@ -93,7 +82,7 @@ export default function GraficoTreinamentos({ opcaoExibir }) {
 		}
 	};
 
-	return (
+	return (<>
 		<div className='col-12 d-flex flex-column justify-content-between'>
 			{/* Titulo */}
 			<div className='card-header bg-white border-0 px-0 mb-3'>
@@ -108,5 +97,5 @@ export default function GraficoTreinamentos({ opcaoExibir }) {
 				{data && <Bar data={data} options={options} />}
 			</div>
 		</div>
-	);
+	</>);
 }

@@ -62,8 +62,8 @@ export default function Calendario({ sessoes = [], treinamento }) {
 
     /* Função para formatar a exibição de data */
     function formatarData(data) {
-        const diaDaSemana = capitalize(format(data, "EEEE", { locale: ptBR }));
-        const diaEHora = format(data, "dd/MM/yyyy - HH:mm", { locale: ptBR });
+        const diaDaSemana = capitalize(format(data, 'EEEE', { locale: ptBR }));
+        const diaEHora = format(data, 'dd/MM/yyyy - HH:mm', { locale: ptBR });
 
         return `${diaDaSemana}<br/>${diaEHora}`;
     }
@@ -100,29 +100,29 @@ export default function Calendario({ sessoes = [], treinamento }) {
                 <div class='col-12 d-flex flex-wrap'>
                     <div class='col-12 col-sm-6 mt-3'>
                         <div class='fw-bold'>Sessão criada em</div>
-                        <div>${sessao.criacao ? formatarData(sessao.criacao) : "Dia da semana <br/> 00/00/0000 - 00:00"}</div>
+                        <div>${sessao.criacao ? formatarData(sessao.criacao) : 'Dia da semana <br/> 00/00/0000 - 00:00'}</div>
                     </div>
 
                     <div class='col-12 col-sm-6 mt-3'>
                         <div class='fw-bold'>Data da sessão</div>
-                        <div>${sessao.inicio ? formatarData(sessao.inicio) : "Dia da semana <br/> 00/00/0000 - 00:00"}</div>
+                        <div>${sessao.inicio ? formatarData(sessao.inicio) : 'Dia da semana <br/> 00/00/0000 - 00:00'}</div>
                     </div>
                 </div>
 
                 <div class='mt-3'>
-                    <button id="btnFecharSwal" class="swal2-confirm swal2-styled border btn-White">Fechar</button>
+                    <button id='btnFecharSwal' class='swal2-confirm swal2-styled border btn-White'>Fechar</button>
                     
                 </div>
             `,
-            // <button id="btnIrSessao" class="swal2-cancel swal2-styled btn-azulGM">Ver sessão</button>
+            // <button id='btnIrSessao' class='swal2-cancel swal2-styled btn-azulGM'>Ver sessão</button>
             showConfirmButton: false,
 
             didOpen: () => {
-                document.getElementById("btnFecharSwal").addEventListener("click", () => {
+                document.getElementById('btnFecharSwal').addEventListener('click', () => {
                     Swal.close();
                 });
 
-                // document.getElementById("btnIrSessao").addEventListener("click", () => {
+                // document.getElementById('btnIrSessao').addEventListener('click', () => {
                 // });
             }
         })
@@ -132,17 +132,17 @@ export default function Calendario({ sessoes = [], treinamento }) {
         <div className='flex-grow-1'>
             <Calendar
                 localizer={localizer}
-                culture="pt-BR"
+                culture='pt-BR'
 
                 views={[Views.MONTH, Views.WEEK, Views.DAY]}
                 messages={{
-                    month: "Mês",
-                    week: "Semana",
-                    day: "Dia",
-                    today: "Atual",
-                    previous: "Anterior",
-                    next: "Próximo",
-                    agenda: "Agenda"
+                    month: 'Mês',
+                    week: 'Semana',
+                    day: 'Dia',
+                    today: 'Atual',
+                    previous: 'Anterior',
+                    next: 'Próximo',
+                    agenda: 'Agenda'
                 }}
 
                 events={eventos()}

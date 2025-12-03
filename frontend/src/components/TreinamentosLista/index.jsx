@@ -18,13 +18,6 @@ export default function TreinamentosLista({
     const [treinamentos, setTreinamentos] = useState([]);
     const [trExibir, setTrExibir] = useState([]);
 
-    /* Iniciando com o filtro desligado */
-    useEffect(() => {
-        setTreinamentos(treinamentosExibidos)
-        setTrExibir(treinamentosExibidos)
-    }, [treinamentosExibidos])
-
-
     /* Objeto para as cores do estado */
     const Status = {
         'Pendente': ['primary', 'fa-question-circle'],
@@ -33,6 +26,12 @@ export default function TreinamentosLista({
         'Cancelado': ['danger', 'fa-xmark'],
     };
 
+    /* Iniciando com o filtro desligado */
+    useEffect(() => {
+        setTreinamentos(treinamentosExibidos)
+        setTrExibir(treinamentosExibidos)
+    }, [treinamentosExibidos])
+
     /* Função para filtrar treinamentos por estado */
     function FiltrarTreinamentos(estado) {
         estado
@@ -40,6 +39,7 @@ export default function TreinamentosLista({
             : setTrExibir(treinamentos);
     }
 
+    /* Função para criar os botões de paginação */
     function botoesPaginacao() {
         const botoes = [];
 
@@ -59,7 +59,7 @@ export default function TreinamentosLista({
 
         botoes.push(<button
             key={'anterior'}
-            className="btn border rounded-0 btnPaginacao" 
+            className='btn border rounded-0 btnPaginacao'
             onClick={e => {
                 setPagina(pagina - 1)
                 setFiltro('')
@@ -85,9 +85,9 @@ export default function TreinamentosLista({
             );
         }
 
-        botoes.push(<button key={'proximo'} className="btn border rounded-0 btnPaginacao" 
+        botoes.push(<button key={'proximo'} className='btn border rounded-0 btnPaginacao'
             onClick={e => {
-                setPagina(pagina + 1) 
+                setPagina(pagina + 1)
                 setFiltro('')
             }}
             disabled={(pagina === totalPaginas) || (totalPaginas === 0)}>
@@ -97,8 +97,7 @@ export default function TreinamentosLista({
         return botoes;
     }
 
-    return (
-
+    return (<>
         <div className='h-100 col-12 card border-0 shadow-sm p-3'>
 
             {/* Div superior */}
@@ -127,7 +126,8 @@ export default function TreinamentosLista({
                         <button
                             className={`col-12 col-sm-6 col-md-3 btn border rounded-0 bg-secondary bg-opacity-50`}
                             disabled
-                        >Ofertados
+                        >
+                            Ofertados
                         </button>
                     ) : (
                         <button
@@ -203,12 +203,16 @@ export default function TreinamentosLista({
                         // Calculando o número de treinamentos com o estado determinado
                         const numeroTreinamentos = treinamentos.filter(tr => tr.estado === estado).length;
 
-                        // Criando o botão
+                        // Exibindo a quantidade de treinamentos do estado
                         return (
                             <div key={index} className='col-md-6 d-flex gap-2 align-items-center'>
-                                <div className={`bg-${Status[estado][0]} bg-opacity-10 rounded d-flex justify-content-center align-items-center`} style={{ height: '2.5rem', width: '2.5rem' }}>
+                                <div
+                                    className={`bg-${Status[estado][0]} bg-opacity-10 rounded d-flex justify-content-center align-items-center`}
+                                    style={{ height: '2.5rem', width: '2.5rem' }}
+                                >
                                     <i className={`fas ${Status[estado][1]} text-${Status[estado][0]}`} />
                                 </div>
+
                                 <div>
                                     {numeroTreinamentos}
                                     {numeroTreinamentos === 1 ? ' treinamento ' : ' treinamentos '}
@@ -221,5 +225,5 @@ export default function TreinamentosLista({
             </div>
 
         </div>
-    );
+    </>);
 }

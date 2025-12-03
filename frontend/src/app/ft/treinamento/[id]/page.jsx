@@ -160,16 +160,16 @@ export default function Treinamento() {
     }
 
     function formatarData(data) {
-        if (!data) return "--/--/---- - --:--";
+        if (!data) return '--/--/---- - --:--';
 
         const d = new Date(data);
-        if (isNaN(d)) return "--/--/---- - --:--";
+        if (isNaN(d)) return '--/--/---- - --:--';
 
-        const dia = String(d.getDate()).padStart(2, "0");
-        const mes = String(d.getMonth() + 1).padStart(2, "0");
+        const dia = String(d.getDate()).padStart(2, '0');
+        const mes = String(d.getMonth() + 1).padStart(2, '0');
         const ano = d.getFullYear();
-        const horas = String(d.getHours()).padStart(2, "0");
-        const minutos = String(d.getMinutes()).padStart(2, "0");
+        const horas = String(d.getHours()).padStart(2, '0');
+        const minutos = String(d.getMinutes()).padStart(2, '0');
 
         return `${dia}/${mes}/${ano} às ${horas}:${minutos}`;
     }
@@ -181,7 +181,7 @@ export default function Treinamento() {
             heightAuto: false,
 
             title: 'Confirmar Exclusão',
-            html: `Deseja confirmar a exclusão do treinamento "${treinamento.nome}"?`,
+            html: `Deseja confirmar a exclusão do treinamento '${treinamento.nome}'?`,
 
             confirmButtonText: 'Confirmar',
             confirmButtonColor: '#dc3545',
@@ -205,7 +205,7 @@ export default function Treinamento() {
 
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("Treinamento cancelado!");
+                console.log('Treinamento cancelado!');
                 carregarTreinamento()
             }
         });
@@ -217,7 +217,7 @@ export default function Treinamento() {
             heightAuto: false,
 
             title: 'Confirmar Conclusão',
-            html: `Deseja confirmar a conclusão do treinamento "${treinamento.nome}"?`,
+            html: `Deseja confirmar a conclusão do treinamento '${treinamento.nome}'?`,
 
             confirmButtonText: 'Confirmar',
             confirmButtonColor: '#198754',
@@ -241,7 +241,7 @@ export default function Treinamento() {
 
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("Treinamento Concluído!");
+                console.log('Treinamento Concluído!');
                 carregarTreinamento()
             }
         });
@@ -264,7 +264,7 @@ export default function Treinamento() {
                             <label class='fs-6 fw-semibold'>Alterar nome</label>
                         </div>
                         <div class='gm-input'>
-                            <input id="inputNome" type="text" value="${''}"/>
+                            <input id='inputNome' type='text' value='${''}'/>
                         </div>
                     </div>
                     
@@ -273,7 +273,7 @@ export default function Treinamento() {
                             <label class='fs-6 fw-semibold'>Alterar descrição</label>
                         </div>
                         <div class='gm-input2'>
-                            <textarea id="inputDescricao">${''}</textarea>
+                            <textarea id='inputDescricao'>${''}</textarea>
                         </div>
                     </div>
 
@@ -292,8 +292,8 @@ export default function Treinamento() {
             cancelButtonText: 'Cancelar',
 
             preConfirm: async () => {
-                const novoNome = document.getElementById("inputNome").value;
-                const novaDescricao = document.getElementById("inputDescricao").value;
+                const novoNome = document.getElementById('inputNome').value;
+                const novaDescricao = document.getElementById('inputDescricao').value;
 
 
                 const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/atualizarInfos`, {
@@ -312,7 +312,7 @@ export default function Treinamento() {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("Alterações concluídas!");
+                console.log('Alterações concluídas!');
                 carregarTreinamento()
             }
         });;

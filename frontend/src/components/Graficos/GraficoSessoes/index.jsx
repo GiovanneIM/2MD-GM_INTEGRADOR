@@ -24,46 +24,31 @@ export default function GraficoSessoes({ opcaoExibir, idUsuario }) {
 	useEffect(() => {
 		setData({ labels: [], datasets: [{}] });
 
-		async function carregar() {
+		// Função para carregar as sessões
+		async function carregarSessoes() {
+			// Carregando as sessões realizadas
 			if (opcaoExibir === 'Realizados') {
 				const res = await fetch(`http://localhost:3000/api/treinamentos/sessoes/participante/${idUsuario}/seisMeses`)
 				const data = await res.json()
-				console.log('data Realizados');
-				console.log(data);
-				
 				setData(formatarDadosParaChart(data.dados.sessoes))
 			}
+			// Carregando as sessões realizadas
 			else {
 				const res = await fetch(`http://localhost:3000/api/treinamentos/sessoes/criador/${idUsuario}/seisMeses`)
 				const data = await res.json()
-				console.log('data Oferecidos');
-				console.log(data);
 				setData(formatarDadosParaChart(data.dados.sessoes))
 			}
 		}
 
-		carregar()
+		carregarSessoes()
 	}, [opcaoExibir])
 
 	/* Função para formatar os dados da API para a formatação do Data do Chart.js */
 	function formatarDadosParaChart(registros) {
 		const estados = [
-			{
-				estado: 'Pendente',
-				cor: '#0d6efd',
-			},
-			{
-				estado: 'Em andamento',
-				cor: '#ffc107',
-			},
-			{
-				estado: 'Concluido',
-				cor: '#198754',
-			},
-			{
-				estado: 'Cancelado',
-				cor: '#dc3545'
-			}
+			{ estado: 'Agendada', cor: '#CECECE' },
+			{ estado: 'Em andamento', cor: '#ffc107' },
+			{ estado: 'Concluida', cor: '#198754' }
 		];
 
 		// Obtendo os meses
@@ -83,7 +68,7 @@ export default function GraficoSessoes({ opcaoExibir, idUsuario }) {
 		console.log(labels);
 		console.log('datasets');
 		console.log(datasets);
-		
+
 		return { labels, datasets };
 	}
 
@@ -94,16 +79,12 @@ export default function GraficoSessoes({ opcaoExibir, idUsuario }) {
 			legend: { display: false },
 		},
 		scales: {
-			x: {
-				stacked: true,
-			},
-			y: {
-				stacked: true,
-			}
+			x: { stacked: true },
+			y: { stacked: true }
 		}
 	};
 
-	return (
+	return (<>
 		<div className='col-12 d-flex flex-column justify-content-between'>
 			{/* Titulo */}
 			<div className='card-header bg-white border-0 px-0 mb-3'>
@@ -115,8 +96,8 @@ export default function GraficoSessoes({ opcaoExibir, idUsuario }) {
 
 			{/* Gráfico */}
 			<div className='col-12 d-flex justify-content-center align-items-center'>
-				{ data && <Bar data={data} options={options} /> }
+				{data && <Bar data={data} options={options} />}
 			</div>
 		</div>
-	);
+	</>);
 }

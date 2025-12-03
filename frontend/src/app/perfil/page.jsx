@@ -65,9 +65,9 @@ export default function Perfil() {
             carregarUsuario();
             setEditar(false);
             setNovosDados({});
-            alert("Perfil atualizado com sucesso!");
+            alert('Perfil atualizado com sucesso!');
         } else {
-            alert("Erro ao atualizar o perfil!");
+            alert('Erro ao atualizar o perfil!');
         }
     }
 
@@ -132,7 +132,7 @@ export default function Perfil() {
                 <div className='col-12 col-lg-6 h-100 pe-lg-2'>
                     <div className='col-12 h-100 d-flex flex-column bg-white shadow rounded p-3'>
 
-                        <div className="d-flex justify-content-between mb-3">
+                        <div className='d-flex justify-content-between mb-3'>
                             <h5 className='mb-4 fs-4'>Informações Pessoais</h5>
                         </div>
 
@@ -144,7 +144,7 @@ export default function Perfil() {
 
                                 {!editar
                                     ? (<div style={{ height: '38px' }}>{usuario.nome}</div>)
-                                    : (<input className="form-control" value={novosDados.nome} onChange={e => setNovosDados({ ...novosDados, nome: e.target.value })} />)
+                                    : (<input className='form-control' value={novosDados.nome} onChange={e => setNovosDados({ ...novosDados, nome: e.target.value })} />)
                                 }
                             </div>
 
@@ -154,7 +154,7 @@ export default function Perfil() {
 
                                 {!editar
                                     ? (<div style={{ height: '38px' }}>{usuario.email}</div>)
-                                    : (<input className="form-control" value={novosDados.email} onChange={e => setNovosDados({ ...novosDados, email: e.target.value })} />)
+                                    : (<input className='form-control' value={novosDados.email} onChange={e => setNovosDados({ ...novosDados, email: e.target.value })} />)
                                 }
                             </div>
 
@@ -164,7 +164,7 @@ export default function Perfil() {
 
                                 {!editar
                                     ? (<div style={{ height: '38px' }}>{usuario.telefone}</div>)
-                                    : (<input className="form-control" value={novosDados.telefone} onChange={e => setNovosDados({ ...novosDados, telefone: e.target.value })} />)
+                                    : (<input className='form-control' value={novosDados.telefone} onChange={e => setNovosDados({ ...novosDados, telefone: e.target.value })} />)
                                 }
                             </div>
 
@@ -177,13 +177,13 @@ export default function Perfil() {
                                     : (
                                         <div className='position-relative'>
                                             <textarea
-                                                className="form-control" style={{ minHeight: '120px', resize: 'none' }}
+                                                className='form-control' style={{ minHeight: '120px', resize: 'none' }}
                                                 value={novosDados.bio}
                                                 onChange={e => setNovosDados({ ...novosDados, bio: e.target.value.length <= 200 ? e.target.value : e.target.value.subtring(0, 200) })}
                                             />
 
                                             <div className='position-absolute bottom-0 end-0 me-2'>
-                                                <small style={{ color: "#666" }}>{novosDados.bio?.length ?? 0}/200</small>
+                                                <small style={{ color: '#666' }}>{novosDados.bio?.length ?? 0}/200</small>
                                             </div>
                                         </div>
                                     )
@@ -192,8 +192,8 @@ export default function Perfil() {
 
                             <div className='text-center'>
                                 {!editar
-                                    ? (<button className="btn btn-primary col-2" onClick={() => setEditar(true)}>Editar</button>)
-                                    : (<button className="btn btn-success col-2" onClick={salvarAlteracoes}>Salvar</button>)
+                                    ? (<button className='btn btn-primary col-2' onClick={() => setEditar(true)}>Editar</button>)
+                                    : (<button className='btn btn-success col-2' onClick={salvarAlteracoes}>Salvar</button>)
                                 }
                             </div>
 
@@ -256,9 +256,9 @@ export default function Perfil() {
                             type='button'
                             className='btn btn-primary'
                             onClick={() => {
-                                console.log("Mensagem enviada!");
+                                console.log('Mensagem enviada!');
                                 const modal = bootstrap.Modal.getInstance(
-                                    document.getElementById("exampleModal")
+                                    document.getElementById('exampleModal')
                                 );
                                 modal.hide();
                             }}
