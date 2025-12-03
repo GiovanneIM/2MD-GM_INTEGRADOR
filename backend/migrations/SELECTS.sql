@@ -16,6 +16,3 @@ SELECT * FROM participacoes;
 SELECT * FROM presencas;
 SELECT * FROM certificados;
 
-
-SELECT * FROM treinamentos WHERE idCriador = 2
-ORDER BY id DESC;

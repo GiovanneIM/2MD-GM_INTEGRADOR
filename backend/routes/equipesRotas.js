@@ -12,11 +12,5 @@ router.get('/:id', EquipesController.listarEquipe)
 // Listar os MEMBROS de uma equipe ESPECÍFICA
 router.get('/:id/membros', EquipesController.listarMembros)    
 
-// Listar os FTs de uma equipe ESPECÍFICA
-router.get('/:id/ft', EquipesController.listarFTs)
-
-// Listar os MTs de uma equipe ESPECÍFICA
-router.get('/:id/mt', EquipesController.listarMTs)
-
 
 export default router;

@@ -27,15 +27,15 @@ export default function GraficoTreinamentos({ opcaoExibir }) {
 		async function carregar() {
 			// Carregando os treinamentos realizados
 			if (opcaoExibir === 'Realizados') {
-				const res = await fetch('http://localhost:3000/api/treinamentos/2/seisMeses')
+				const res = await fetch('http://localhost:3000/api/treinamentos/participante/2/seisMeses')
 				const data = await res.json()
-				setData(formatarDadosParaChart(data.dados))
+				setData(formatarDadosParaChart(data.dados.treinamentos))
 			}
 			// Carregando os treinamentos criados
 			else {
-				const res = await fetch('http://localhost:3000/api/treinamentos/2/criador/seisMeses')
+				const res = await fetch('http://localhost:3000/api/treinamentos/criador/2/seisMeses')
 				const data = await res.json()
-				setData(formatarDadosParaChart(data.dados))
+				setData(formatarDadosParaChart(data.dados.treinamentos))
 			}
 		}
 

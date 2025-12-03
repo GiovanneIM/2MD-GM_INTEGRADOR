@@ -200,7 +200,7 @@ class TreinamentoModel {
                 const sqlTreinamentos = `
                     SELECT 
                         t.*,
-                        u.nome AS criador,
+                        u.nome AS criador
                     FROM treinamentos t
                     INNER JOIN participacoes p on p.idTreinamento = t.id
                     INNER JOIN usuarios u ON u.id = t.idCriador
@@ -244,7 +244,7 @@ class TreinamentoModel {
                 const sqlTreinamentos = `
                     SELECT 
                         t.*,
-                        u.nome AS criador,
+                        u.nome AS criador
                     FROM treinamentos t
                     INNER JOIN usuarios u ON u.id = t.idCriador
                     WHERE t.idCriador = ?
@@ -436,7 +436,7 @@ class TreinamentoModel {
                 })
 
                 // Retornando as sessões
-                return { sessoes  };
+                return { sessoes };
             } finally {
                 connection.release();
             }
@@ -473,6 +473,84 @@ class TreinamentoModel {
 
 
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+    /*  OBTER O Nº DE SESSÕES EM QUE UM USUÁRIO FOI INSCRITO NOS ÚLTIMOS 6 MESES separados por mês e estado */
+    static async listarSessoesParticipadasSeisMeses(idUsuario) {
+        try {
+            const connection = await getConnection();
+
+            try {
+                // Comando para obter o número de treinamentos por estados
+                const sql = `
+                    WITH RECURSIVE ultimos_meses AS (
+                        SELECT 
+                            DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m-01') AS data_base
+                        UNION ALL
+                        SELECT 
+                            DATE_ADD(data_base, INTERVAL 1 MONTH)
+                        FROM ultimos_meses
+                        WHERE data_base < DATE_FORMAT(CURDATE(), '%Y-%m-01')
+                    )
+                    SELECT 
+                        DATE_FORMAT(data_base, '%b') AS mes,
+                        'estado' AS estado,
+                        0 AS total
+                    FROM ultimos_meses;
+                ;`
+
+                // Fazendo a consulta
+                const [sessoes] = await connection.query(sql);
+
+                // Retornando os treinamentos
+                return { sessoes };
+            } finally {
+                connection.release();
+            }
+
+        } catch (error) {
+            console.error('Erro ao listar treinamentos participados:', error);
+            throw error;
+        }
+    }
+
+    /*  OBTER O Nº DE SESSÕES QUE UM USUÁRIO CRIOU NOS ÚLTIMOS 6 MESES separados por mês e estado */
+    static async listarSessoesOferecidasSeisMeses(idUsuario) {
+        try {
+            const connection = await getConnection();
+
+            try {
+                // Comando para obter o número de treinamentos por estados
+                const sql = `
+                    WITH RECURSIVE ultimos_meses AS (
+                        SELECT 
+                            DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m-01') AS data_base
+                        UNION ALL
+                        SELECT 
+                            DATE_ADD(data_base, INTERVAL 1 MONTH)
+                        FROM ultimos_meses
+                        WHERE data_base < DATE_FORMAT(CURDATE(), '%Y-%m-01')
+                    ) 
+                    SELECT 
+                        DATE_FORMAT(data_base, '%b') AS mes,
+                        'estado' AS estado,
+                        0 AS total
+                    FROM ultimos_meses;
+                ;`
+
+                // Fazendo a consulta
+                const [sessoes] = await connection.query(sql);
+
+                // Retornando os treinamentos
+                return { sessoes };
+            } finally {
+                connection.release();
+            }
+
+        } catch (error) {
+            console.error('Erro ao listar treinamentos oferecidos:', error);
+            throw error;
+        }
+    }
 }
 
 

@@ -40,6 +40,7 @@ CREATE TABLE if not exists sessoes (
     localidade			VARCHAR(100) NOT NULL,
     data_criacao		DATETIME DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao	DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    estado				ENUM('Agendada', 'Em andamento', 'Concluida') NOT NULL DEFAULT 'Agendada',
     
     FOREIGN KEY (idTreinamento) REFERENCES treinamentos(id) ON DELETE CASCADE
 );
