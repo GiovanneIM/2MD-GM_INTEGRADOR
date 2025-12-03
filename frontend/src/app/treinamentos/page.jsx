@@ -20,6 +20,7 @@ export default function Treinamentos() {
         'Cancelado': ['danger', 'fa-xmark'],
     };
 
+    /* Carregando o usuário logado */
     useEffect(() => {
         async function carregarUsuario() {
             const res = await fetch("http://localhost:3000/api/auth/perfil", {
@@ -30,8 +31,6 @@ export default function Treinamentos() {
 
             const data = await res.json();
             if (data.sucesso) {
-                console.log(usuario);
-                
                 setUsuario(data.dados);
             }
         }
@@ -39,27 +38,28 @@ export default function Treinamentos() {
         carregarUsuario();
     }, []);
 
-    /* Buscando os treinamentos do usuário */
+    /* Carregando os treinamentos do usuário */
     useEffect(() => {
-        if (!usuario?.id) return;
-
         async function carregarTreinamentos() {
 
             // Treinamentos realizados
-            const resRealizados = await fetch(`http://localhost:3000/api/treinamentos/participante/${usuario.id}/${pagina}`);
+            const resRealizados = await fetch(`http://localhost:3000/api/treinamentos/participante/${usuario.id}?pagina=${pagina}`);
             const dadosRealizados = await resRealizados.json();
-            if (dadosRealizados.sucesso) setTreinamentosRealizados(dadosRealizados.dados);
+            if (dadosRealizados.sucesso) 
+                setTreinamentosRealizados(dadosRealizados.dados.treinamentos);
 
             // Treinamentos ofertados (criados pelo usuário)
-            const resOfertados = await fetch(`http://localhost:3000/api/treinamentos/criador/${usuario.id}/${pagina}`);
+            const resOfertados = await fetch(`http://localhost:3000/api/treinamentos/criador/${usuario.id}?pagina=${pagina}`);
             const dadosOfertados = await resOfertados.json();
-            if (dadosOfertados.sucesso) setTreinamentosOfertados(dadosOfertados.dados);
+            if (dadosOfertados.sucesso) 
+                setTreinamentosOfertados(dadosOfertados.dados.treinamentos);
         }
 
-        carregarTreinamentos();
+        if (usuario)
+            carregarTreinamentos();
     }, [usuario]);
 
-    /* Buscando os treinamentos do usuário ao mudar a página */
+    /* Carregando os treinamentos do usuário ao mudar a página */
     useEffect(() => {
         if (!usuario?.id) return;
 
@@ -67,15 +67,17 @@ export default function Treinamentos() {
 
             // Treinamentos realizados
             if (exibir === 'Realizados') {
-                const resRealizados = await fetch(`http://localhost:3000/api/treinamentos/${usuario.id}`);
+                const resRealizados = await fetch(`http://localhost:3000/api/treinamentos/participante/${usuario.id}?pagina=${pagina}`);
                 const dadosRealizados = await resRealizados.json();
-                if (dadosRealizados.sucesso) setTreinamentosRealizados(dadosRealizados.dados);
+                if (dadosRealizados.sucesso) 
+                    setTreinamentosRealizados(dadosRealizados.dados.treinamentos);
             }
             else {
                 // Treinamentos ofertados (criados pelo usuário)
-                const resOfertados = await fetch(`http://localhost:3000/api/treinamentos/criador/${usuario.id}/${pagina}`);
+                const resOfertados = await fetch(`http://localhost:3000/api/treinamentos/criador/${usuario.id}?pagina=${pagina}`);
                 const dadosOfertados = await resOfertados.json();
-                if (dadosOfertados.sucesso) setTreinamentosOfertados(dadosOfertados.dados);
+                if (dadosOfertados.sucesso) 
+                    setTreinamentosOfertados(dadosOfertados.dados.treinamentos);
             }
         }
 
