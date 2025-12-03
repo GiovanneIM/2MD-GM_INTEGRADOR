@@ -37,7 +37,9 @@ class EquipesController {
             // Retornando a equipe
             res.status(200).json({
                 sucesso: true,
-                dados: { equipe: resultado.equipe },
+                dados: {
+                    equipe: resultado.equipe
+                },
             });
             
         } catch (error) {

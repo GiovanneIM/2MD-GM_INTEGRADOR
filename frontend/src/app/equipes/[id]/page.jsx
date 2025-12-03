@@ -45,10 +45,13 @@ export default function Times() {
 	useEffect(() => {
 		async function carregarMenbros() {
 			try {
-				const res = await fetch(`http://localhost:3000/api/equipes/${id}/membros`);
+				if (!equipe) return;
+				
+				const res = await fetch(`http://localhost:3000/api/equipes/${equipe.id}/membros`);
 				const data = await res.json();
 
 				if (data.sucesso) {
+					console.log(data);
 					setFT(data.dados.FT);
 					setMT(data.dados.MT);
 				} else {

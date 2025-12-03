@@ -36,7 +36,7 @@ class EquipesModel {
                 const sql = `SELECT * FROM equipes WHERE id = ${idEquipe}`;
 
                 // Fazendo a consulta
-                const [equipe] = await connection.query(sql);
+                const [[equipe]] = await connection.query(sql);
 
                 // Retornando a equipe
                 return { equipe };
@@ -68,8 +68,8 @@ class EquipesModel {
 
                 // Retornando os membros separados por cargo
                 return {
-                    MT: membros.filter(m => m.tipo === "MT"),
-                    FT: membros.filter(m => m.tipo === "FT")
+                    MT: membros.filter(m => m.tipo === "mt"),
+                    FT: membros.filter(m => m.tipo === "ft")
                 };
             } finally {
                 connection.release();

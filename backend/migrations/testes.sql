@@ -29,3 +29,7 @@ INNER JOIN usuarios u on u.id = t.idCriador;
 
 
 UPDATE treinamentos t SET t.estado = 'Pendente' WHERE t.id = 1;
+
+SELECT id, nome, email, telefone, tipo, id_equipe 
+FROM usuarios u 
+WHERE u.id_equipe = 1;
