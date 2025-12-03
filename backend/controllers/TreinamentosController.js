@@ -333,7 +333,9 @@ class TreinamentoController {
             // Respondendo a requisição
             res.status(200).json({
                 sucesso: true,
-                dados: resultado.sessoes
+                dados: {
+                    sessoes: resultado.sessoes
+                }
             });
 
         } catch (error) {
