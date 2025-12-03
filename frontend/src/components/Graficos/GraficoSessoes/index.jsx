@@ -26,14 +26,14 @@ export default function GraficoSessoes({ opcaoExibir }) {
 
 		async function carregar() {
 			if (opcaoExibir === 'Realizados') {
-				// const res = await fetch('http://localhost:3000/api/treinamentos/2/seisMeses')
-				// const data = await res.json()
-				// setData(formatarDadosParaChart(data.dados))
+				const res = await fetch('http://localhost:3000/api/treinamentos/sessoes/participante/:idUsuario/seisMeses')
+				const data = await res.json()
+				setData(formatarDadosParaChart(data.dados.sessoes))
 			}
 			else {
-				// const res = await fetch('http://localhost:3000/api/treinamentos/2/criador/seisMeses')
-				// const data = await res.json()
-				// setData(formatarDadosParaChart(data.dados))
+				const res = await fetch('http://localhost:3000/api/treinamentos/sessoes/criador/:idUsuario/seisMeses')
+				const data = await res.json()
+				setData(formatarDadosParaChart(data.dados.sessoe))
 			}
 		}
 
@@ -74,6 +74,9 @@ export default function GraficoSessoes({ opcaoExibir }) {
 			})
 		}));
 
+		console.log(labels);
+		console.log(datasets);
+		
 		return { labels, datasets };
 	}
 

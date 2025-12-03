@@ -259,7 +259,7 @@ class TreinamentoController {
             res.status(500).json({
                 sucesso: false,
                 erro: 'Erro interno do servidor',
-                mensagem: 'Não foi possível listar os treinamentos oferecidos'
+                mensagem: 'Não foi possível listar os treinamentos oferecidos pelo usuário'
             });
         }
     }
@@ -379,6 +379,61 @@ class TreinamentoController {
     }
 
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    /* ROTAS RELACIONADAS ÀS SESSÕES DE UM USUÁRIO */
+
+    /*  OBTER O Nº DE SESSÕES EM QUE UM USUÁRIO FOI INSCRITO NOS ÚLTIMOS 6 MESES separados por mês e estado */
+    static async listarSessoesParticipadasSeisMeses(req, res) {
+        try {
+            // Obtendo o id do usuário
+            const idUsuario = parseInt(req.params.idUsuario);
+
+            // Chamando o model para fazer a consulta
+            const resultado = await TreinamentoModel.listarSessoesParticipadasSeisMeses(idUsuario);
+
+            // Respondendo a requisição
+            res.status(200).json({
+                sucesso: true,
+                dados: {
+                    sessoes: resultado.sessoes
+                },
+            });
+
+        } catch (error) {
+            console.error('Erro ao listar sessões participadas nos últimos 6 meses:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível listar as sessões participadas nos últimos 6 meses'
+            });
+        }
+    }
+
+    /*  OBTER O Nº DE SESSÕES QUE UM USUÁRIO CRIOU NOS ÚLTIMOS 6 MESES separados por mês e estado */
+    static async listarSessoesOferecidasSeisMeses(req, res) {
+        try {
+            // Obtendo o id do usuário
+            const idUsuario = parseInt(req.params.idUsuario);
+
+            // Chamando o model para fazer a consulta
+            const resultado = await TreinamentoModel.listarSessoesOferecidasSeisMeses(idUsuario);
+
+            // Respondendo a requisição
+            res.status(200).json({
+                sucesso: true,
+                dados: {
+                    sessoes: resultado.sessoes
+                },
+            });
+
+        } catch (error) {
+            console.error('Erro ao listar sessões oferecidas nos últimos 6 meses:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível listar as sessões oferecidas nos últimos 6 meses'
+            });
+        }
+    }
 
 }
 

@@ -42,75 +42,80 @@ WITH RECURSIVE ultimos_meses AS (
         DATE_ADD(data_base, INTERVAL 1 MONTH)
     FROM ultimos_meses
     WHERE data_base < DATE_FORMAT(CURDATE(), '%Y-%m-01')
-) SELECT DATE_FORMAT(data_base, '%b') AS meses FROM ultimos_meses;
+) SELECT 
+	DATE_FORMAT(data_base, '%b') AS mes,
+    'estado' AS estado,
+    0 AS total
+FROM ultimos_meses;
 
 
--- TREINAMENTOS PARTICIPADOS nos últimos 6 meses separados por estados
+
+
+
+
+
+-- Criando uma lista com os últimos 6 meses
 WITH RECURSIVE ultimos_meses AS (
-    SELECT 
-        DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m-01') AS data_base
-    UNION ALL
-    SELECT 
-        DATE_ADD(data_base, INTERVAL 1 MONTH)
-    FROM ultimos_meses
-    WHERE data_base < DATE_FORMAT(CURDATE(), '%Y-%m-01')
+	SELECT 
+		DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m-01') AS data_base
+	UNION ALL
+	SELECT 
+		DATE_ADD(data_base, INTERVAL 1 MONTH)
+	FROM ultimos_meses
+	WHERE data_base < DATE_FORMAT(CURDATE(), '%Y-%m-01')
 )
+-- Coletando as sessões marcadas nos últimos 6 meses
 SELECT
-    *
+	DATE_FORMAT(um.data_base, '%b') AS mes,
+	COALESCE(t.estado, 'Sem sessões') AS estado,
+	COUNT(CASE WHEN p.idParticipante = 2 THEN 1 END) AS total
 FROM ultimos_meses um
+
 LEFT JOIN treinamentos t
-    ON MONTH(t.data_criacao) = MONTH(um.data_base)
-   AND YEAR(t.data_criacao) = YEAR(um.data_base)
+	ON MONTH(t.data_criacao) = MONTH(um.data_base)
+	AND YEAR(t.data_criacao) = YEAR(um.data_base)
+    
 LEFT JOIN participacoes p
-    ON p.idTreinamento = t.id
-   AND p.idParticipante = 2
+	ON p.idTreinamento = t.id
+    
 GROUP BY um.data_base, estado
 ORDER BY um.data_base, estado;
 
 
+
+-- Criando uma lista com os últimos 6 meses
 WITH RECURSIVE ultimos_meses AS (
-    SELECT 
-        DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m-01') AS data_base
-    UNION ALL
-    SELECT 
-        DATE_ADD(data_base, INTERVAL 1 MONTH)
-    FROM ultimos_meses
-    WHERE data_base < DATE_FORMAT(CURDATE(), '%Y-%m-01')
+	SELECT 
+		DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m-01') AS data_base
+	UNION ALL
+	SELECT 
+		DATE_ADD(data_base, INTERVAL 1 MONTH)
+	FROM ultimos_meses
+	WHERE data_base < DATE_FORMAT(CURDATE(), '%Y-%m-01')
 )
+-- Coletando as sessões marcadas nos últimos 6 meses
 SELECT
-    DATE_FORMAT(um.data_base, '%b') AS mes,
-    COALESCE(t.estado, 'Sem treinamentos') AS estado,
+	DATE_FORMAT(um.data_base, '%b') AS mes,
+	COALESCE(s.estado, 'Sem sessões') AS estado,
     COUNT(CASE WHEN p.idParticipante = 2 THEN 1 END) AS total
 FROM ultimos_meses um
+
 LEFT JOIN treinamentos t
-    ON MONTH(t.data_criacao) = MONTH(um.data_base)
-   AND YEAR(t.data_criacao) = YEAR(um.data_base)
+	ON MONTH(t.data_criacao) = MONTH(um.data_base)
+	AND YEAR(t.data_criacao) = YEAR(um.data_base)
+    
+LEFT JOIN sessoes s
+	ON s.idTreinamento = t.id
+    
 LEFT JOIN participacoes p
-    ON p.idTreinamento = t.id
-GROUP BY um.data_base, estado
-ORDER BY um.data_base, estado;
+	ON p.idTreinamento = t.id
+    
+GROUP BY um.data_base, s.estado
+ORDER BY um.data_base, s.estado;
 
 
-
-
--- TREINAMENTOS CRIADOS nos últimos 6 meses separados por estados
-WITH RECURSIVE ultimos_meses AS (
-    SELECT 
-        DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m-01') AS data_base
-    UNION ALL
-    SELECT 
-        DATE_ADD(data_base, INTERVAL 1 MONTH)
-    FROM ultimos_meses
-    WHERE data_base < DATE_FORMAT(CURDATE(), '%Y-%m-01')
-)
-SELECT
-    DATE_FORMAT(um.data_base, '%b') AS mes,
-    COALESCE(t.estado, 'Sem treinamentos') AS estado,
-    COALESCE(COUNT(t.id), 0) AS total
-FROM ultimos_meses um
-LEFT JOIN treinamentos t
-       ON MONTH(t.data_criacao) = MONTH(um.data_base)
-      AND YEAR(t.data_criacao) = YEAR(um.data_base)
-      AND t.idCriador = 2
-GROUP BY mes, estado, um.data_base
-ORDER BY um.data_base, estado;
+/*
+DATE_FORMAT(um.data_base, '%b') AS mes,
+COALESCE(t.estado, 'Sem sessões') AS estado,
+COUNT(CASE WHEN p.idParticipante = 2 THEN 1 END) AS total
+*/

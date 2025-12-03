@@ -58,5 +58,12 @@ router.post('/:idTreinamento/criarSessao', TreinamentoController.criarSessao)
 
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
+
+// Listar o número de treinamentos em que um usuario foi inscrito nos últimos 6 meses por estado
+router.get('/sessoes/participante/:idUsuario/seisMeses', TreinamentoController.listarSessoesParticipadasSeisMeses)
+
+// Listar o número de treinamentos que um usuario criou nos últimos 6 meses por estado
+router.get('/sessoes/criador/:idUsuario/seisMeses', TreinamentoController.listarSessoesOferecidasSeisMeses)
+
 export default router;
 
