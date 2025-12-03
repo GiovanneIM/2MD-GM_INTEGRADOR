@@ -65,7 +65,7 @@ class TreinamentoModel {
                 `;
 
                 // Fazendo a consulta
-                const [treinamento] = await connection.query(sql);
+                const [[treinamento]] = await connection.query(sql);
 
                 // Retornando o treinamento
                 return { treinamento };

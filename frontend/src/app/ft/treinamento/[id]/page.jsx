@@ -229,9 +229,6 @@ export default function Treinamento() {
         Swal.fire({
             width: 500,
             background: '#f4f6f8',
-            // customClass: {
-            //     htmlContainer: 'swal-custom-html'
-            // },
             html: `
             <div class='gm-container'>
                 <div class='fs-3 fw-bold'>Alterar informações</div>
@@ -260,16 +257,6 @@ export default function Treinamento() {
             
             </div>
             `,
-
-            // <div className='position-relative'>
-            //             <textarea
-            //                 className="form-control" style="minHeight:120px; resize:none"
-            //             />
-
-            //             <div className='position-absolute bottom-0 end-0 me-2'>
-            //                 <small style={{ color: "#666" }}>{novosDados.bio?.length ?? 0}/200</small>
-            //             </div>
-            //         </div>
 
             showConfirmButton: true,
             confirmButtonColor: '#0956FF',
