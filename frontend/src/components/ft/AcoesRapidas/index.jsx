@@ -29,7 +29,7 @@ export default function AcoesRapidas() {
             {/* Titulo */}
             <div className='card-header bg-white border-0 px-0'>
                 <div className='d-flex justify-content-between align-items-center'>
-                    <h5 className='mb-0 fs-5'>Ações rápidas</h5>
+                    <h2 className='mb-0 fs-5'>Ações rápidas</h2>
                 </div>
             </div>
 

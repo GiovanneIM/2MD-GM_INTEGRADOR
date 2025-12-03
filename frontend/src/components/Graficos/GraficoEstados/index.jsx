@@ -43,7 +43,7 @@ export default function GraficoEstados({ treinamentos }) {
         <div className='card border-0 shadow-sm p-3 col-12 h-100 pb-2 d-flex flex-column align-items-center'>
             {/* Titulo */}
             <div className='col-12 d-flex flex-column'>
-                <h5 className='mb-0 fs-5'>Estados dos Treinamentos</h5>
+                <h2 className='mb-0 fs-5'>Estados dos Treinamentos</h2>
                 <div className='text-muted' style={{ fontSize: '0.85rem' }}>Proporção dos seus treinamentos por estado</div>
             </div>
 

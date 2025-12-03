@@ -105,7 +105,7 @@ export default function TreinamentosLista({
             <div className='card-header bg-white border-0 px-0 d-flex flex-wrap'>
                 {/* Título */}
                 <div className='col-12 col-md-6'>
-                    <h5 className='mb-0 fs-5'>Treinamentos</h5>
+                    <h2 className='mb-0 fs-5'>Treinamentos</h2>
                 </div>
 
                 {/* Botão para exibir os treinamentos realizados */}
