@@ -23,7 +23,7 @@ export default function Equipes() {
                 const data = await res.json();
 
                 if (data.sucesso) {
-                    setEquipes(data.dados);
+                    setEquipes(data.dados.equipes);
                 } else {
                     console.log(data.mensagem);
                 }

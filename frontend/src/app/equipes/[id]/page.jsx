@@ -18,7 +18,6 @@ export default function Times() {
 	const { id } = useParams()
 
 	const [equipe, setEquipe] = useState(null);
-	const [membros, setMembros] = useState([]);
 	const [ft, setFT] = useState([])
 	const [mt, setMT] = useState([])
 
@@ -30,7 +29,7 @@ export default function Times() {
 				const data = await res.json();
 
 				if (data.sucesso) {
-					setEquipe(data.dados[0]);
+					setEquipe(data.dados.equipe);
 				} else {
 					console.log(data.mensagem);
 				}
@@ -50,7 +49,8 @@ export default function Times() {
 				const data = await res.json();
 
 				if (data.sucesso) {
-					setMembros(data.dados);
+					setFT(data.dados.FT);
+					setMT(data.dados.MT);
 				} else {
 					console.log(data.mensagem);
 				}
@@ -61,12 +61,6 @@ export default function Times() {
 
 		carregarMenbros();
 	}, [equipe]);
-
-	/* Filtrando os membros pelo cargo */
-	useEffect(() => {
-		setFT(membros.filter((m) => m.tipo === 'ft'));
-		setMT(membros.filter((m) => m.tipo === 'mt'));
-	}, [membros]);
 
 
 	if (!equipe) {

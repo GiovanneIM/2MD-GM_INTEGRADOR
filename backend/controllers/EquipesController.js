@@ -29,7 +29,7 @@ class EquipesController {
     static async listarEquipe(req, res) {
         try {
             // Obtendo o id da equipe
-            const idEquipe = parseInt(req.params.id)
+            const idEquipe = parseInt(req.params.idEquipe)
 
             // Chamando o model para fazer a consulta
             const resultado = await EquipesModel.listarEquipe(idEquipe);
@@ -54,7 +54,7 @@ class EquipesController {
     static async listarMembros(req, res) {
         try {
             // Obtendo o id da equipe
-            const idEquipe = parseInt(req.params.id)
+            const idEquipe = parseInt(req.params.idEquipe)
 
             // Chamando o model para fazer a consulta
             const resultado = await EquipesModel.listarMembros(idEquipe);

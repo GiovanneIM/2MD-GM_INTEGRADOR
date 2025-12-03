@@ -17,7 +17,7 @@ ChartJS.register(
 	Tooltip,
 );
 
-export default function GraficoSessoes({ opcaoExibir }) {
+export default function GraficoSessoes({ opcaoExibir, idUsuario }) {
 	const [data, setData] = useState({ labels: [], datasets: [{}] })
 
 	/* Carregando os treinamentos */
@@ -26,14 +26,19 @@ export default function GraficoSessoes({ opcaoExibir }) {
 
 		async function carregar() {
 			if (opcaoExibir === 'Realizados') {
-				const res = await fetch('http://localhost:3000/api/treinamentos/sessoes/participante/:idUsuario/seisMeses')
+				const res = await fetch(`http://localhost:3000/api/treinamentos/sessoes/participante/${idUsuario}/seisMeses`)
 				const data = await res.json()
+				console.log('data Realizados');
+				console.log(data);
+				
 				setData(formatarDadosParaChart(data.dados.sessoes))
 			}
 			else {
-				const res = await fetch('http://localhost:3000/api/treinamentos/sessoes/criador/:idUsuario/seisMeses')
+				const res = await fetch(`http://localhost:3000/api/treinamentos/sessoes/criador/${idUsuario}/seisMeses`)
 				const data = await res.json()
-				setData(formatarDadosParaChart(data.dados.sessoe))
+				console.log('data Oferecidos');
+				console.log(data);
+				setData(formatarDadosParaChart(data.dados.sessoes))
 			}
 		}
 
@@ -74,7 +79,9 @@ export default function GraficoSessoes({ opcaoExibir }) {
 			})
 		}));
 
+		console.log('labels');
 		console.log(labels);
+		console.log('datasets');
 		console.log(datasets);
 		
 		return { labels, datasets };

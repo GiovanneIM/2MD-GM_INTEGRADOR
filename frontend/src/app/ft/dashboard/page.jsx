@@ -33,7 +33,6 @@ export default function Dashboard() {
 			// Verificando se há um usuário logado
 			if (data.sucesso) {
 				sessionStorage.setItem('usuario', JSON.stringify(data.dados));
-				console.log(data.dados);
 				setUsuario(data.dados);
 			}
 		}
@@ -47,9 +46,11 @@ export default function Dashboard() {
 		const data = await res.json();
 
 		if (data.sucesso) {
-			console.log(data);
+			// console.log(data);
 			
 			setTreinamentosExibidos(data.dados.treinamentos);
+			// console.log(data.dados.treinamentos);
+			
 		}
 		else {
 			console.log(data.mensagem);
@@ -63,6 +64,7 @@ export default function Dashboard() {
 
 		if (data.sucesso) {
 			setTreinamentosExibidos(data.dados.treinamentos);
+			// console.log(data.dados.treinamentos);
 		}
 		else {
 			console.log(data.mensagem);
@@ -133,7 +135,7 @@ export default function Dashboard() {
 					{/* Grafico de sessões */}
 					<div className='col-lg-6'>
 						<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
-							<GraficoSessoes opcaoExibir={opcaoExibir}/>
+							<GraficoSessoes opcaoExibir={opcaoExibir} idUsuario={usuario.id}/>
 						</div>
 					</div>
 

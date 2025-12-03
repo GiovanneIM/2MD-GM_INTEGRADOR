@@ -7,10 +7,10 @@ const router = express.Router();
 router.get('/', EquipesController.listarTodos)
 
 // Listar uma equipe ESPECÍFICA
-router.get('/:id', EquipesController.listarEquipe)
+router.get('/:idEquipe', EquipesController.listarEquipe)
 
 // Listar os MEMBROS de uma equipe ESPECÍFICA
-router.get('/:id/membros', EquipesController.listarMembros)    
+router.get('/:idEquipe/membros', EquipesController.listarMembros)    
 
 
 export default router;

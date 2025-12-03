@@ -51,13 +51,13 @@ export default function NovoTreinamento() {
 
 
             try {
-                const res = await fetch(`http://localhost:3000/api/equipes/${ft.id_equipe}/mt`);
+                const res = await fetch(`http://localhost:3000/api/equipes/${ft.id_equipe}/membros`);
                 const data = await res.json();
 
                 if (data.sucesso) {
-                    console.log(data);
+                    console.log(data.dados);
 
-                    setMTs(data.dados);
+                    setMTs(data.dados.MT);
                 }
                 else {
                     console.log(data.mensagem);
