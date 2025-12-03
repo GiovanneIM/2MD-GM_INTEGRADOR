@@ -11,7 +11,6 @@ import { useParams } from 'next/navigation';
 import LogoGM from '@/components/LogoGM';
 import EstadoTreinamento from '@/components/EstadoTreinamento/page';
 import Sessoes from '@/components/ft/sessoes';
-import Swal from 'sweetalert2';
 
 import ModalVerPart from '@/components/ModalVerPart';
 

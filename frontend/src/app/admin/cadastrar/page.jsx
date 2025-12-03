@@ -109,6 +109,8 @@ export default function Cadastrar() {
             if (data.sucesso) {
                 // Alerta de usuário cadastrado
                 Swal.fire({
+                    scrollbarPadding: false,
+                    heightAuto: false,
                     title: 'Usuário cadastrado',
                     html: `
                         <p class='mb-2'>O usuário foi cadastrado com as seguintes informações:</p>

@@ -29,6 +29,9 @@ export default function Sessoes({
         let localidade = "";
 
         MySwal.fire({
+            scrollbarPadding: false,
+            heightAuto: false,
+
             title: "Nova sessão",
             showConfirmButton: false,
             html: (

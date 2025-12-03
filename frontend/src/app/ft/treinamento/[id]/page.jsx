@@ -29,7 +29,23 @@ export default function Treinamento() {
     const { id } = useParams()
 
     const [treinamento, setTreinamento] = useState({});
-    const [sessoes, setSessoes] = useState(null);
+    const [sessoes, setSessoes] = useState([{
+        id: 1,
+        idTreinamento: 1,
+        dia: '04/12/2025',
+        hora_inicio: '12:00',
+        hora_fim: '15:00',
+        localidade: 'Sala de integração',
+        data_criacao: {
+            data: '03/12/2025',
+            hora: '12:00'
+        },
+        data_atualizacao: {
+            data: '03/12/2025',
+            hora: '14:00'
+        },
+        estado: 'Agendada',
+    }]);
     const [usuario, setUsuario] = useState({});
     const [participantes, setParticipantes] = useState(null);
 
@@ -61,7 +77,7 @@ export default function Treinamento() {
 
             if (data.sucesso) {
                 setSessoes(data.dados.sessoes);
-                
+
             } else {
                 console.log(data.mensagem);
             }
@@ -83,7 +99,7 @@ export default function Treinamento() {
 
                 if (data.sucesso) {
                     setParticipantes(data.dados.participantes);
-                    
+
                 } else {
                     console.log(data.mensagem);
                 }
@@ -161,6 +177,9 @@ export default function Treinamento() {
     /* Modal para cancelar treinamento */
     function cancelarTreinamento() {
         Swal.fire({
+            scrollbarPadding: false,
+            heightAuto: false,
+
             title: 'Confirmar Exclusão',
             html: `Deseja confirmar a exclusão do treinamento "${treinamento.nome}"?`,
 
@@ -194,6 +213,9 @@ export default function Treinamento() {
 
     function concluirTreinamento() {
         Swal.fire({
+            scrollbarPadding: false,
+            heightAuto: false,
+
             title: 'Confirmar Conclusão',
             html: `Deseja confirmar a conclusão do treinamento "${treinamento.nome}"?`,
 
@@ -227,6 +249,9 @@ export default function Treinamento() {
 
     function modalInfos() {
         Swal.fire({
+            scrollbarPadding: false,
+            heightAuto: false,
+
             width: 500,
             background: '#f4f6f8',
             html: `
@@ -336,7 +361,7 @@ export default function Treinamento() {
                         {/* Descrição */}
                         <div>
                             <div className='mb-0 fs-5'>Descrição</div>
-                            <div className='ms-3 p-2 rounded' style={{ minHeight: '200px', wordBreak:'break-word' }}>
+                            <div className='ms-3 p-2 rounded' style={{ minHeight: '200px', wordBreak: 'break-word' }}>
                                 {treinamento?.descricao ?? 'Sem Descrição'}
                             </div>
                         </div>

@@ -71,6 +71,9 @@ export default function Calendario({ sessoes = [], treinamento }) {
     /* Abrir SweetAlert com informações da sessão */
     function swalSessao(sessao) {
         Swal.fire({
+            scrollbarPadding: false,
+            heightAuto: false,
+
             title: `${sessao.title}`,
             html: `
                 <div class='text-start p-3 border rounded' style='background:#f8f9fa;'>

@@ -115,6 +115,9 @@ export default function NovoTreinamento() {
             if (data.sucesso) {
                 // Alerta de usuário cadastrado
                 Swal.fire({
+                    scrollbarPadding: false,
+                    heightAuto: false,
+
                     title: 'Treinamento cadastrado',
                     html: `
                             <p class='mb-2'>Treinamento criado com sucesso</p>
@@ -160,7 +163,7 @@ export default function NovoTreinamento() {
             <div className='col-12 bg-white shadow rounded p-3'>
                 {/* Formulário */}
                 <form className='col-12 d-flex flex-wrap' onSubmit={CadastrarTreinamento}>
-                    
+
                     {/* Nome e descrição */}
                     <div className='col-12 col-lg-6 pe-lg-2 d-flex flex-column justify-content-lg-between'>
                         {/* Nome */}

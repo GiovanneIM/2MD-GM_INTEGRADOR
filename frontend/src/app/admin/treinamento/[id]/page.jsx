@@ -133,6 +133,9 @@ export default function Treinamento() {
     /* Modal para cancelar treinamento */
     function cancelarTreinamento() {
         Swal.fire({
+            scrollbarPadding: false,
+            heightAuto: false,
+
             title: 'Confirmar Exclusão',
             html: `Deseja confirmar a exclusão do treinamento "${treinamento.nome}"?`,
 
@@ -167,6 +170,9 @@ export default function Treinamento() {
     /* Modal para aprovar treinamento */
     function aprovarTreinamento() {
         Swal.fire({
+            scrollbarPadding: false,
+            heightAuto: false,
+
             title: 'Confirmar Aprovação',
             html: `Deseja confirmar a aprovação do treinamento "${treinamento.nome}"?`,
 
@@ -201,6 +207,9 @@ export default function Treinamento() {
 
     function modalInfos() {
         Swal.fire({
+            scrollbarPadding: false,
+            heightAuto: false,
+
             width: 500,
             background: '#f4f6f8',
             showConfirmButton: false,
