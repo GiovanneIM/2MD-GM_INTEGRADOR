@@ -70,8 +70,7 @@ export default function Cadastrar() {
                 const data = await res.json();
 
                 if (data.sucesso) {
-                    console.log(data.dados)
-                    setEquipes(data.dados);
+                    setEquipes(data.dados.equipes);
                 } else {
                     console.log(data.mensagem);
                 }

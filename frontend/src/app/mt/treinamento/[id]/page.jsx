@@ -34,11 +34,11 @@ export default function Treinamento() {
     useEffect(() => {
         async function carregarTreinamento() {
             try {
-                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}`);
+                const res = await fetch(`http://localhost:3000/api/treinamentos/${id}`);
                 const data = await res.json();
 
                 if (data.sucesso) {
-                    setTreinamento(data.dados[0]);
+                    setTreinamento(data.dados.treinamento);
 
                     /* Carregando as sessões do treinamento */
                     carregarSessoes();
@@ -76,13 +76,11 @@ export default function Treinamento() {
     /* Função para carregar as sessões de um treinamento */
     async function carregarSessoes() {
         try {
-            const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/sessoes`);
+            const res = await fetch(`http://localhost:3000/api/treinamentos/${id}/sessoes`);
             const data = await res.json();
 
             if (data.sucesso) {
-                setSessoes(data.dados);
-                console.log(data.dados);
-
+                setSessoes(data.dados.sessoes);
             } else {
                 console.log(data.mensagem);
             }
@@ -93,32 +91,7 @@ export default function Treinamento() {
     }
 
     // Função para criar uma nova sessão no treinamento
-    function registrarSessao(novaSessaoDados) {
-        novaSessaoDados = {
-            ...novaSessaoDados,
-            idTreinamento: id
-        }
-
-        console.log(novaSessaoDados);
-
-        fetch(`http://127.0.0.1:3000/api/treinamentos/treinamento/${id}/criarSessao`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(novaSessaoDados)
-        }).then(res => res.json()
-        ).then(data => {
-            if (data.sucesso) {
-                carregarSessoes()
-            }
-            else {
-                console.log(data.mensagem);
-            }
-        }).catch(err =>
-            console.error(err)
-        )
-    }
+    function registrarSessao(novaSessaoDados) { return; }
 
     function formatarData(data) {
         if (!data) return "--/--/---- - --:--";

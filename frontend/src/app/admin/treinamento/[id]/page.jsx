@@ -32,11 +32,11 @@ export default function Treinamento() {
     /* Função para carregar o treinamento */
     async function carregarTreinamento() {
         try {
-            const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}`);
+            const res = await fetch(`http://localhost:3000/api/treinamentos/${id}`);
             const data = await res.json();
 
             if (data.sucesso) {
-                setTreinamento(data.dados[0]);
+                setTreinamento(data.dados.treinamento);
 
                 /* Carregando as sessões do treinamento */
                 carregarSessoes();
@@ -58,12 +58,11 @@ export default function Treinamento() {
     useEffect(() => {
         async function carregarParticipantes() {
             try {
-                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/participantes`);
+                const res = await fetch(`http://localhost:3000/api/treinamentos/${id}/participantes`);
                 const data = await res.json();
 
                 if (data.sucesso) {
-                    console.log(data.dados)
-                    setParticipantes(data.dados);
+                    setParticipantes(data.dados.participantes);
                 } else {
                     console.log(data.mensagem);
                 }
@@ -98,13 +97,11 @@ export default function Treinamento() {
     /* Função para carregar as sessões de um treinamento */
     async function carregarSessoes() {
         try {
-            const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/sessoes`);
+            const res = await fetch(`http://localhost:3000/api/treinamentos/${id}/sessoes`);
             const data = await res.json();
 
             if (data.sucesso) {
-                setSessoes(data.dados);
-                console.log(data.dados);
-
+                setSessoes(data.dados.sessoes);
             } else {
                 console.log(data.mensagem);
             }
@@ -147,7 +144,7 @@ export default function Treinamento() {
             cancelButtonColor: '#adb5bd',
 
             preConfirm: async () => {
-                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/atualizarEstado`, {
+                const res = await fetch(`http://localhost:3000/api/treinamentos/${id}/atualizarEstado`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -181,7 +178,7 @@ export default function Treinamento() {
             cancelButtonColor: '#adb5bd',
 
             preConfirm: async () => {
-                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/atualizarEstado`, {
+                const res = await fetch(`http://localhost:3000/api/treinamentos/${id}/atualizarEstado`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

@@ -124,7 +124,7 @@ export default function Treinamento() {
 
         console.log(novaSessaoDados);
 
-        fetch(`http://127.0.0.1:3000/api/treinamentos/treinamento/${id}/criarSessao`, {
+        fetch(`http://127.0.0.1:3000/api/treinamentos/${id}/criarSessao`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

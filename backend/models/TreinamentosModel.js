@@ -101,7 +101,7 @@ class TreinamentoModel {
                 const participantesSemSenha = participantes.map(({ senha, ...resto }) => resto);
 
                 // Retornando os participantes
-                return { participantesSemSenha };
+                return { participantes: participantesSemSenha };
 
             } finally {
                 connection.release();
