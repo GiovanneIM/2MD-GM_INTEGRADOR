@@ -172,7 +172,7 @@ export default function Treinamento() {
             cancelButtonColor: '#adb5bd',
 
             preConfirm: async () => {
-                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/atualizarEstado`, {
+                const res = await fetch(`http://localhost:3000/api/treinamentos/${id}/atualizarEstado`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -205,7 +205,7 @@ export default function Treinamento() {
             cancelButtonColor: '#adb5bd',
 
             preConfirm: async () => {
-                const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/atualizarEstado`, {
+                const res = await fetch(`http://localhost:3000/api/treinamentos/${id}/atualizarEstado`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
