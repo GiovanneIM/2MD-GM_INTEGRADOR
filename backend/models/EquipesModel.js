@@ -8,13 +8,14 @@ class EquipesModel {
             const connection = await getConnection();
 
             try {
+                // Comando para obter as equipes
                 const sql = 'SELECT * FROM equipes ORDER BY id';
 
+                // Fazendo a consulta
                 const [equipes] = await connection.query(sql);
 
-                return {
-                    equipes
-                };
+                // Retornando as equipes
+                return { equipes };
             } finally {
                 connection.release();
             }
@@ -31,13 +32,14 @@ class EquipesModel {
             const connection = await getConnection();
 
             try {
+                // Comando para obter a equipe com id = idEquipe
                 const sql = `SELECT * FROM equipes WHERE id = ${idEquipe}`;
 
+                // Fazendo a consulta
                 const [equipe] = await connection.query(sql);
 
-                return {
-                    equipe
-                };
+                // Retornando a equipe
+                return { equipe };
             } finally {
                 connection.release();
             }
@@ -54,58 +56,20 @@ class EquipesModel {
             const connection = await getConnection();
 
             try {
-                const sql = `SELECT id, nome, email, telefone, tipo, id_equipe FROM usuarios u WHERE u.id_equipe = ${idEquipe};`;
+                // Comando para obter os membros de uma equipe
+                const sql = `
+                    SELECT id, nome, email, telefone, tipo, id_equipe 
+                    FROM usuarios u 
+                    WHERE u.id_equipe = ${idEquipe}
+                ;`
 
+                // Fazendo a consulta
                 const [membros] = await connection.query(sql);
 
+                // Retornando os membros separados por cargo
                 return {
-                    membros
-                };
-            } finally {
-                connection.release();
-            }
-
-        } catch (error) {
-            console.error('Erro ao listar membros:', error);
-            throw error;
-        }
-    }
-
-    // LISTAR OS FTs DE UMA EQUIPE
-    static async listarFTs(idEquipe) {
-        try {
-            const connection = await getConnection();
-
-            try {
-                const sql = `SELECT id, nome, email, telefone, tipo, id_equipe FROM usuarios u WHERE u.id_equipe = ${idEquipe} AND u.tipo = 'ft';`;
-
-                const [membros] = await connection.query(sql);
-
-                return {
-                    membros
-                };
-            } finally {
-                connection.release();
-            }
-
-        } catch (error) {
-            console.error('Erro ao listar membros:', error);
-            throw error;
-        }
-    }
-
-    // LISTAR OS MTs DE UMA EQUIPE
-    static async listarMTs(idEquipe) {
-        try {
-            const connection = await getConnection();
-
-            try {
-                const sql = `SELECT id, nome, email, telefone, tipo, id_equipe FROM usuarios u WHERE u.id_equipe = ${idEquipe} AND tipo = 'mt';`;
-
-                const [membros] = await connection.query(sql);
-
-                return {
-                    membros
+                    MT: membros.filter(m => m.tipo === "MT"),
+                    FT: membros.filter(m => m.tipo === "FT")
                 };
             } finally {
                 connection.release();
