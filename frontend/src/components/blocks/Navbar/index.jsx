@@ -154,9 +154,9 @@ export default function Navbar() {
 				</ul>
 			</div>
 
-			{/* Tema e Logo da GM */}
-			<div className='d-flex flex-lg-column'>
-				<div className='col-12 d-flex align-items-center justify-content-center mb-2'>
+			{/* Sair e Logo da GM */}
+			<div className='d-flex flex-lg-column gap-2'>
+				<div className='col-lg-12 d-flex align-items-center justify-content-center'>
 					<button className='btn border navbar__logout rounded d-flex align-items-center justify-content-center' onClick={logout}>
 						<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='currentColor' className='bi bi-door-open' viewBox='0 0 16 16'>
 							<path d='M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1' />
