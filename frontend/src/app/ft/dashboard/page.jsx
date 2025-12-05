@@ -77,68 +77,73 @@ export default function Dashboard() {
 		} else {
 			carregarTreinamentosOferecidos();
 		}
-		
+
 	}, [usuario.id, pagina, opcaoExibir]);
 
 	useEffect(() => { setPagina(1); }, [opcaoExibir]);
 
 
-	return (
-		<>
-			<div className='container py-4'>
-				{/* Titulo da página*/}
-				<div className='d-flex flex-column justify-content-between mb-3'>
-					<div className='bottom-bordaAzulGM ps-3 col-12'><h1 className='h3 mb-0 fw-bold fs-2'>Painel de Controle - Facilitador de time</h1></div>
-					<p className='text-muted small mt-1 ps-3 fs-6'>Bem vindo(a), {usuario?.nome}</p>
+	return (<>
+		<div className='container py-4'>
+			{/* Titulo da página*/}
+			<div className='d-flex flex-column justify-content-between mb-3'>
+				<div className='bottom-bordaAzulGM ps-3 col-12'>
+					<h1 className='h3 mb-0 fw-bold fs-2'>Painel de Controle - Facilitador de time</h1>
 				</div>
-
-				{/* Corpo da página */}
-				<div className='row g-3'>
-
-					{/* Listagem de treinamentos */}
-					<div className='col-lg-6'>
-						<div className='col-12 h-100'>
-							<TreinamentosLista
-								treinamentosExibidos={treinamentosExibidos ?? []}
-								setOpcaoExibir={setOpcaoExibir}
-								setPagina={setPagina}
-								pagina={pagina}
-								totalPaginas={totalPaginas}
-								tipoUsuario={usuario.tipo}
-							/>
-						</div>
-					</div>
-
-					{/* Ações rápidas e gráfico de pizza */}
-					<div className='col-lg-6'>
-
-						{/* Ações Rápidas */}
-						<div className='col-12 h-50 pb-2'>
-							<AcoesRapidas />
-						</div>
-
-						{/* Gráfico de pizza */}
-						<div className='col-12 h-50 pt-2'>
-							<GraficoEstados treinamentos={treinamentosExibidos} />
-						</div>
-					</div>
-
-					{/* Grafico de treinamentos */}
-					<div className='col-lg-6'>
-						<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
-							<GraficoTreinamentos opcaoExibir={opcaoExibir} />
-						</div>
-					</div>
-
-					{/* Grafico de sessões */}
-					<div className='col-lg-6'>
-						<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
-							<GraficoSessoes opcaoExibir={opcaoExibir} idUsuario={usuario.id}/>
-						</div>
-					</div>
-
-				</div>
+				<p className='text-muted small mt-1 ps-3 fs-6'>Bem vindo(a), {usuario?.nome}</p>
 			</div>
-		</>
-	);
+
+			{/* Corpo da página */}
+			<div className='row g-3'>
+
+				{/* Listagem de treinamentos */}
+				<div className='col-lg-6'>
+					<div className='col-12 h-100'>
+						<TreinamentosLista
+							treinamentosExibidos={treinamentosExibidos ?? []}
+							setOpcaoExibir={setOpcaoExibir}
+							setPagina={setPagina}
+							pagina={pagina}
+							totalPaginas={totalPaginas}
+							tipoUsuario={usuario.tipo}
+						/>
+					</div>
+				</div>
+
+				{/* Ações rápidas e gráfico de pizza */}
+				<div className='col-lg-6'>
+					{/* Ações Rápidas */}
+					<div className='col-12 h-50 pb-2'>
+						<AcoesRapidas idEquipe={usuario.id_equipe}/>
+					</div>
+
+					{/* Gráfico de pizza */}
+					<div className='col-12 h-50 pt-2'>
+						<GraficoEstados treinamentos={treinamentosExibidos} />
+					</div>
+				</div>
+
+				{/* Grafico de treinamentos */}
+				<div className='col-lg-6'>
+					<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
+						<GraficoTreinamentos
+							opcaoExibir={opcaoExibir}
+							idUsuario={usuario.id}
+						/>
+					</div>
+				</div>
+
+				{/* Grafico de sessões */}
+				<div className='col-lg-6'>
+					<div className='h-100 col-12 bg-white rounded shadow-sm p-3'>
+						<GraficoSessoes
+							opcaoExibir={opcaoExibir}
+							idUsuario={usuario.id}
+						/>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</>);
 }

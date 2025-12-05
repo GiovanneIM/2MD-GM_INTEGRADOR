@@ -92,9 +92,6 @@ export default function Login() {
 
                         {/* Botão entrar */}
                         <button className='btn btn-azulGM w-100 py-2' type='submit'>Entrar</button>
-
-                        {/* Legenda */}
-                        <p className='mt-2 text-body-secondary small'>Não possui uma conta? <a>Como conseguir uma</a></p>
                     </form>
                 </div>
 

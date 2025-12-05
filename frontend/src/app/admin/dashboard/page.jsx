@@ -132,7 +132,7 @@ export default function Dashboard() {
 
 					<div className='d-flex flex-wrap pt-3 row-gap-3'>
 						<div className='col-12 col-md-6 col-lg-4 px-2'>
-							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1 top-bordaAzulGM bordaAzulGM">
+							<div className='col-12 bg-white shadow-sm rounded ratio ratio-1x1 top-bordaAzulGM bordaAzulGM'>
 								<div className='d-flex flex-column col-12 h-100'>
 									<div className='col-12 fs-4 p-2 text-center'>Treinamentos pendentes</div>
 									<div className='p-3 flex-grow-1 overflow-y-scroll'>
@@ -144,8 +144,8 @@ export default function Dashboard() {
 													<div>{tr.criador}</div>
 												</div>
 												<a className='btn btn-White' href={`/admin/treinamento/${tr.id}`}>
-													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
-														<path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+													<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' className='bi bi-arrow-right' viewBox='0 0 16 16'>
+														<path fillRule='evenodd' d='M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8' />
 													</svg>
 												</a>
 											</div>
@@ -156,7 +156,7 @@ export default function Dashboard() {
 						</div>
 
 						<div className='col-12 col-md-6 col-lg-4 px-2'>
-							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1 top-bordaAzulGM bordaAzulGM">
+							<div className='col-12 bg-white shadow-sm rounded ratio ratio-1x1 top-bordaAzulGM bordaAzulGM'>
 								<div className='d-flex flex-column col-12 h-100'>
 									<div className='col-12 fs-4 p-2 text-center'>Treinamentos em andamento</div>
 									<div className='p-3 flex-grow-1 overflow-y-scroll'>
@@ -168,8 +168,8 @@ export default function Dashboard() {
 													<div>{tr.criador}</div>
 												</div>
 												<a className='btn btn-White' href={`/admin/treinamento/${tr.id}`}>
-													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
-														<path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+													<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' className='bi bi-arrow-right' viewBox='0 0 16 16'>
+														<path fillRule='evenodd' d='M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8' />
 													</svg>
 												</a>
 											</div>
@@ -180,7 +180,7 @@ export default function Dashboard() {
 						</div>
 
 						<div className='col-12 col-md-6 col-lg-4 px-2'>
-							<div className="col-12 bg-white shadow-sm rounded ratio ratio-1x1 top-bordaAzulGM bordaAzulGM">
+							<div className='col-12 bg-white shadow-sm rounded ratio ratio-1x1 top-bordaAzulGM bordaAzulGM'>
 								<div className='d-flex flex-column col-12 h-100'>
 									<div className='col-12 fs-4 p-2 text-center'>Treinamentos concluídos</div>
 									<div className='p-3 flex-grow-1 overflow-y-scroll'>
@@ -192,8 +192,8 @@ export default function Dashboard() {
 													<div>{tr.criador}</div>
 												</div>
 												<a className='btn btn-White' href={`/admin/treinamento/${tr.id}`}>
-													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
-														<path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+													<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' className='bi bi-arrow-right' viewBox='0 0 16 16'>
+														<path fillRule='evenodd' d='M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8' />
 													</svg>
 												</a>
 											</div>
