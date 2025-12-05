@@ -45,15 +45,6 @@ CREATE TABLE if not exists sessoes (
     FOREIGN KEY (idTreinamento) REFERENCES treinamentos(id) ON DELETE CASCADE
 );
 
--- Inserindo dados de teste na tabela  de treinamentos
-/*
-INSERT INTO sessoes (idTreinamento, dia) values 
-(2, '2025-11-20 12:00:00'),
-(3, '2025-11-30 10:30:00'),
-(3, '2025-12-10 14:30:00'),
-(4, '2025-12-01 13:00:00')
-;
-*/
 -- =====================================================================================================================================
 
 -- Criando a tabela de participacoes
@@ -79,7 +70,5 @@ CREATE TABLE if not exists presencas (
     FOREIGN KEY (idSessao) REFERENCES sessoes(id) ON DELETE CASCADE,
     FOREIGN KEY (idParticipante) REFERENCES usuarios(id) ON DELETE CASCADE
 );
-
--- =====================================================================================================================================
 
 -- =====================================================================================================================================
