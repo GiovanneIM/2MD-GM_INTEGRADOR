@@ -413,7 +413,7 @@ export default function Treinamento() {
                 {
                     treinamento.estado != 'Pendente' &&
                     <div className='col-12 bg-white p-3 rounded shadow-sm d-flex flex-wrap row-gap-3'>
-                        <Sessoes treinamento={treinamento} sessoes={sessoes} criador={treinamento.idCriador == usuario.id} registrarSessao={registrarSessao} />
+                        <Sessoes treinamento={treinamento} sessoes={sessoes} criador={treinamento.idCriador == usuario.id} registrarSessao={registrarSessao} carregarSessoes={carregarSessoes}/>
                     </div>
                 }
             </div>

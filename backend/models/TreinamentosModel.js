@@ -474,6 +474,44 @@ class TreinamentoModel {
         }
     }
 
+    // CANCELAR SESSÃO
+    static async cancelarSessao(idSessao) {
+        try {
+            const connection = await getConnection();
+
+            try {
+                // Fazendo a exclusão da sessao
+                await deleteRecord('sessoes', `id = ${idSessao}`);
+            } finally {
+                connection.release();
+            }
+
+        } catch (error) {
+            console.error('Erro ao cancelar a sessao:', error);
+            throw error;
+        }
+    }
+
+    /* ATUALIZAR O ESTADO DE UMA SESSÃO */
+    static async atualizarEstadoSessao(idSessao, estado) {
+        try {
+            const connection = await getConnection();
+
+            try {
+                // Fazendo a alteração do estado da sessao
+                const sessao = await update('sessoes', { estado: estado }, `id = ${idSessao}`);
+
+                // Retornando a sessao atualizada
+                return { sessao }
+            } finally {
+                connection.release();
+            }
+
+        } catch (error) {
+            console.error('Erro ao atualizar o estado da sessao:', error);
+            throw error;
+        }
+    }
 
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
