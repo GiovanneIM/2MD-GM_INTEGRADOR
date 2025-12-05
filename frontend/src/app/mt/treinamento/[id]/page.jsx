@@ -11,7 +11,6 @@ import { useParams } from 'next/navigation';
 import LogoGM from '@/components/LogoGM';
 import EstadoTreinamento from '@/components/EstadoTreinamento/page';
 import Sessoes from '@/components/ft/sessoes';
-import Swal from 'sweetalert2';
 
 import ModalVerPart from '@/components/ModalVerPart';
 
@@ -94,16 +93,16 @@ export default function Treinamento() {
     function registrarSessao(novaSessaoDados) { return; }
 
     function formatarData(data) {
-        if (!data) return "--/--/---- - --:--";
+        if (!data) return '--/--/---- - --:--';
 
         const d = new Date(data);
-        if (isNaN(d)) return "--/--/---- - --:--";
+        if (isNaN(d)) return '--/--/---- - --:--';
 
-        const dia = String(d.getDate()).padStart(2, "0");
-        const mes = String(d.getMonth() + 1).padStart(2, "0");
+        const dia = String(d.getDate()).padStart(2, '0');
+        const mes = String(d.getMonth() + 1).padStart(2, '0');
         const ano = d.getFullYear();
-        const horas = String(d.getHours()).padStart(2, "0");
-        const minutos = String(d.getMinutes()).padStart(2, "0");
+        const horas = String(d.getHours()).padStart(2, '0');
+        const minutos = String(d.getMinutes()).padStart(2, '0');
 
         return `${dia}/${mes}/${ano} às ${horas}:${minutos}`;
     }

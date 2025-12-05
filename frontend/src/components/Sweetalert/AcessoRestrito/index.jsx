@@ -6,6 +6,9 @@ export default function AcessoRestrito({
     text,
 }) {
     Swal.fire({
+        scrollbarPadding: false,
+        heightAuto: false,
+
         // Atributos do botão
         title: 'Acesso negado',
         html: text,

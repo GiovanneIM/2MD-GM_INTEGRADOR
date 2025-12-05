@@ -7,6 +7,9 @@ export default function CardMembros({
 }) {
 	function modalInfos() {
 		Swal.fire({
+			scrollbarPadding: false,
+			heightAuto: false,
+
 			width: 380,
 			background: '#f4f6f8',
 			showConfirmButton: false,
@@ -33,7 +36,7 @@ export default function CardMembros({
 			`
 		});
 	}
-	
+
 
 	return (
 		<div className='card-funcionario text-center bg-white p-3 shadow rounded' onClick={modalInfos}>
@@ -46,7 +49,7 @@ export default function CardMembros({
 			</div>
 
 			<div className=' rounded-3 mt-n3 card-body'>
-				<h6 className='fw-700 dark-color mb-1' style={{height: '50px'}}>{pessoa.nome}</h6>
+				<h6 className='fw-700 dark-color mb-1' style={{ height: '50px' }}>{pessoa.nome}</h6>
 				<small>{
 					pessoa.tipo === 'ft' ? ('Facilitador de time') : ('Membro de time')
 				}</small>

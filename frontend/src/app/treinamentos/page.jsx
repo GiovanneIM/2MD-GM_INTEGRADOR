@@ -9,7 +9,7 @@ export default function Treinamentos() {
 
     const [treinamentosRealizados, setTreinamentosRealizados] = useState([]);
     const [treinamentosOfertados, setTreinamentosOfertados] = useState([]);
-    const [exibir, setExibir] = useState("Realizados");
+    const [exibir, setExibir] = useState('Realizados');
 
     const [pagina, setPagina] = useState(1);
     const [totalPaginas, setTotalPaginas] = useState(1)
@@ -24,9 +24,9 @@ export default function Treinamentos() {
     /* Carregando o usuário logado */
     useEffect(() => {
         async function carregarUsuario() {
-            const res = await fetch("http://localhost:3000/api/auth/perfil", {
+            const res = await fetch('http://localhost:3000/api/auth/perfil', {
                 headers: {
-                    "Authorization": "Bearer " + sessionStorage.getItem("token"),
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
                 },
             });
 
@@ -108,7 +108,7 @@ export default function Treinamentos() {
 
 
     // Treinamentos exibidos conforme a opção
-    const lista = exibir === "Realizados" ? treinamentosRealizados : treinamentosOfertados;
+    const lista = exibir === 'Realizados' ? treinamentosRealizados : treinamentosOfertados;
 
     function botoesPaginacao() {
         const botoes = [];
@@ -127,7 +127,7 @@ export default function Treinamentos() {
         if (inicio < 1) inicio = 1;
 
 
-        botoes.push(<button key={'anterior'} className="btn border rounded-0 btnPaginacao" onClick={e => setPagina(pagina - 1)}
+        botoes.push(<button key={'anterior'} className='btn border rounded-0 btnPaginacao' onClick={e => setPagina(pagina - 1)}
             disabled={(pagina === 1) || (totalPaginas === 0)}
         >
             Anterior
@@ -146,7 +146,7 @@ export default function Treinamentos() {
             );
         }
 
-        botoes.push(<button key={'proximo'} className="btn border rounded-0 btnPaginacao" onClick={e => setPagina(pagina + 1)}
+        botoes.push(<button key={'proximo'} className='btn border rounded-0 btnPaginacao' onClick={e => setPagina(pagina + 1)}
             disabled={(pagina === totalPaginas) || (totalPaginas === 0)}>
             Próximo
         </button>)
@@ -174,14 +174,14 @@ export default function Treinamentos() {
                         <div className='col-12 col-md-6 pe-md-2'>
                             <button
                                 className={`col-12 col-sm-6 btn border rounded-0 btn-filtro btnPaginacao ${exibir === 'Realizados' ? 'active' : ''}`}
-                                onClick={() => setExibir("Realizados")}
+                                onClick={() => setExibir('Realizados')}
                             >
                                 Realizados
                             </button>
 
                             <button
                                 className={`col-12 col-sm-6 btn border rounded-0 btn-filtro btnPaginacao ${exibir === 'Ofertados' ? 'active' : ''}`}
-                                onClick={() => setExibir("Ofertados")}
+                                onClick={() => setExibir('Ofertados')}
                                 disabled={usuario.tipo === 'mt'}
                             >
                                 Ofertados
@@ -212,7 +212,7 @@ export default function Treinamentos() {
 
                                 {lista.length === 0 && (
                                     <tr>
-                                        <td colSpan="4" className='text-center py-3'>
+                                        <td colSpan='4' className='text-center py-3'>
                                             Nenhum treinamento encontrado.
                                         </td>
                                     </tr>

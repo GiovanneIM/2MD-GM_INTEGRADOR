@@ -115,16 +115,16 @@ export default function Treinamento() {
     function registrarSessao() { }
 
     function formatarData(data) {
-        if (!data) return "--/--/---- - --:--";
+        if (!data) return '--/--/---- - --:--';
 
         const d = new Date(data);
-        if (isNaN(d)) return "--/--/---- - --:--";
+        if (isNaN(d)) return '--/--/---- - --:--';
 
-        const dia = String(d.getDate()).padStart(2, "0");
-        const mes = String(d.getMonth() + 1).padStart(2, "0");
+        const dia = String(d.getDate()).padStart(2, '0');
+        const mes = String(d.getMonth() + 1).padStart(2, '0');
         const ano = d.getFullYear();
-        const horas = String(d.getHours()).padStart(2, "0");
-        const minutos = String(d.getMinutes()).padStart(2, "0");
+        const horas = String(d.getHours()).padStart(2, '0');
+        const minutos = String(d.getMinutes()).padStart(2, '0');
 
         return `${dia}/${mes}/${ano} às ${horas}:${minutos}`;
     }
@@ -133,8 +133,11 @@ export default function Treinamento() {
     /* Modal para cancelar treinamento */
     function cancelarTreinamento() {
         Swal.fire({
+            scrollbarPadding: false,
+            heightAuto: false,
+
             title: 'Confirmar Exclusão',
-            html: `Deseja confirmar a exclusão do treinamento "${treinamento.nome}"?`,
+            html: `Deseja confirmar a exclusão do treinamento '${treinamento.nome}'?`,
 
             confirmButtonText: 'Confirmar',
             confirmButtonColor: '#dc3545',
@@ -158,7 +161,7 @@ export default function Treinamento() {
 
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("Treinamento cancelado!");
+                console.log('Treinamento cancelado!');
                 carregarTreinamento()
             }
         });
@@ -167,8 +170,11 @@ export default function Treinamento() {
     /* Modal para aprovar treinamento */
     function aprovarTreinamento() {
         Swal.fire({
+            scrollbarPadding: false,
+            heightAuto: false,
+
             title: 'Confirmar Aprovação',
-            html: `Deseja confirmar a aprovação do treinamento "${treinamento.nome}"?`,
+            html: `Deseja confirmar a aprovação do treinamento '${treinamento.nome}'?`,
 
             confirmButtonText: 'Confirmar',
             confirmButtonColor: '#0dcaf0',
@@ -192,7 +198,7 @@ export default function Treinamento() {
 
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("Treinamento aprovado!");
+                console.log('Treinamento aprovado!');
                 carregarTreinamento()
             }
         });
@@ -201,6 +207,9 @@ export default function Treinamento() {
 
     function modalInfos() {
         Swal.fire({
+            scrollbarPadding: false,
+            heightAuto: false,
+
             width: 500,
             background: '#f4f6f8',
             showConfirmButton: false,
@@ -217,7 +226,7 @@ export default function Treinamento() {
                         <div class='gm-card'>
                             <h4>Alterar nome:</h4>
                             <div class='gm-input'>
-                                <input type="text" />
+                                <input type='text' />
                             </div>
         
                             <h4>Alterar descrição:</h4>

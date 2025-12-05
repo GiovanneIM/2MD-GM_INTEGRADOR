@@ -19,35 +19,33 @@ const options = {
 export default function GraficoEstados({ treinamentos }) {
     const data = {
         labels: ['Pendentes', 'Cancelados', 'Em andamento', 'Concluídos'],
-        datasets: [
-            {
-                label: 'Quantidade',
-                data: [
-                    treinamentos.filter(tr => tr.estado === 'Pendente').length,
-                    treinamentos.filter(tr => tr.estado === 'Cancelado').length,
-                    treinamentos.filter(tr => tr.estado === 'Em andamento').length,
-                    treinamentos.filter(tr => tr.estado === 'Concluido').length
-                ],
-                backgroundColor: [
-                    '#0d6efd',
-                    '#dc3545',
-                    '#ffc107',
-                    '#198754'
-                ]
-            }
-        ]
+        datasets: [{
+            label: 'Quantidade',
+            data: [
+                treinamentos.filter(tr => tr.estado === 'Pendente').length,
+                treinamentos.filter(tr => tr.estado === 'Cancelado').length,
+                treinamentos.filter(tr => tr.estado === 'Em andamento').length,
+                treinamentos.filter(tr => tr.estado === 'Concluido').length
+            ],
+            backgroundColor: [
+                '#0d6efd',
+                '#dc3545',
+                '#ffc107',
+                '#198754'
+            ]
+        }]
     };
 
-    return (
-        // <div className='h-100 col-12 d-flex flex-column align-items-center'>
+    return (<>
         <div className='card border-0 shadow-sm p-3 col-12 h-100 pb-2 d-flex flex-column align-items-center'>
             {/* Titulo */}
             <div className='col-12 d-flex flex-column'>
-                <h5 className='mb-0 fs-5'>Estados dos Treinamentos</h5>
+                <h2 className='mb-0 fs-5'>Estados dos Treinamentos</h2>
                 <div className='text-muted' style={{ fontSize: '0.85rem' }}>Proporção dos seus treinamentos por estado</div>
             </div>
 
+            {/* Gráfico */}
             <Pie data={data} options={options} />
         </div>
-    );
+    </>);
 }

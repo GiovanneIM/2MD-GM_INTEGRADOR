@@ -29,7 +29,23 @@ export default function Treinamento() {
     const { id } = useParams()
 
     const [treinamento, setTreinamento] = useState({});
-    const [sessoes, setSessoes] = useState(null);
+    const [sessoes, setSessoes] = useState([{
+        id: 1,
+        idTreinamento: 1,
+        dia: '04/12/2025',
+        hora_inicio: '12:00',
+        hora_fim: '15:00',
+        localidade: 'Sala de integração',
+        data_criacao: {
+            data: '03/12/2025',
+            hora: '12:00'
+        },
+        data_atualizacao: {
+            data: '03/12/2025',
+            hora: '14:00'
+        },
+        estado: 'Agendada',
+    }]);
     const [usuario, setUsuario] = useState({});
     const [participantes, setParticipantes] = useState(null);
 
@@ -61,7 +77,7 @@ export default function Treinamento() {
 
             if (data.sucesso) {
                 setSessoes(data.dados.sessoes);
-                
+
             } else {
                 console.log(data.mensagem);
             }
@@ -83,7 +99,7 @@ export default function Treinamento() {
 
                 if (data.sucesso) {
                     setParticipantes(data.dados.participantes);
-                    
+
                 } else {
                     console.log(data.mensagem);
                 }
@@ -144,16 +160,16 @@ export default function Treinamento() {
     }
 
     function formatarData(data) {
-        if (!data) return "--/--/---- - --:--";
+        if (!data) return '--/--/---- - --:--';
 
         const d = new Date(data);
-        if (isNaN(d)) return "--/--/---- - --:--";
+        if (isNaN(d)) return '--/--/---- - --:--';
 
-        const dia = String(d.getDate()).padStart(2, "0");
-        const mes = String(d.getMonth() + 1).padStart(2, "0");
+        const dia = String(d.getDate()).padStart(2, '0');
+        const mes = String(d.getMonth() + 1).padStart(2, '0');
         const ano = d.getFullYear();
-        const horas = String(d.getHours()).padStart(2, "0");
-        const minutos = String(d.getMinutes()).padStart(2, "0");
+        const horas = String(d.getHours()).padStart(2, '0');
+        const minutos = String(d.getMinutes()).padStart(2, '0');
 
         return `${dia}/${mes}/${ano} às ${horas}:${minutos}`;
     }
@@ -161,8 +177,11 @@ export default function Treinamento() {
     /* Modal para cancelar treinamento */
     function cancelarTreinamento() {
         Swal.fire({
+            scrollbarPadding: false,
+            heightAuto: false,
+
             title: 'Confirmar Exclusão',
-            html: `Deseja confirmar a exclusão do treinamento "${treinamento.nome}"?`,
+            html: `Deseja confirmar a exclusão do treinamento '${treinamento.nome}'?`,
 
             confirmButtonText: 'Confirmar',
             confirmButtonColor: '#dc3545',
@@ -186,7 +205,7 @@ export default function Treinamento() {
 
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("Treinamento cancelado!");
+                console.log('Treinamento cancelado!');
                 carregarTreinamento()
             }
         });
@@ -194,8 +213,11 @@ export default function Treinamento() {
 
     function concluirTreinamento() {
         Swal.fire({
+            scrollbarPadding: false,
+            heightAuto: false,
+
             title: 'Confirmar Conclusão',
-            html: `Deseja confirmar a conclusão do treinamento "${treinamento.nome}"?`,
+            html: `Deseja confirmar a conclusão do treinamento '${treinamento.nome}'?`,
 
             confirmButtonText: 'Confirmar',
             confirmButtonColor: '#198754',
@@ -219,7 +241,7 @@ export default function Treinamento() {
 
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("Treinamento Concluído!");
+                console.log('Treinamento Concluído!');
                 carregarTreinamento()
             }
         });
@@ -227,6 +249,9 @@ export default function Treinamento() {
 
     function modalInfos() {
         Swal.fire({
+            scrollbarPadding: false,
+            heightAuto: false,
+
             width: 500,
             background: '#f4f6f8',
             html: `
@@ -239,7 +264,7 @@ export default function Treinamento() {
                             <label class='fs-6 fw-semibold'>Alterar nome</label>
                         </div>
                         <div class='gm-input'>
-                            <input id="inputNome" type="text" value="${''}"/>
+                            <input id='inputNome' type='text' value='${''}'/>
                         </div>
                     </div>
                     
@@ -248,7 +273,7 @@ export default function Treinamento() {
                             <label class='fs-6 fw-semibold'>Alterar descrição</label>
                         </div>
                         <div class='gm-input2'>
-                            <textarea id="inputDescricao">${''}</textarea>
+                            <textarea id='inputDescricao'>${''}</textarea>
                         </div>
                     </div>
 
@@ -267,8 +292,8 @@ export default function Treinamento() {
             cancelButtonText: 'Cancelar',
 
             preConfirm: async () => {
-                const novoNome = document.getElementById("inputNome").value;
-                const novaDescricao = document.getElementById("inputDescricao").value;
+                const novoNome = document.getElementById('inputNome').value;
+                const novaDescricao = document.getElementById('inputDescricao').value;
 
 
                 const res = await fetch(`http://localhost:3000/api/treinamentos/treinamento/${id}/atualizarInfos`, {
@@ -287,7 +312,7 @@ export default function Treinamento() {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("Alterações concluídas!");
+                console.log('Alterações concluídas!');
                 carregarTreinamento()
             }
         });;
@@ -336,7 +361,7 @@ export default function Treinamento() {
                         {/* Descrição */}
                         <div>
                             <div className='mb-0 fs-5'>Descrição</div>
-                            <div className='ms-3 p-2 rounded' style={{ minHeight: '200px', wordBreak:'break-word' }}>
+                            <div className='ms-3 p-2 rounded' style={{ minHeight: '200px', wordBreak: 'break-word' }}>
                                 {treinamento?.descricao ?? 'Sem Descrição'}
                             </div>
                         </div>
