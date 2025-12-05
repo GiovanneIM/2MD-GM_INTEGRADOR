@@ -380,6 +380,58 @@ class TreinamentoController {
         }
     }
 
+    /* CANCELAR UMA SESSÃO */
+    static async cancelarSessao(req, res) {
+        try {
+            // Obtendo o id do treinamento
+            const idSessao = parseInt(req.params.idSessao);
+
+            // Chamando o model para fazer o cancelamento da sessão
+            await TreinamentoModel.cancelarSessao(idSessao);
+
+            // Respondendo a requisição
+            res.status(200).json({
+                sucesso: true,
+                mensagem: 'Sessão cancelada',
+            });
+        } catch (error) {
+            console.error('Erro ao cancelar sessão:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível cancelar a sessão'
+            });
+        }
+    }
+
+    /* ATUALIZAR O ESTADO DE UMA SESSÃO */
+    static async atualizarEstadoSessao(req, res) {
+        try {
+            // Obtendo o id do treinamento
+            const idSessao = parseInt(req.params.idSessao);
+
+            // Obtendo o estado para qual o treinamento deve ser alterado
+            const { estado } = req.body;
+
+            // Chamando o model para fazer alteração do estado
+            const resultado = await TreinamentoModel.atualizarEstadoSessao(idSessao, estado);
+
+            // Respondendo a requisição
+            res.status(200).json({
+                sucesso: true,
+                mensagem: 'Estado atualizado',
+                dados: { sessao: resultado.sessao, },
+            });
+        } catch (error) {
+            console.error('Erro ao criar sessão:', error);
+            res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno do servidor',
+                mensagem: 'Não foi possível atualizar o estado da sessão'
+            });
+        }
+    }
+
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
     /* ROTAS RELACIONADAS ÀS SESSÕES DE UM USUÁRIO */
 

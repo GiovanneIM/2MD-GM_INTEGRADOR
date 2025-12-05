@@ -56,6 +56,12 @@ router.get('/:idTreinamento/sessoes', TreinamentoController.listarSessoes)
 // Criar uma sessão em um treinamentos específico
 router.post('/:idTreinamento/criarSessao', TreinamentoController.criarSessao)
 
+// Cancelar uma sessão em um treinamentos específico
+router.delete('/:idSessao/cancelarSessao', TreinamentoController.cancelarSessao)
+
+// Alterar o estado uma sessão em um treinamentos específico
+router.post('/:idSessao/atualizarEstadoSessao', TreinamentoController.atualizarEstadoSessao)
+
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 
