@@ -29,25 +29,12 @@ export default function Treinamento() {
     const { id } = useParams()
 
     const [treinamento, setTreinamento] = useState({});
-    const [sessoes, setSessoes] = useState([{
-        id: 1,
-        idTreinamento: 1,
-        dia: '04/12/2025',
-        hora_inicio: '12:00',
-        hora_fim: '15:00',
-        localidade: 'Sala de integração',
-        data_criacao: {
-            data: '03/12/2025',
-            hora: '12:00'
-        },
-        data_atualizacao: {
-            data: '03/12/2025',
-            hora: '14:00'
-        },
-        estado: 'Agendada',
-    }]);
+    const [sessoes, setSessoes] = useState([]);
     const [usuario, setUsuario] = useState({});
     const [participantes, setParticipantes] = useState(null);
+
+    // const hoje = new Date();
+    // const dataAtual = hoje.getDate() + '/' + (hoje.getMonth() + 1) + '/' + hoje.getFullYear()
 
     /* Função para carregar o treinamento */
     async function carregarTreinamento() {
@@ -76,6 +63,10 @@ export default function Treinamento() {
             const data = await res.json();
 
             if (data.sucesso) {
+                // const hoje = new Date();
+                // console.log(hoje.getDate() + '/' + (hoje.getMonth() + 1) + '/' + hoje.getFullYear() );
+                // console.log(data.dados.sessoes);
+                
                 setSessoes(data.dados.sessoes);
 
             } else {
